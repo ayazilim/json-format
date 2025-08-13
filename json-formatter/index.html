@@ -332,6 +332,11 @@
         color: var(--text);
       }
       pre#cs { margin: 0; padding: 12px; white-space: pre; font-size: 12px; font-family: var(--font); }
+      pre#cs .cs-keyword { color: var(--color-boolean); }
+      pre#cs .cs-type { color: var(--color-key); }
+      pre#cs .cs-string { color: var(--color-string); }
+      pre#cs .cs-number { color: var(--color-number); }
+      pre#cs .cs-comment { color: var(--muted); font-style: italic; }
     </style>
   </head>
   <body>
@@ -960,23 +965,23 @@
           const lines = [];
           const emitIndent = (n) => '  '.repeat(n);
           const emitType = (s) => {
-            if (s.kind === 'ref') return s.ref;
-            if (s.kind === 'string') return 'string';
-            if (s.kind === 'number') return s.type;
-            if (s.kind === 'boolean') return 'bool';
+            if (s.kind === 'ref') return `<span class="cs-type">${s.ref}</span>`;
+            if (s.kind === 'string') return `<span class="cs-type">string</span>`;
+            if (s.kind === 'number') return `<span class="cs-type">${s.type}</span>`;
+            if (s.kind === 'boolean') return `<span class="cs-type">bool</span>`;
             if (s.kind === 'array') return emitType(s.element) + '[]';
-            if (s.kind === 'null') return 'object';
-            if (s.kind === 'object') return 'object';
-            return 'object';
+            if (s.kind === 'null') return `<span class="cs-type">object</span>`;
+            if (s.kind === 'object') return `<span class="cs-type">object</span>`;
+            return `<span class="cs-type">object</span>`;
           };
           const emitModel = (name, props) => {
-            const header = `${kindWord} ${name}`;
+            const header = `<span class="cs-keyword">${kindWord}</span> <span class="cs-type">${name}</span>`;
             lines.push(header);
             lines.push('{');
             props.forEach(p => {
               const propType = emitType(p.schema);
               const propName = toPascalCase(p.name);
-              lines.push(emitIndent(1) + `public ${propType} ${propName} { get; set; }`);
+              lines.push(emitIndent(1) + `<span class="cs-keyword">public</span> ${propType} <span class="cs-type">${propName}</span> { <span class="cs-keyword">get</span>; <span class="cs-keyword">set</span>; }`);
             });
             lines.push('}');
           };
@@ -998,10 +1003,10 @@
               emitModel(rootTypeName, found.properties);
             }
           } else if (schema.kind === 'array') {
-            lines.push(`// Root: ${emitType(schema)} (koleksiyon)`);
+            lines.push(`<span class="cs-comment">// Root: ${emitType(schema)} (koleksiyon)</span>`);
           } else {
             // Primitive root
-            lines.push(`// Root: ${emitType(schema)}`);
+            lines.push(`<span class="cs-comment">// Root: ${emitType(schema)}</span>`);
           }
           return lines.join('\n');
         }
@@ -1017,7 +1022,7 @@
           const kindSel = dom.csKind ? dom.csKind.value : 'class';
           const kindWord = kindSel === 'record' ? 'public record' : (kindSel === 'struct' ? 'public struct' : 'public class');
           const code = schemaToCSharp(rootSchema, types, rootName, kindWord);
-          dom.cs.textContent = code;
+          dom.cs.innerHTML = code;
         }
 
         dom.btnFormat.addEventListener('click', () => formatAction(true));
