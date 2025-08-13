@@ -320,6 +320,18 @@
         inset: 8px;
         z-index: 2000;
       }
+
+      /* C# Model görünümü */
+      .csbar { display: flex; gap: 8px; align-items: center; border-bottom: 1px solid var(--border); padding: 8px 8px; background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.02)); flex-wrap: wrap; }
+      .csbar label { font-size: 12px; color: var(--muted); }
+      .csbar input[type="text"], .csbar select {
+        padding: 6px 10px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: transparent;
+        color: var(--text);
+      }
+      pre#cs { margin: 0; padding: 12px; white-space: pre; font-size: 12px; font-family: var(--font); }
     </style>
   </head>
   <body>
@@ -381,6 +393,7 @@
               <button class="tab-btn active" data-tab="edit">Düzenle</button>
               <button class="tab-btn" data-tab="tree">Ağaç</button>
               <button class="tab-btn" data-tab="raw">Ham</button>
+              <button class="tab-btn" data-tab="cs">C# Model</button>
             </div>
             <div class="card-header-right">
               <div class="dim">Sürükle-bırak desteklenir</div>
@@ -404,6 +417,21 @@
             </div>
             <div class="viewer hidden" id="viewer-raw" style="min-height: 0;">
               <pre id="raw"></pre>
+            </div>
+            <div class="viewer hidden" id="viewer-cs">
+              <div class="csbar">
+                <label>Tip</label>
+                <select id="csKind">
+                  <option value="class">class</option>
+                  <option value="record">record</option>
+                  <option value="struct">struct</option>
+                </select>
+                <label>Ad</label>
+                <input type="text" id="csRootName" value="Root" placeholder="Kök tip adı">
+                <button class="btn ok" id="btnGenCs">Oluştur</button>
+                <button class="btn" id="btnCopyCs">Kopyala</button>
+              </div>
+              <pre id="cs"></pre>
             </div>
             <div class="status" id="status">Hazır</div>
             <div class="drop-hint" id="dropHint">JSON dosyasını bu alana sürükleyip bırakabilirsiniz.</div>
@@ -474,10 +502,12 @@
           indent: document.getElementById('indent'),
           sortKeys: document.getElementById('sortKeys'),
           raw: document.getElementById('raw'),
+          cs: document.getElementById('cs'),
           tree: document.getElementById('tree'),
           viewerEdit: document.getElementById('viewer-edit'),
           viewerTree: document.getElementById('viewer-tree'),
           viewerRaw: document.getElementById('viewer-raw'),
+          viewerCs: document.getElementById('viewer-cs'),
           tabs: Array.from(document.querySelectorAll('.tab-btn')),
           btnFull: document.getElementById('btnFull'),
           mainCard: document.getElementById('mainCard'),
@@ -488,6 +518,10 @@
           qpMenu: document.getElementById('qpMenu'),
           qpList: document.getElementById('qpList'),
           qpSwatches: document.getElementById('qpSwatches'),
+          csKind: document.getElementById('csKind'),
+          csRootName: document.getElementById('csRootName'),
+          btnGenCs: document.getElementById('btnGenCs'),
+          btnCopyCs: document.getElementById('btnCopyCs'),
           inpMaxDepth: document.getElementById('maxDepth'),
           inpMaxSizeKB: document.getElementById('maxSizeKB'),
           rememberSession: document.getElementById('rememberSession'),
@@ -541,6 +575,7 @@
           dom.viewerEdit.classList.toggle('hidden', tab !== 'edit');
           dom.viewerTree.classList.toggle('hidden', tab !== 'tree');
           dom.viewerRaw.classList.toggle('hidden', tab !== 'raw');
+          dom.viewerCs.classList.toggle('hidden', tab !== 'cs');
           if (tab !== 'edit') formatAction(false);
         }));
 
@@ -869,6 +904,122 @@
           });
         }
 
+        // JSON → C# Model üretimi
+        function toPascalCase(name) {
+          return String(name)
+            .replace(/^[^a-zA-Z_]+/g, '')
+            .replace(/[-\s_]+(.)/g, (_, g1) => g1.toUpperCase())
+            .replace(/^(.)/, (_, g1) => g1.toUpperCase())
+            .replace(/[^a-zA-Z0-9_]/g, '');
+        }
+        function uniqueTypeName(base, used) {
+          let n = toPascalCase(base || 'Type');
+          if (!n) n = 'Type';
+          let i = 2; let t = n;
+          while (used.has(t)) { t = n + i; i++; }
+          used.add(t); return t;
+        }
+        function detectNumberType(num) {
+          if (Number.isInteger(num)) {
+            if (num >= -2147483648 && num <= 2147483647) return 'int';
+            if (num >= 0 && num <= 4294967295) return 'uint';
+            if (num >= -9007199254740991 && num <= 9007199254740991) return 'long';
+            return 'long';
+          }
+          return 'double';
+        }
+        function analyze(value, typeNames, usedNames, suggestedName) {
+          if (value === null) return { kind: 'null', type: 'object' };
+          const t = typeof value;
+          if (t === 'string') return { kind: 'string', type: 'string' };
+          if (t === 'number') return { kind: 'number', type: detectNumberType(value) };
+          if (t === 'boolean') return { kind: 'boolean', type: 'bool' };
+          if (Array.isArray(value)) {
+            if (value.length === 0) return { kind: 'array', element: { kind: 'object', type: 'object' } };
+            // Eleman türlerini dene; farklıysa object kabul et
+            let elemSchema = analyze(value[0], typeNames, usedNames, suggestedName);
+            for (let i = 1; i < value.length; i++) {
+              const next = analyze(value[i], typeNames, usedNames, suggestedName);
+              if (JSON.stringify(next) !== JSON.stringify(elemSchema)) { elemSchema = { kind: 'object', type: 'object' }; break; }
+            }
+            return { kind: 'array', element: elemSchema };
+          }
+          if (t === 'object') {
+            const typeName = uniqueTypeName(suggestedName || 'Item', usedNames);
+            const props = [];
+            Object.keys(value).forEach(k => {
+              const child = analyze(value[k], typeNames, usedNames, k);
+              props.push({ name: k, schema: child });
+            });
+            typeNames.push({ name: typeName, properties: props });
+            return { kind: 'ref', ref: typeName };
+          }
+          return { kind: 'string', type: 'string' };
+        }
+        function schemaToCSharp(schema, typeNames, rootName, kindWord) {
+          const lines = [];
+          const emitIndent = (n) => '  '.repeat(n);
+          const emitType = (s) => {
+            if (s.kind === 'ref') return s.ref;
+            if (s.kind === 'string') return 'string';
+            if (s.kind === 'number') return s.type;
+            if (s.kind === 'boolean') return 'bool';
+            if (s.kind === 'array') return emitType(s.element) + '[]';
+            if (s.kind === 'null') return 'object';
+            if (s.kind === 'object') return 'object';
+            return 'object';
+          };
+          const emitModel = (name, props) => {
+            const header = `${kindWord} ${name}`;
+            lines.push(header);
+            lines.push('{');
+            props.forEach(p => {
+              const propType = emitType(p.schema);
+              const propName = toPascalCase(p.name);
+              lines.push(emitIndent(1) + `public ${propType} ${propName} { get; set; }`);
+            });
+            lines.push('}');
+          };
+          // Emit all collected types first (excluding potential duplicate root re-emit)
+          const emitted = new Set();
+          typeNames.forEach(t => {
+            if (!emitted.has(t.name)) {
+              emitModel(t.name, t.properties);
+              emitted.add(t.name);
+              lines.push('');
+            }
+          });
+          // Emit root wrapper if needed
+          const rootTypeName = toPascalCase(rootName || 'Root');
+          if (schema.kind === 'ref') {
+            // If root already emitted, alias by class with same properties name
+            const found = typeNames.find(x => x.name === schema.ref);
+            if (found && found.name !== rootTypeName) {
+              emitModel(rootTypeName, found.properties);
+            }
+          } else if (schema.kind === 'array') {
+            lines.push(`// Root: ${emitType(schema)} (koleksiyon)`);
+          } else {
+            // Primitive root
+            lines.push(`// Root: ${emitType(schema)}`);
+          }
+          return lines.join('\n');
+        }
+        function generateCSharp() {
+          const text = dom.input.value.trim();
+          if (!text) { dom.cs.textContent = ''; return; }
+          const res = parseJsonSafely(text);
+          if (!res.ok) { setStatusErr('Geçersiz JSON'); return; }
+          const used = new Set();
+          const types = [];
+          const rootName = dom.csRootName ? (dom.csRootName.value || 'Root') : 'Root';
+          const rootSchema = analyze(res.value, types, used, rootName);
+          const kindSel = dom.csKind ? dom.csKind.value : 'class';
+          const kindWord = kindSel === 'record' ? 'public record' : (kindSel === 'struct' ? 'public struct' : 'public class');
+          const code = schemaToCSharp(rootSchema, types, rootName, kindWord);
+          dom.cs.textContent = code;
+        }
+
         dom.btnFormat.addEventListener('click', () => formatAction(true));
         dom.btnMinify.addEventListener('click', () => minifyAction());
         dom.btnValidate.addEventListener('click', () => validateAction());
@@ -886,6 +1037,14 @@
         dom.btnSettings.addEventListener('click', () => openSettings());
         dom.btnCloseSettings.addEventListener('click', () => closeSettings());
         dom.btnSaveSettings.addEventListener('click', () => saveSettingsFromUI());
+
+        // C# üretim
+        if (dom.btnGenCs) dom.btnGenCs.addEventListener('click', generateCSharp);
+        if (dom.btnCopyCs) dom.btnCopyCs.addEventListener('click', async () => {
+          const code = dom.cs.textContent;
+          if (!code) return;
+          try { await navigator.clipboard.writeText(code); setStatusOk('C# kopyalandı.'); } catch { setStatusErr('Kopyalanamadı.'); }
+        });
 
         dom.input.addEventListener('keydown', (e) => {
           if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
