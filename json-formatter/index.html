@@ -209,7 +209,7 @@
         display: flex;
         flex-direction: column;
       }
-      #viewer-edit { height: calc(100vh - 160px - var(--footer-h)); }
+      .workspace > .card { height: 100%; min-height: 0; }
       pre#raw {
         margin: 0;
         white-space: pre;
@@ -393,7 +393,7 @@
             </div>
           </div>
           <div class="card-body">
-            <div class="viewer" id="viewer-edit">
+            <div class="viewer" id="viewer-edit" style="min-height: 0;">
               <textarea id="input" spellcheck="false" placeholder='{"hello":"world"}'></textarea>
             </div>
             <div class="viewer hidden" id="viewer-tree">
@@ -624,6 +624,20 @@
           return JSON.stringify(v, null, space);
         }
 
+        function getIndentSpace() {
+          const v = dom.indent.value;
+          if (v === '\\t' || v === '\t' || v === '\u0009' || v === '\\u0009' || v === '\u0009') return '\t';
+          const n = Number(v);
+          if (Number.isFinite(n) && n > 0) return n;
+          return 2;
+        }
+
+        function getIndentUnit(space) {
+          if (space === '\t') return '\t';
+          if (typeof space === 'number' && space > 0) return ' '.repeat(space);
+          return '';
+        }
+
         function escapeHtml(str) {
           return String(str)
             .replace(/&/g, '&amp;')
@@ -695,10 +709,10 @@
             setStatusErr(`Derinlik sınırı aşıldı: > ${settings.maxDepth}`);
             return;
           }
-          const space = dom.indent.value === '\t' ? '\t' : Number(dom.indent.value);
+          const space = getIndentSpace();
           const pretty = stringify(result.value, space, dom.sortKeys.checked);
           if (replaceInput) dom.input.value = pretty;
-          const indentUnit = (space === '\t') ? '\t' : (typeof space === 'number' && space > 0 ? ' '.repeat(space) : '');
+          const indentUnit = getIndentUnit(space);
           dom.raw.innerHTML = buildHighlightedHtml(result.value, indentUnit, dom.sortKeys.checked);
           renderTree(result.value);
           if (settings.rememberSession) { settings.lastInput = dom.input.value; saveSettings(); }
@@ -859,7 +873,10 @@
         dom.btnCollapse.addEventListener('click', () => { formatAction(false); expandCollapseAll(false); });
 
         // Girinti ve anahtar sıralama: anında uygula
-        dom.indent.addEventListener('change', () => formatAction(true));
+        dom.indent.addEventListener('change', () => {
+          // Sekme seçildiğinde de pretty bas, ham görünümü de bozmadan üret
+          formatAction(true);
+        });
         dom.sortKeys.addEventListener('change', () => formatAction(true));
 
         // Ayarlar aç/kapa
@@ -903,7 +920,7 @@
           if (!text) { setStatusErr('Kaydedilecek içerik yok.'); return; }
           const res = parseJsonSafely(text);
           if (!res.ok) { setStatusErr('Geçersiz JSON kaydedilemez.'); return; }
-          const space = dom.indent.value === '\t' ? '\t' : Number(dom.indent.value);
+          const space = getIndentSpace();
           const content = stringify(res.value, space, dom.sortKeys.checked);
           const blob = new Blob([content], { type: 'application/json;charset=utf-8' });
           const url = URL.createObjectURL(blob);
