@@ -794,6 +794,17 @@
           language: 'tr'
         };
         let settings = loadSettings();
+        // URL ?lang=tr|en parametresi gelirse dili buna göre ayarla (ayarları da güncelle)
+        try {
+          const qsLang = new URLSearchParams(window.location.search).get('lang');
+          if (qsLang) {
+            const normalized = String(qsLang).toLowerCase();
+            if (normalized === 'tr' || normalized === 'en') {
+              settings.language = normalized;
+              saveSettings();
+            }
+          }
+        } catch {}
         applyPalette(settings.palette);
         populatePaletteUI();
         hydrateControlsFromSettings();
@@ -1611,6 +1622,8 @@
         });
 
         function applyLanguage(lang) {
+          // html lang özniteliğini güncelle
+          try { document.documentElement.setAttribute('lang', lang || 'tr'); } catch {}
           // Header buttons text and titles
           dom.btnFormat.textContent = t('btn.format');
           dom.btnFormat.title = t('tooltip.format');
