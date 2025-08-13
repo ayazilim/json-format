@@ -624,6 +624,63 @@
           return JSON.stringify(v, null, space);
         }
 
+        function escapeHtml(str) {
+          return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+        }
+
+        function buildHighlightedHtml(value, indentUnit, sort) {
+          const compact = !indentUnit;
+          const v = sort ? sortKeysDeep(value) : value;
+          function render(val, depth) {
+            const t = typeof val;
+            if (val === null) return '<span class="type-null">null</span>';
+            if (t === 'string') return '<span class="type-string">' + escapeHtml(JSON.stringify(val)) + '</span>';
+            if (t === 'number') return '<span class="type-number">' + String(val) + '</span>';
+            if (t === 'boolean') return '<span class="type-boolean">' + String(val) + '</span>';
+            if (Array.isArray(val)) {
+              if (val.length === 0) return '[]';
+              if (compact) {
+                return '[' + val.map(item => render(item, depth + 1)).join(',') + ']';
+              }
+              const indent = indentUnit.repeat(depth);
+              const nextIndent = indentUnit.repeat(depth + 1);
+              let out = '[\n';
+              for (let i = 0; i < val.length; i++) {
+                out += nextIndent + render(val[i], depth + 1) + (i < val.length - 1 ? ',' : '') + '\n';
+              }
+              out += indent + ']';
+              return out;
+            }
+            if (t === 'object') {
+              const keys = Object.keys(val);
+              if (keys.length === 0) return '{}';
+              if (compact) {
+                return '{' + keys.map((k, i) => {
+                  const keyHtml = '<span class="key">' + escapeHtml(JSON.stringify(k)) + '</span>';
+                  return keyHtml + ':' + render(val[k], depth + 1);
+                }).join(',') + '}';
+              }
+              const indent = indentUnit.repeat(depth);
+              const nextIndent = indentUnit.repeat(depth + 1);
+              let out = '{\n';
+              for (let i = 0; i < keys.length; i++) {
+                const k = keys[i];
+                const keyHtml = '<span class="key">' + escapeHtml(JSON.stringify(k)) + '</span>';
+                out += nextIndent + keyHtml + ': ' + render(val[k], depth + 1) + (i < keys.length - 1 ? ',' : '') + '\n';
+              }
+              out += indent + '}';
+              return out;
+            }
+            return escapeHtml(String(val));
+          }
+          return render(v, 0);
+        }
+
         function formatAction(replaceInput = true) {
           const text = dom.input.value.trim();
           if (exceedsMaxSize(text)) return;
@@ -641,7 +698,8 @@
           const space = dom.indent.value === '\t' ? '\t' : Number(dom.indent.value);
           const pretty = stringify(result.value, space, dom.sortKeys.checked);
           if (replaceInput) dom.input.value = pretty;
-          dom.raw.textContent = pretty;
+          const indentUnit = (space === '\t') ? '\t' : (typeof space === 'number' && space > 0 ? ' '.repeat(space) : '');
+          dom.raw.innerHTML = buildHighlightedHtml(result.value, indentUnit, dom.sortKeys.checked);
           renderTree(result.value);
           if (settings.rememberSession) { settings.lastInput = dom.input.value; saveSettings(); }
           setStatusOk('Biçimlendirme başarılı.');
@@ -660,7 +718,7 @@
           if (exceedsMaxDepth(result.value, settings.maxDepth)) { setStatusErr(`Derinlik sınırı aşıldı: > ${settings.maxDepth}`); return; }
           const minified = stringify(result.value, 0, dom.sortKeys.checked);
           dom.input.value = minified;
-          dom.raw.textContent = minified;
+          dom.raw.innerHTML = buildHighlightedHtml(result.value, '', dom.sortKeys.checked);
           renderTree(result.value);
           if (settings.rememberSession) { settings.lastInput = dom.input.value; saveSettings(); }
           setStatusOk('Sıkıştırma başarılı.');
