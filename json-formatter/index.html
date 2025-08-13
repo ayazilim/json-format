@@ -518,9 +518,8 @@
         <section class="card" id="mainCard">
           <div class="card-header">
             <div class="tabs">
-              <button class="tab-btn active" data-tab="edit">Düzenle</button>
+              <button class="tab-btn active" data-tab="raw">Raw</button>
               <button class="tab-btn" data-tab="tree">Ağaç</button>
-              <button class="tab-btn" data-tab="raw">Raw</button>
               <span class="top-status" id="topStatus" aria-live="polite" role="status"></span>
             </div>
             <div class="card-header-right"> 
@@ -536,7 +535,7 @@
             </div>
           </div>
           <div class="card-body">
-            <div class="viewer" id="viewer-edit" style="min-height: 0;">
+            <div class="viewer" id="viewer-raw" style="min-height: 0;">
               <div class="editor" id="editorWrap">
                 <pre id="inputHighlight" class="editor-highlight"></pre>
                 <textarea id="input" spellcheck="false" placeholder='{"hello":"world"}'></textarea>
@@ -544,9 +543,6 @@
             </div>
             <div class="viewer hidden" id="viewer-tree">
               <div class="tree" id="tree"></div>
-            </div>
-            <div class="viewer hidden" id="viewer-raw" style="min-height: 0;">
-              <pre id="raw"></pre>
             </div>
             <div class="status" id="status">Hazır</div>
             <div class="drop-hint" id="dropHint">JSON dosyasını bu alana sürükleyip bırakabilirsiniz.</div>
@@ -628,9 +624,9 @@
           labelSort: document.getElementById('labelSort'),
           labelLang: document.getElementById('labelLang'),
           lang: document.getElementById('lang'),
-          raw: document.getElementById('raw'),
+          raw: document.getElementById('inputHighlight'),
           tree: document.getElementById('tree'),
-          viewerEdit: document.getElementById('viewer-edit'),
+          viewerEdit: null,
           viewerTree: document.getElementById('viewer-tree'),
           viewerRaw: document.getElementById('viewer-raw'),
           tabs: Array.from(document.querySelectorAll('.tab-btn')),
@@ -880,9 +876,8 @@
           dom.tabs.forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
           const tab = btn.getAttribute('data-tab');
-          dom.viewerEdit.classList.toggle('hidden', tab !== 'edit');
-          dom.viewerTree.classList.toggle('hidden', tab !== 'tree');
           dom.viewerRaw.classList.toggle('hidden', tab !== 'raw');
+          dom.viewerTree.classList.toggle('hidden', tab !== 'tree');
           // Her tab değişiminde RAW ve Tree güncellensin (cache hissi olmasın)
           formatAction(false);
         }));
