@@ -104,7 +104,7 @@
       }
       .workspace {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
         gap: 16px;
         min-height: 0;
       }
@@ -177,6 +177,8 @@
         flex: 1;
         min-height: 0;
         font-family: var(--font);
+        display: flex;
+        flex-direction: column;
       }
       pre#raw {
         margin: 0;
@@ -192,11 +194,11 @@
       .expanded > .node > .caret::before { transform: rotate(90deg); }
       .children { display: none; border-left: 1px dashed var(--border); margin-left: 7px; padding-left: 10px; }
       .expanded > .children { display: block; }
-      .key { color: #93c5fd; }
-      .type-string { color: #fbbf24; }
-      .type-number { color: #f472b6; }
-      .type-boolean { color: #34d399; }
-      .type-null { color: #a3a3a3; font-style: italic; }
+      .key { color: var(--color-key, #93c5fd); }
+      .type-string { color: var(--color-string, #fbbf24); }
+      .type-number { color: var(--color-number, #f472b6); }
+      .type-boolean { color: var(--color-boolean, #34d399); }
+      .type-null { color: var(--color-null, #a3a3a3); font-style: italic; }
       .dim { color: var(--muted); }
       .badge { color: var(--muted); font-size: 11px; border: 1px solid var(--border); padding: 1px 6px; border-radius: 999px; margin-left: 6px; }
       .node { display: inline-flex; align-items: center; gap: 2px; }
@@ -211,6 +213,59 @@
       .kbd { border: 1px solid var(--border); padding: 0 6px; border-radius: 4px; background: rgba(255,255,255,.03); font-family: var(--font); font-size: 12px; }
       .hidden { display: none !important; }
       @media (max-width: 1200px) { .workspace { grid-template-columns: 1fr; } }
+
+      /* Ayarlar modalı */
+      .settings-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+      }
+      .settings-dialog {
+        width: 640px;
+        max-width: calc(100vw - 32px);
+        background: var(--panel);
+        color: var(--text);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        padding: 16px;
+      }
+      .settings-title { font-weight: 700; margin: 4px 0 12px 0; font-size: 16px; }
+      .settings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+      .form-row { display: flex; flex-direction: column; gap: 6px; }
+      .form-row label { font-size: 12px; color: var(--muted); }
+      .form-row input[type="number"], .form-row select {
+        padding: 8px 10px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: transparent;
+        color: var(--text);
+      }
+      .palette-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; }
+      .palette {
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 8px;
+        background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.02));
+        cursor: pointer;
+      }
+      .palette.active { outline: 2px solid var(--accent); }
+      .palette-name { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+      .swatches { display: flex; gap: 4px; }
+      .sw { width: 14px; height: 14px; border-radius: 3px; border: 1px solid var(--border); }
+      .settings-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px; }
+
+      /* Yumuşak tam ekran (yalnızca JSON kartı) */
+      .body-soft-full header, .body-soft-full .footer { display: none; }
+      #mainCard.fullscreen-card {
+        position: fixed;
+        inset: 8px;
+        z-index: 2000;
+      }
     </style>
   </head>
   <body>
@@ -245,38 +300,34 @@
             <button class="btn" id="btnPaste">Yapıştır</button>
           </div>
           <button class="btn" id="btnTheme" title="Tema değiştir">Tema</button>
+          <button class="btn" id="btnFull" title="JSON tam ekran">Tam Ekran</button>
+          <button class="btn" id="btnSettings" title="Ayarlar">Ayarlar</button>
           <input class="hidden" type="file" id="fileInput" accept="application/json,.json,text/json,text/plain">
         </div>
       </header>
 
       <div class="workspace">
-        <section class="card">
+        <section class="card" id="mainCard">
           <div class="card-header">
-            <div><strong>Girdi</strong> <span class="dim">(JSON metni)</span></div>
+            <div class="tabs">
+              <button class="tab-btn active" data-tab="edit">Düzenle</button>
+              <button class="tab-btn" data-tab="tree">Ağaç</button>
+              <button class="tab-btn" data-tab="raw">Ham</button>
+            </div>
             <div class="dim">Sürükle-bırak desteklenir</div>
           </div>
           <div class="card-body">
-            <textarea id="input" spellcheck="false" placeholder='{"hello":"world"}'></textarea>
-            <div class="status" id="status">Hazır</div>
-            <div class="drop-hint">JSON dosyasını bu alana sürükleyip bırakabilirsiniz.</div>
-          </div>
-        </section>
-
-        <section class="card">
-          <div class="card-header">
-            <div class="tabs">
-              <button class="tab-btn active" data-tab="tree">Ağaç Görünümü</button>
-              <button class="tab-btn" data-tab="raw">Ham JSON</button>
+            <div class="viewer" id="viewer-edit">
+              <textarea id="input" spellcheck="false" placeholder='{"hello":"world"}'></textarea>
             </div>
-            <div class="dim">Salt-okunur</div>
-          </div>
-          <div class="card-body">
-            <div class="viewer" id="viewer-tree">
+            <div class="viewer hidden" id="viewer-tree">
               <div class="tree" id="tree"></div>
             </div>
             <div class="viewer hidden" id="viewer-raw">
               <pre id="raw"></pre>
             </div>
+            <div class="status" id="status">Hazır</div>
+            <div class="drop-hint" id="dropHint">JSON dosyasını bu alana sürükleyip bırakabilirsiniz.</div>
           </div>
         </section>
       </div>
@@ -287,6 +338,38 @@
         </div>
         <div>
           Kısayol: <span class="kbd">Ctrl</span> + <span class="kbd">Enter</span> → Biçimlendir
+        </div>
+      </div>
+      
+      <!-- Ayarlar Modal -->
+      <div id="settingsModal" class="settings-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+        <div class="settings-dialog">
+          <div class="settings-title" id="settingsTitle">Ayarlar</div>
+          <div class="settings-grid">
+            <div class="form-row">
+              <label for="maxDepth">Maksimum Derinlik</label>
+              <input type="number" id="maxDepth" min="1" max="100" value="32">
+            </div>
+            <div class="form-row">
+              <label for="maxSizeKB">Maksimum Boyut (KB)</label>
+              <input type="number" id="maxSizeKB" min="10" max="51200" value="2048">
+            </div>
+            <div class="form-row">
+              <label for="rememberSession"><input type="checkbox" id="rememberSession"> Son oturumu hatırla</label>
+            </div>
+            <div class="form-row">
+              <label for="paletteSelect">Renk Paleti</label>
+              <select id="paletteSelect"></select>
+            </div>
+          </div>
+          <div class="form-row" style="margin-top:8px;">
+            <label>Palet Önizleme</label>
+            <div class="palette-grid" id="paletteGrid"></div>
+          </div>
+          <div class="settings-actions">
+            <button class="btn" id="btnCloseSettings">İptal</button>
+            <button class="btn ok" id="btnSaveSettings">Kaydet</button>
+          </div>
         </div>
       </div>
     </div>
@@ -307,14 +390,26 @@
           btnCopy: document.getElementById('btnCopy'),
           btnPaste: document.getElementById('btnPaste'),
           btnTheme: document.getElementById('btnTheme'),
+          btnSettings: document.getElementById('btnSettings'),
           fileInput: document.getElementById('fileInput'),
           indent: document.getElementById('indent'),
           sortKeys: document.getElementById('sortKeys'),
           raw: document.getElementById('raw'),
           tree: document.getElementById('tree'),
+          viewerEdit: document.getElementById('viewer-edit'),
           viewerTree: document.getElementById('viewer-tree'),
           viewerRaw: document.getElementById('viewer-raw'),
           tabs: Array.from(document.querySelectorAll('.tab-btn')),
+          btnFull: document.getElementById('btnFull'),
+          mainCard: document.getElementById('mainCard'),
+          settingsModal: document.getElementById('settingsModal'),
+          paletteSelect: document.getElementById('paletteSelect'),
+          paletteGrid: document.getElementById('paletteGrid'),
+          inpMaxDepth: document.getElementById('maxDepth'),
+          inpMaxSizeKB: document.getElementById('maxSizeKB'),
+          rememberSession: document.getElementById('rememberSession'),
+          btnCloseSettings: document.getElementById('btnCloseSettings'),
+          btnSaveSettings: document.getElementById('btnSaveSettings'),
         };
 
         // Tema
@@ -326,13 +421,39 @@
           localStorage.setItem('theme', current);
         });
 
-        // Sekmeler
+        // Renk paletleri
+        const colorPalettes = {
+          classic: { name: 'Klasik', key: '#93c5fd', string: '#fbbf24', number: '#f472b6', boolean: '#34d399', null: '#a3a3a3' },
+          ocean:   { name: 'Okyanus', key: '#38bdf8', string: '#a7f3d0', number: '#7dd3fc', boolean: '#60a5fa', null: '#94a3b8' },
+          sunset:  { name: 'Gün Batımı', key: '#fb7185', string: '#f59e0b', number: '#f472b6', boolean: '#84cc16', null: '#a3a3a3' },
+          cyber:   { name: 'Cyberpunk', key: '#22d3ee', string: '#f0abfc', number: '#f97316', boolean: '#a3e635', null: '#9ca3af' },
+          forest:  { name: 'Orman', key: '#86efac', string: '#fde68a', number: '#93c5fd', boolean: '#34d399', null: '#a3a3a3' },
+          light:   { name: 'Açık', key: '#2563eb', string: '#059669', number: '#b45309', boolean: '#047857', null: '#6b7280' },
+        };
+
+        const defaultSettings = {
+          maxDepth: 32,
+          maxSizeKB: 2048,
+          palette: 'classic',
+          rememberSession: true,
+          indent: '2',
+          sortKeys: false,
+          lastInput: ''
+        };
+        let settings = loadSettings();
+        applyPalette(settings.palette);
+        populatePaletteUI();
+        hydrateControlsFromSettings();
+
+        // Sekmeler (tek kart)
         dom.tabs.forEach(btn => btn.addEventListener('click', () => {
           dom.tabs.forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
           const tab = btn.getAttribute('data-tab');
+          dom.viewerEdit.classList.toggle('hidden', tab !== 'edit');
           dom.viewerTree.classList.toggle('hidden', tab !== 'tree');
           dom.viewerRaw.classList.toggle('hidden', tab !== 'raw');
+          if (tab !== 'edit') formatAction(false);
         }));
 
         function setStatusOk(message) {
@@ -373,6 +494,34 @@
           return { line, column };
         }
 
+        function getSizeKB(text) {
+          try { return Math.ceil(new Blob([text]).size / 1024); } catch { return Math.ceil(text.length / 1024); }
+        }
+
+        function exceedsMaxSize(text) {
+          const kb = getSizeKB(text);
+          if (kb > settings.maxSizeKB) {
+            setStatusErr(`Boyut sınırı aşıldı: ${kb}KB > ${settings.maxSizeKB}KB`);
+            return true;
+          }
+          return false;
+        }
+
+        function exceedsMaxDepth(value, limit) {
+          function walk(v, depth) {
+            if (depth > limit) return true;
+            if (!v || typeof v !== 'object') return false;
+            if (Array.isArray(v)) {
+              for (let i = 0; i < v.length; i++) { if (walk(v[i], depth + 1)) return true; }
+              return false;
+            }
+            const keys = Object.keys(v);
+            for (let i = 0; i < keys.length; i++) { if (walk(v[keys[i]], depth + 1)) return true; }
+            return false;
+          }
+          return walk(value, 1);
+        }
+
         function sortKeysDeep(value) {
           if (Array.isArray(value)) {
             return value.map(sortKeysDeep);
@@ -392,6 +541,7 @@
 
         function formatAction(replaceInput = true) {
           const text = dom.input.value.trim();
+          if (exceedsMaxSize(text)) return;
           if (!text) { setStatusOk('Boş girdi.'); dom.tree.innerHTML = ''; dom.raw.textContent = ''; return; }
           const result = parseJsonSafely(text);
           if (!result.ok) {
@@ -399,16 +549,22 @@
             setStatusErr(`JSON hatası${where}: ${result.error}`);
             return;
           }
+          if (exceedsMaxDepth(result.value, settings.maxDepth)) {
+            setStatusErr(`Derinlik sınırı aşıldı: > ${settings.maxDepth}`);
+            return;
+          }
           const space = dom.indent.value === '\t' ? '\t' : Number(dom.indent.value);
           const pretty = stringify(result.value, space, dom.sortKeys.checked);
           if (replaceInput) dom.input.value = pretty;
           dom.raw.textContent = pretty;
           renderTree(result.value);
+          if (settings.rememberSession) { settings.lastInput = dom.input.value; saveSettings(); }
           setStatusOk('Biçimlendirme başarılı.');
         }
 
         function minifyAction() {
           const text = dom.input.value.trim();
+          if (exceedsMaxSize(text)) return;
           if (!text) { setStatusOk('Boş girdi.'); return; }
           const result = parseJsonSafely(text);
           if (!result.ok) {
@@ -416,15 +572,18 @@
             setStatusErr(`JSON hatası${where}: ${result.error}`);
             return;
           }
+          if (exceedsMaxDepth(result.value, settings.maxDepth)) { setStatusErr(`Derinlik sınırı aşıldı: > ${settings.maxDepth}`); return; }
           const minified = stringify(result.value, 0, dom.sortKeys.checked);
           dom.input.value = minified;
           dom.raw.textContent = minified;
           renderTree(result.value);
+          if (settings.rememberSession) { settings.lastInput = dom.input.value; saveSettings(); }
           setStatusOk('Sıkıştırma başarılı.');
         }
 
         function validateAction() {
           const text = dom.input.value.trim();
+          if (exceedsMaxSize(text)) return;
           if (!text) { setStatusOk('Boş girdi.'); return; }
           const result = parseJsonSafely(text);
           if (!result.ok) {
@@ -432,6 +591,7 @@
             setStatusErr(`Geçersiz JSON${where}: ${result.error}`);
             return;
           }
+          if (exceedsMaxDepth(result.value, settings.maxDepth)) { setStatusErr(`Derinlik sınırı aşıldı: > ${settings.maxDepth}`); return; }
           setStatusOk('Geçerli JSON.');
         }
 
@@ -483,7 +643,7 @@
           return node;
         }
 
-        function buildTree(value, key) {
+        function buildTree(value, key, depth = 1) {
           const li = document.createElement('li');
           const isObj = value && typeof value === 'object' && value.constructor === Object;
           const isArr = Array.isArray(value);
@@ -506,12 +666,21 @@
             const children = document.createElement('ul');
             children.className = 'children';
 
-            const list = isArr ? value : value;
-            const keys = isArr ? value.map((_, i) => i) : Object.keys(list);
-            keys.forEach(k => {
-              const child = buildTree(list[k], k);
-              children.appendChild(child);
-            });
+            if (depth >= settings.maxDepth) {
+              const cap = document.createElement('li');
+              const capNode = document.createElement('div');
+              capNode.className = 'node dim';
+              capNode.textContent = '… (derinlik sınırı)';
+              cap.appendChild(capNode);
+              children.appendChild(cap);
+            } else {
+              const list = isArr ? value : value;
+              const keys = isArr ? value.map((_, i) => i) : Object.keys(list);
+              keys.forEach(k => {
+                const child = buildTree(list[k], k, depth + 1);
+                children.appendChild(child);
+              });
+            }
 
             li.appendChild(children);
             if (hasChildren) li.classList.add('expanded');
@@ -529,7 +698,7 @@
 
         function renderTree(value) {
           dom.tree.innerHTML = '';
-          const root = buildTree(value, null);
+          const root = buildTree(value, null, 1);
           dom.tree.appendChild(document.createElement('ul')).appendChild(root);
         }
 
@@ -543,11 +712,16 @@
         dom.btnFormat.addEventListener('click', () => formatAction(true));
         dom.btnMinify.addEventListener('click', () => minifyAction());
         dom.btnValidate.addEventListener('click', () => validateAction());
-        dom.btnExpand.addEventListener('click', () => expandCollapseAll(true));
-        dom.btnCollapse.addEventListener('click', () => expandCollapseAll(false));
+        dom.btnExpand.addEventListener('click', () => { formatAction(false); expandCollapseAll(true); });
+        dom.btnCollapse.addEventListener('click', () => { formatAction(false); expandCollapseAll(false); });
 
         dom.indent.addEventListener('change', () => formatAction(false));
         dom.sortKeys.addEventListener('change', () => formatAction(false));
+
+        // Ayarlar aç/kapa
+        dom.btnSettings.addEventListener('click', () => openSettings());
+        dom.btnCloseSettings.addEventListener('click', () => closeSettings());
+        dom.btnSaveSettings.addEventListener('click', () => saveSettingsFromUI());
 
         dom.input.addEventListener('keydown', (e) => {
           if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
@@ -568,8 +742,8 @@
         });
 
         // Sürükle-bırak
-        ;['dragenter','dragover'].forEach(evt => dom.input.addEventListener(evt, (e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'copy'; }));
-        dom.input.addEventListener('drop', async (e) => {
+        ;['dragenter','dragover'].forEach(evt => dom.mainCard.addEventListener(evt, (e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'copy'; }));
+        dom.mainCard.addEventListener('drop', async (e) => {
           e.preventDefault();
           const file = e.dataTransfer.files && e.dataTransfer.files[0];
           if (file) {
@@ -625,19 +799,118 @@
 
         // Başlangıç
         try {
-          const example = {
-            firstName: "John",
-            lastName: "Smith",
-            age: 32,
-            address: { city: "New York", postalCode: "10021" },
-            phoneNumbers: [
-              { type: "home", number: "212 555-1234" },
-              { type: "fax", number: "646 555-4567" }
-            ]
-          };
-          dom.input.value = JSON.stringify(example, null, 2);
-          formatAction(true);
+          if (settings.rememberSession && settings.lastInput) {
+            dom.input.value = settings.lastInput;
+            formatAction(false);
+          } else {
+            const example = {
+              firstName: "John",
+              lastName: "Smith",
+              age: 32,
+              address: { city: "New York", postalCode: "10021" },
+              phoneNumbers: [
+                { type: "home", number: "212 555-1234" },
+                { type: "fax", number: "646 555-4567" }
+              ]
+            };
+            dom.input.value = JSON.stringify(example, null, 2);
+            formatAction(true);
+          }
         } catch {}
+
+        // Yumuşak tam ekran (yalnızca JSON kartı)
+        let softFull = false;
+        function toggleSoftFull() {
+          softFull = !softFull;
+          document.body.classList.toggle('body-soft-full', softFull);
+          dom.mainCard.classList.toggle('fullscreen-card', softFull);
+          if (!dom.viewerTree.classList.contains('hidden') || !dom.viewerRaw.classList.contains('hidden')) {
+            formatAction(false);
+          }
+        }
+        dom.btnFull.addEventListener('click', toggleSoftFull);
+
+        // Settings helpers
+        function applyPalette(key) {
+          const pal = colorPalettes[key] || colorPalettes.classic;
+          const root = document.documentElement.style;
+          root.setProperty('--color-key', pal.key);
+          root.setProperty('--color-string', pal.string);
+          root.setProperty('--color-number', pal.number);
+          root.setProperty('--color-boolean', pal.boolean);
+          root.setProperty('--color-null', pal.null);
+        }
+
+        function populatePaletteUI() {
+          dom.paletteSelect.innerHTML = '';
+          Object.keys(colorPalettes).forEach(k => {
+            const opt = document.createElement('option');
+            opt.value = k; opt.textContent = colorPalettes[k].name;
+            if (k === settings.palette) opt.selected = true;
+            dom.paletteSelect.appendChild(opt);
+          });
+          dom.paletteGrid.innerHTML = '';
+          Object.keys(colorPalettes).forEach(k => {
+            const pal = colorPalettes[k];
+            const el = document.createElement('div');
+            el.className = 'palette' + (k === settings.palette ? ' active' : '');
+            el.innerHTML = `<div class="palette-name">${pal.name}</div><div class="swatches">
+              <span class="sw" style="background:${pal.key}"></span>
+              <span class="sw" style="background:${pal.string}"></span>
+              <span class="sw" style="background:${pal.number}"></span>
+              <span class="sw" style="background:${pal.boolean}"></span>
+              <span class="sw" style="background:${pal.null}"></span>
+            </div>`;
+            el.addEventListener('click', () => {
+              settings.palette = k; applyPalette(k); saveSettings();
+              populatePaletteUI();
+            });
+            dom.paletteGrid.appendChild(el);
+          });
+          dom.paletteSelect.addEventListener('change', () => {
+            settings.palette = dom.paletteSelect.value; applyPalette(settings.palette); saveSettings(); populatePaletteUI();
+          });
+        }
+
+        function openSettings() {
+          dom.inpMaxDepth.value = String(settings.maxDepth);
+          dom.inpMaxSizeKB.value = String(settings.maxSizeKB);
+          dom.rememberSession.checked = !!settings.rememberSession;
+          dom.paletteSelect.value = settings.palette;
+          dom.settingsModal.classList.remove('hidden');
+        }
+        function closeSettings() { dom.settingsModal.classList.add('hidden'); }
+
+        function saveSettingsFromUI() {
+          settings.maxDepth = Math.max(1, Number(dom.inpMaxDepth.value || defaultSettings.maxDepth));
+          settings.maxSizeKB = Math.max(10, Number(dom.inpMaxSizeKB.value || defaultSettings.maxSizeKB));
+          settings.rememberSession = !!dom.rememberSession.checked;
+          settings.palette = dom.paletteSelect.value;
+          settings.indent = dom.indent.value;
+          settings.sortKeys = dom.sortKeys.checked;
+          saveSettings();
+          applyPalette(settings.palette);
+          closeSettings();
+          if (dom.input.value.trim()) formatAction(false);
+        }
+
+        function hydrateControlsFromSettings() {
+          dom.indent.value = settings.indent;
+          dom.sortKeys.checked = !!settings.sortKeys;
+        }
+
+        function loadSettings() {
+          try {
+            const raw = localStorage.getItem('jf_settings');
+            if (!raw) return { ...defaultSettings };
+            const obj = JSON.parse(raw);
+            return { ...defaultSettings, ...obj };
+          } catch { return { ...defaultSettings }; }
+        }
+
+        function saveSettings() {
+          try { localStorage.setItem('jf_settings', JSON.stringify(settings)); } catch {}
+        }
       })();
     </script>
   </body>

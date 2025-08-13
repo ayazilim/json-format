@@ -12,10 +12,11 @@ Bu dosya, projede yapılan işleri ve planlanan görevleri takip etmek için kul
 - [x] JSON kaydet (indir) özelliği
 - [x] Tema (açık/koyu) ve kalıcılık (localStorage)
 - [x] Hata konumunu (satır/sütun) tespit edip gösterme
+- [x] Ayarlar modalı (renk paletleri, max derinlik, max boyut, son oturumu hatırla)
 
 ## Sıradaki İyileştirmeler
 - [ ] Ağaç görünümünde arama/filtreleme
-- [ ] Kullanıcı ayarlarını (girinti, anahtar sıralama) kalıcı yapma
+- [ ] Kullanıcı ayarlarını (girinti, anahtar sıralama) kalıcı yapma (kısmen: ayarlar modali kaydediyor)
 - [ ] Büyük dosyalar için performans optimizasyonları (sanal listeleme)
 - [ ] Klavye kısayollarını genişletme (örn. Ctrl+S kaydet)
 - [ ] Erişilebilirlik (A11y) geliştirmeleri
