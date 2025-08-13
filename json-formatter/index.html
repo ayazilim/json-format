@@ -789,6 +789,12 @@
           pastel:  { name: 'Pastel', key: '#7c7cf5', string: '#ffb3ba', number: '#bae1ff', boolean: '#baffc9', null: '#cfcfcf' },
           neon:    { name: 'Neon', key: '#39ff14', string: '#ff2079', number: '#00e5ff', boolean: '#ffe700', null: '#bbbbbb' },
           grayscale: { name: 'Gri Ton', key: '#9ca3af', string: '#d1d5db', number: '#a3a3a3', boolean: '#e5e7eb', null: '#6b7280' },
+          // Yeni – Koyu temalar için belirgin
+          vividDark: { name: 'Koyu (Belirgin)', key: '#7dd3fc', string: '#f472b6', number: '#fbbf24', boolean: '#34d399', null: '#d1d5db' },
+          midnight: { name: 'Gece', key: '#8ab4f8', string: '#ff8ab4', number: '#ffd166', boolean: '#4ade80', null: '#9aa0a6' },
+          // Yeni – Açık temalar için belirgin
+          vividLight: { name: 'Açık (Belirgin)', key: '#1d4ed8', string: '#d97706', number: '#b91c1c', boolean: '#16a34a', null: '#475569' },
+          daylight: { name: 'Gün Işığı', key: '#0ea5e9', string: '#16a34a', number: '#b45309', boolean: '#10b981', null: '#6b7280' },
         };
 
         const defaultSettings = {
@@ -1529,6 +1535,7 @@
           root.setProperty('--color-number', pal.number);
           root.setProperty('--color-boolean', pal.boolean);
           root.setProperty('--color-null', pal.null);
+          trackEvent('palette_apply', { event_label: key });
         }
 
         function populatePaletteUI() {
