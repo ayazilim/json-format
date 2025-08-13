@@ -256,6 +256,23 @@
         font-size: 13px;
         line-height: 1.5;
         background: transparent;
+        color: transparent;
+        caret-color: var(--text);
+        tab-size: 2;
+      }
+      .editor { position: relative; height: 100%; min-height: 300px; }
+      .editor-highlight {
+        position: absolute;
+        inset: 0;
+        margin: 0;
+        padding: 14px 16px;
+        font-family: var(--font);
+        font-size: 13px;
+        line-height: 1.5;
+        white-space: pre-wrap;
+        word-break: break-word;
+        overflow: auto;
+        pointer-events: none;
         color: var(--text);
         tab-size: 2;
       }
@@ -432,7 +449,7 @@
             <button class="btn" id="btnMinify" title="Sıkıştır (Minify)">Sıkıştır</button>
             <button class="btn" id="btnValidate" title="Doğrula">Doğrula</button>
           </div>
-          <div class="seg" role="group" aria-label="Ağaç">
+          <div class="seg" role="group" aria-label="Tree">
             <button class="btn" id="btnExpand">Genişlet</button>
             <button class="btn" id="btnCollapse">Daralt</button>
           </div>
@@ -503,7 +520,7 @@
             <div class="tabs">
               <button class="tab-btn active" data-tab="edit">Düzenle</button>
               <button class="tab-btn" data-tab="tree">Ağaç</button>
-              <button class="tab-btn" data-tab="raw">Ham</button>
+              <button class="tab-btn" data-tab="raw">Raw</button>
               <span class="top-status" id="topStatus" aria-live="polite" role="status"></span>
             </div>
             <div class="card-header-right"> 
@@ -520,7 +537,10 @@
           </div>
           <div class="card-body">
             <div class="viewer" id="viewer-edit" style="min-height: 0;">
-              <textarea id="input" spellcheck="false" placeholder='{"hello":"world"}'></textarea>
+              <div class="editor" id="editorWrap">
+                <pre id="inputHighlight" class="editor-highlight"></pre>
+                <textarea id="input" spellcheck="false" placeholder='{"hello":"world"}'></textarea>
+              </div>
             </div>
             <div class="viewer hidden" id="viewer-tree">
               <div class="tree" id="tree"></div>
@@ -684,8 +704,8 @@
             'label.sort': 'Sırala',
             'label.lang': 'Dil:',
             'tab.edit': 'Düzenle',
-            'tab.tree': 'Ağaç',
-            'tab.raw': 'Ham',
+            'tab.tree': 'Tree',
+            'tab.raw': 'Raw',
             'tooltip.format': 'Biçimlendir (Ctrl+Enter)',
             'tooltip.minify': 'Sıkıştır (Minify)',
             'tooltip.validate': 'Doğrula',
@@ -973,6 +993,22 @@
             .replace(/>/g, '&gt;')
             .replace(/"/g, '&quot;')
             .replace(/'/g, '&#39;');
+        }
+
+        // Editörde satır içi renklendirme (ham metin için basit yaklaşım)
+        function buildInlineHighlightedHtmlFromText(text) {
+          // Basit JSON token’ları: string, number, boolean, null, key
+          let html = escapeHtml(text);
+          // string (çift tırnak içi)
+          html = html.replace(/&quot;([^"\\]|\\.)*&quot;/g, (m) => `<span class="type-string">${m}</span>`);
+          // numbers
+          html = html.replace(/\b-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?\b/g, (m) => `<span class="type-number">${m}</span>`);
+          // booleans and null
+          html = html.replace(/\btrue\b|\bfalse\b/g, (m) => `<span class="type-boolean">${m}</span>`);
+          html = html.replace(/\bnull\b/g, (m) => `<span class="type-null">${m}</span>`);
+          // keys: "key":
+          html = html.replace(/(&quot;[^&]*?&quot;)\s*:/g, (m, g1) => `<span class="key">${g1}</span>:`);
+          return html;
         }
 
         function buildHighlightedHtml(value, indentUnit, sort) {
@@ -1419,6 +1455,7 @@
         dom.input.addEventListener('input', () => {
           clearTimeout(inputUpdateTimer);
           inputUpdateTimer = setTimeout(() => formatAction(false), 200);
+          syncHighlight();
         });
 
         // Dil seçimi (header)
@@ -1447,6 +1484,20 @@
             e.preventDefault();
             formatAction(true);
           }
+        });
+        // Editör renklendirme senkronizasyonu
+        const syncHighlight = () => {
+          const text = dom.input.value;
+          const html = buildInlineHighlightedHtmlFromText(text);
+          const el = document.getElementById('inputHighlight');
+          if (el) el.innerHTML = html;
+          const ta = dom.input, hw = document.getElementById('inputHighlight');
+          if (hw) hw.scrollTop = ta.scrollTop, hw.scrollLeft = ta.scrollLeft;
+        };
+        dom.input.addEventListener('input', syncHighlight);
+        dom.input.addEventListener('scroll', () => {
+          const hw = document.getElementById('inputHighlight');
+          if (hw) { hw.scrollTop = dom.input.scrollTop; hw.scrollLeft = dom.input.scrollLeft; }
         });
 
         // Dosya yükleme
@@ -1528,6 +1579,8 @@
           if (settings.rememberSession && settings.lastInput) {
             dom.input.value = settings.lastInput;
             formatAction(false);
+            // highlight hydrate
+            try { (function(){ const el = document.getElementById('inputHighlight'); if (el) el.innerHTML = buildInlineHighlightedHtmlFromText(dom.input.value); })(); } catch {}
           } else {
             const example = {
               firstName: "John",
@@ -1541,6 +1594,7 @@
             };
             dom.input.value = JSON.stringify(example, null, 2);
             formatAction(true);
+            try { (function(){ const el = document.getElementById('inputHighlight'); if (el) el.innerHTML = buildInlineHighlightedHtmlFromText(dom.input.value); })(); } catch {}
           }
         } catch {}
 
