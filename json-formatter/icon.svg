@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">JSON Formatter Icon</title>
+  <desc id="desc">Curly braces with a validation check and color bars representing syntax highlighting.</desc>
+
+  <!-- Renk değişkenleri -->
+  <style>
+    :root {
+      --bg: #0f172a;          /* arka plan */
+      --stroke: #e2e8f0;      /* ana çizgi rengi */
+      --accent: #22c55e;      /* doğrulama/aksan */
+      --bar1: #60a5fa;        /* renk şeritleri */
+      --bar2: #f59e0b;
+      --bar3: #ef4444;
+    }
+    .s { stroke: var(--stroke); }
+  </style>
+
+  <!-- Kart/tuval -->
+  <rect x="16" y="16" width="224" height="224" rx="24" fill="var(--bg)"></rect>
+
+  <!-- Kod paneli çerçevesi -->
+  <rect x="36" y="44" width="184" height="140" rx="12" fill="none" stroke="var(--stroke)" stroke-width="6" stroke-linejoin="round"></rect>
+
+  <!-- Süslü parantezler { } -->
+  <!-- Sol parantez -->
+  <path d="
+    M88 84
+    c-12 0-18 8-18 16
+    c0 7 4 12 12 16
+    c-8 4-12 9-12 16
+    c0 8 6 16 18 16
+  " fill="none" stroke="var(--stroke)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"></path>
+  <!-- Sağ parantez -->
+  <path d="
+    M168 84
+    c12 0 18 8 18 16
+    c0 7-4 12-12 16
+    c8 4 12 9 12 16
+    c0 8-6 16-18 16
+  " fill="none" stroke="var(--stroke)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"></path>
+
+  <!-- Nokta/virgül ve iki tırnak ipucu -->
+  <circle cx="128" cy="114" r="4" fill="var(--stroke)"></circle>
+  <rect x="122" y="140" width="12" height="6" rx="3" fill="var(--stroke)"></rect>
+
+  <!-- Renk şeritleri (syntax highlight) -->
+  <rect x="44" y="198" width="56" height="12" rx="6" fill="var(--bar1)"></rect>
+  <rect x="100" y="198" width="56" height="12" rx="6" fill="var(--bar2)"></rect>
+  <rect x="156" y="198" width="56" height="12" rx="6" fill="var(--bar3)"></rect>
+
+  <!-- Doğrulama rozeti (sağ üst) -->
+  <circle cx="204" cy="60" r="18" fill="var(--accent)"></circle>
+  <path d="M196 60 l6 6 l10 -12" fill="none" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
+
+  <!-- Üst menü noktalari -->
+  <circle cx="56" cy="60" r="4" fill="var(--stroke)"></circle>
+  <circle cx="72" cy="60" r="4" fill="var(--stroke)"></circle>
+  <circle cx="88" cy="60" r="4" fill="var(--stroke)"></circle>
+</svg>
