@@ -758,6 +758,16 @@
           return base.replace(/\{(\w+)\}/g, (_, k) => (vars[k] !== undefined ? String(vars[k]) : `{${k}}`));
         }
 
+        // Analytics helper
+        function trackEvent(name, params = {}) {
+          try {
+            if (typeof gtag === 'function') {
+              const p = { event_category: 'tool_usage', lang: settings.language, ...params };
+              gtag('event', name, p);
+            }
+          } catch {}
+        }
+
         // Tema
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
@@ -765,6 +775,7 @@
           const current = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
           document.documentElement.setAttribute('data-theme', current);
           localStorage.setItem('theme', current);
+          trackEvent('ui_theme_toggle', { event_category: 'ui', event_label: current === 'light' ? 'to_light' : 'to_dark' });
         });
 
         // Renk paletleri
@@ -1170,10 +1181,12 @@
             if (replaceInput) dom.input.value = prettyLenient;
             const where = (result.line && result.column) ? t('where.position', { line: result.line, column: result.column }) : '';
             setStatusErr(t('status.jsonError', { where, error: result.error }));
+            trackEvent('json_format', { event_label: 'format_lenient', value: 1, error_type: 'invalid_json' });
             return;
           }
           if (exceedsMaxDepth(result.value, settings.maxDepth)) {
             setStatusErr(t('status.depthExceeded', { limit: settings.maxDepth }));
+            trackEvent('json_format', { event_label: 'format_depth_exceeded', value: 0 });
             return;
           }
           const space = getIndentSpace();
@@ -1184,6 +1197,7 @@
           renderTree(result.value);
           if (settings.rememberSession) { settings.lastInput = dom.input.value; saveSettings(); }
           setStatusOk(t('status.formatSuccess'));
+          trackEvent('json_format', { event_label: 'format_success', value: 1 });
         }
 
         function minifyAction() {
@@ -1199,6 +1213,7 @@
             dom.input.value = minified;
             const where = (result.line && result.column) ? t('where.position', { line: result.line, column: result.column }) : '';
             setStatusErr(t('status.jsonError', { where, error: result.error }));
+            trackEvent('json_minify', { event_label: 'minify_lenient', value: 1, error_type: 'invalid_json' });
             return;
           }
           if (exceedsMaxDepth(result.value, settings.maxDepth)) { setStatusErr(t('status.depthExceeded', { limit: settings.maxDepth })); return; }
@@ -1208,6 +1223,7 @@
           renderTree(result.value);
           if (settings.rememberSession) { settings.lastInput = dom.input.value; saveSettings(); }
           setStatusOk(t('status.minifySuccess'));
+          trackEvent('json_minify', { event_label: 'minify_success', value: 1 });
         }
 
         function validateAction() {
@@ -1222,10 +1238,12 @@
             dom.tree.innerHTML = '';
             const where = (result.line && result.column) ? t('where.position', { line: result.line, column: result.column }) : '';
             setStatusErr(t('status.invalid', { where, error: result.error }));
+            trackEvent('json_validate', { event_label: 'validation_error', error_type: 'syntax_error' });
             return;
           }
           if (exceedsMaxDepth(result.value, settings.maxDepth)) { setStatusErr(t('status.depthExceeded', { limit: settings.maxDepth })); return; }
           setStatusOk(t('status.valid'));
+          trackEvent('json_validate', { event_label: 'validation_success', value: 1 });
         }
 
         function createNodeLabel(keyText, value) {
@@ -1347,13 +1365,20 @@
         dom.btnValidate.addEventListener('click', () => validateAction());
         dom.btnExpand.addEventListener('click', () => { formatAction(false); expandCollapseAll(true); });
         dom.btnCollapse.addEventListener('click', () => { formatAction(false); expandCollapseAll(false); });
+        // Click tracking
+        dom.btnFormat.addEventListener('click', () => trackEvent('ui_click', { event_category: 'ui', event_label: 'btn_format' }));
+        dom.btnMinify.addEventListener('click', () => trackEvent('ui_click', { event_category: 'ui', event_label: 'btn_minify' }));
+        dom.btnValidate.addEventListener('click', () => trackEvent('ui_click', { event_category: 'ui', event_label: 'btn_validate' }));
+        dom.btnExpand.addEventListener('click', () => trackEvent('ui_click', { event_category: 'ui', event_label: 'btn_expand_all' }));
+        dom.btnCollapse.addEventListener('click', () => trackEvent('ui_click', { event_category: 'ui', event_label: 'btn_collapse_all' }));
 
         // Girinti ve anahtar sıralama: anında uygula
         dom.indent.addEventListener('change', () => {
           // Sekme seçildiğinde de pretty bas
           formatAction(true);
+          trackEvent('settings_change', { event_label: 'indent', value: dom.indent.value });
         });
-        dom.sortKeys.addEventListener('change', () => formatAction(true));
+        dom.sortKeys.addEventListener('change', () => { formatAction(true); trackEvent('settings_change', { event_label: 'sort_keys', value: dom.sortKeys.checked ? 1 : 0 }); });
         // Edit alanı değiştikçe RAW ve Tree anında güncellensin (lenient)
         let inputUpdateTimer = null;
         dom.input.addEventListener('input', () => {
@@ -1371,12 +1396,16 @@
           }
           if (!dom.viewerEdit.classList.contains('hidden')) return;
           if (dom.input.value.trim()) formatAction(false);
+          trackEvent('settings_change', { event_label: 'language_header', value: settings.language });
         });
 
         // Ayarlar aç/kapa
         dom.btnSettings.addEventListener('click', () => openSettings());
+        dom.btnSettings.addEventListener('click', () => trackEvent('ui_click', { event_category: 'ui', event_label: 'btn_settings' }));
         dom.btnCloseSettings.addEventListener('click', () => closeSettings());
+        dom.btnCloseSettings.addEventListener('click', () => trackEvent('settings_close', { event_label: 'cancel' }));
         dom.btnSaveSettings.addEventListener('click', () => saveSettingsFromUI());
+        dom.btnSaveSettings.addEventListener('click', () => trackEvent('settings_save', { event_label: 'save' }));
 
         dom.input.addEventListener('keydown', (e) => {
           if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
@@ -1387,6 +1416,7 @@
 
         // Dosya yükleme
         dom.btnLoad.addEventListener('click', () => dom.fileInput.click());
+        dom.btnLoad.addEventListener('click', () => trackEvent('ui_click', { event_category: 'ui', event_label: 'btn_load' }));
         dom.fileInput.addEventListener('change', async () => {
           const file = dom.fileInput.files && dom.fileInput.files[0];
           if (!file) return;
@@ -1394,6 +1424,7 @@
           dom.input.value = text;
           formatAction(true);
           dom.fileInput.value = '';
+          trackEvent('file_load', { event_label: 'file_input', value: text.length });
         });
 
         // Sürükle-bırak
@@ -1426,6 +1457,7 @@
           a.remove();
           URL.revokeObjectURL(url);
           setStatusOk(t('status.downloaded', { name: 'data.json' }));
+          trackEvent('file_save', { event_label: 'download_json', value: content.length });
         });
 
         // Kopyala
@@ -1435,8 +1467,10 @@
           try {
             await navigator.clipboard.writeText(txt);
             setStatusOk(t('status.copied'));
+            trackEvent('clipboard_copy', { event_label: 'copy', value: txt.length });
           } catch {
             setStatusErr(t('status.copyFailed'));
+            trackEvent('clipboard_copy', { event_label: 'copy_failed' });
           }
         });
 
@@ -1447,8 +1481,10 @@
             if (!txt) { setStatusErr(t('status.clipboardEmpty')); return; }
             dom.input.value = txt;
             formatAction(true);
+            trackEvent('clipboard_paste', { event_label: 'paste', value: txt.length });
           } catch {
             setStatusErr(t('status.clipboardDenied'));
+            trackEvent('clipboard_paste', { event_label: 'paste_denied' });
           }
         });
 
@@ -1519,11 +1555,13 @@
             el.addEventListener('click', () => {
               settings.palette = k; applyPalette(k); saveSettings();
               populatePaletteUI();
+              trackEvent('settings_change', { event_label: 'palette_quick', value: settings.palette });
             });
             dom.paletteGrid.appendChild(el);
           });
           dom.paletteSelect.addEventListener('change', () => {
             settings.palette = dom.paletteSelect.value; applyPalette(settings.palette); saveSettings(); populatePaletteUI();
+            trackEvent('settings_change', { event_label: 'palette_select', value: settings.palette });
           });
         }
 
@@ -1550,6 +1588,11 @@
           applyLanguage(settings.language);
           closeSettings();
           if (dom.input.value.trim()) formatAction(false);
+          trackEvent('settings_change', { event_label: 'max_depth', value: settings.maxDepth });
+          trackEvent('settings_change', { event_label: 'max_size_kb', value: settings.maxSizeKB });
+          trackEvent('settings_change', { event_label: 'remember_session', value: settings.rememberSession ? 1 : 0 });
+          trackEvent('settings_change', { event_label: 'palette', value: settings.palette });
+          trackEvent('settings_change', { event_label: 'language_modal', value: settings.language });
         }
 
         function hydrateControlsFromSettings() {
@@ -1604,6 +1647,7 @@
               dom.qpMenu.classList.add('hidden'); dom.qpToggle.setAttribute('aria-expanded','false');
               if (!dom.viewerEdit.classList.contains('hidden')) return;
               if (dom.input.value.trim()) formatAction(false);
+              trackEvent('settings_change', { event_label: 'palette_quick_dropdown', value: settings.palette });
             });
             dom.qpList.appendChild(item);
           });
