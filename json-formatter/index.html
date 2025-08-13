@@ -406,6 +406,7 @@
       .qp-btn { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--panel); color: var(--text); cursor: pointer; }
       .qp-swatches-inline { display: inline-flex; gap: 3px; }
       .qp-sw { width: 12px; height: 12px; border-radius: 3px; border: 1px solid var(--border); }
+      .quick-select { position: relative; }
       .qp-menu { position: absolute; right: 0; top: calc(100% + 6px); background: var(--panel); border: 1px solid var(--border); border-radius: 10px; box-shadow: var(--shadow); padding: 8px; width: 280px; z-index: 1500; }
       .qp-list { display: grid; grid-template-columns: 1fr; gap: 6px; max-height: 300px; overflow: auto; }
       .qp-item { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.02)); cursor: pointer; }
@@ -435,7 +436,7 @@
             <button class="btn" id="btnExpand">Genişlet</button>
             <button class="btn" id="btnCollapse">Daralt</button>
           </div>
-          <div class="opt">
+          <div class="opt hidden">
             <label for="indent" id="labelIndent">Girinti:</label>
             <select id="indent" title="Girinti">
               <option value="2">2 boşluk</option>
@@ -446,12 +447,28 @@
               <input type="checkbox" id="sortKeys"><span id="labelSort">Sırala</span>
             </label>
           </div>
-          <div class="opt" id="langOpt">
+          <div class="opt hidden" id="langOpt">
             <label for="lang" id="labelLang">Dil:</label>
             <select id="lang" title="Dil">
               <option value="tr">Türkçe</option>
               <option value="en">English</option>
             </select>
+          </div>
+          <div class="quick-select" id="quickIndent">
+            <button class="qp-btn" id="qiToggle" aria-haspopup="true" aria-expanded="false" title="Girinti">
+              <span class="qp-label" id="qiLabel">Girinti: 2</span>
+            </button>
+            <div class="qp-menu hidden" id="qiMenu" role="menu">
+              <div class="qp-list" id="qiList"></div>
+            </div>
+          </div>
+          <div class="quick-select" id="quickLang">
+            <button class="qp-btn" id="qlToggle" aria-haspopup="true" aria-expanded="false" title="Dil">
+              <span class="qp-label" id="qlLabel">Türkçe 🇹🇷</span>
+            </button>
+            <div class="qp-menu hidden" id="qlMenu" role="menu">
+              <div class="qp-list" id="qlList"></div>
+            </div>
           </div>
           <div class="seg" role="group" aria-label="Dosya">
             <button class="icon-btn icon-load" id="btnLoad" aria-label="Yükle" title="JSON Yükle">
@@ -519,7 +536,7 @@
 
       <div class="footer">
         <div id="footerLeft">
-          İşlemler tamamen tarayıcınızda gerçekleşir; veri dışarı gönderilmez. <a href="https://matriksdata.com/" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none;">matriksdata.com</a>
+          İşlemler tamamen tarayıcınızda gerçekleşir; veri dışarı gönderilmez. 
         </div>
         <div id="footerRight">
           Kısayol: <span class="kbd">Ctrl</span> + <span class="kbd">Enter</span> → Biçimlendir
@@ -611,6 +628,15 @@
           dropHint: document.getElementById('dropHint'),
           footerLeft: document.getElementById('footerLeft'),
           footerRight: document.getElementById('footerRight'),
+          // Quick indent/lang
+          qiToggle: document.getElementById('qiToggle'),
+          qiMenu: document.getElementById('qiMenu'),
+          qiList: document.getElementById('qiList'),
+          qiLabel: document.getElementById('qiLabel'),
+          qlToggle: document.getElementById('qlToggle'),
+          qlMenu: document.getElementById('qlMenu'),
+          qlList: document.getElementById('qlList'),
+          qlLabel: document.getElementById('qlLabel'),
           inpMaxDepth: document.getElementById('maxDepth'),
           inpMaxSizeKB: document.getElementById('maxSizeKB'),
           rememberSession: document.getElementById('rememberSession'),
@@ -826,6 +852,8 @@
         hydrateControlsFromSettings();
         applyLanguage(settings.language);
         buildQuickPalette();
+        buildQuickIndent();
+        buildQuickLanguage();
 
         // Sekmeler (tek kart)
         dom.tabs.forEach(btn => btn.addEventListener('click', () => {
@@ -1715,10 +1743,12 @@
           if (dom.dragHint) dom.dragHint.textContent = t('drag.supported');
           if (dom.qpLabel) dom.qpLabel.textContent = t('quick.palette');
           if (dom.dropHint) dom.dropHint.textContent = t('drop.hint');
+          if (dom.qiToggle) dom.qiToggle.title = t('label.indent');
+          if (dom.qlToggle) dom.qlToggle.title = t('settings.language');
 
           // Footer
           if (dom.footerLeft) {
-            dom.footerLeft.innerHTML = `${t('footer.left')}<a href="https://store.matriksdata.com/" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none;">matriksdata.com</a>`;
+            dom.footerLeft.innerHTML = `${t('footer.left')}<a href="https://jsonformat.info/" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none;">jsonformat.info</a>`;
           }
           if (dom.footerRight) {
             dom.footerRight.innerHTML = `${t('footer.right.prefix')} <span class="kbd">Ctrl</span> + <span class="kbd">Enter</span> → ${t('footer.action.format')}`;
@@ -1742,6 +1772,87 @@
           const readyText = t('status.ready');
           if (!dom.status.textContent || /^(Hazır|Ready)$/.test(dom.status.textContent)) dom.status.textContent = readyText;
           if (dom.topStatus && (!dom.topStatus.textContent || /^(Hazır|Ready)$/.test(dom.topStatus.textContent))) dom.topStatus.textContent = readyText;
+
+          // Quick controls labels
+          updateQuickIndentLabel();
+          updateQuickLangLabel();
+        }
+
+        function updateQuickIndentLabel() {
+          if (!dom.qiLabel) return;
+          const v = dom.indent.value;
+          let txt = v === '\t' ? t('indent.tab') : (v === '4' ? t('indent.4') : t('indent.2'));
+          dom.qiLabel.textContent = `${t('label.indent')} ${txt}`;
+        }
+        function updateQuickLangLabel() {
+          if (!dom.qlLabel) return;
+          const v = settings.language || 'tr';
+          const name = v === 'en' ? 'English' : 'Türkçe';
+          const flag = v === 'en' ? '🇬🇧' : '🇹🇷';
+          dom.qlLabel.textContent = `${name} ${flag}`;
+        }
+
+        function buildQuickIndent() {
+          if (!dom.qiList) return;
+          dom.qiList.innerHTML = '';
+          const opts = [
+            { value: '2', label: t('indent.2') },
+            { value: '4', label: t('indent.4') },
+            { value: '\t', label: t('indent.tab') },
+          ];
+          opts.forEach(o => {
+            const item = document.createElement('div');
+            item.className = 'qp-item';
+            item.setAttribute('role','menuitem');
+            const left = document.createElement('div');
+            left.className = 'qp-name'; left.textContent = o.label;
+            item.appendChild(left);
+            if (dom.indent.value === o.value) item.style.borderColor = 'var(--accent)';
+            item.addEventListener('click', () => {
+              dom.indent.value = o.value;
+              dom.indent.dispatchEvent(new Event('change'));
+              updateQuickIndentLabel();
+              dom.qiMenu.classList.add('hidden'); dom.qiToggle.setAttribute('aria-expanded','false');
+              trackEvent('settings_change', { event_label: 'indent_quick', value: o.value });
+            });
+            dom.qiList.appendChild(item);
+          });
+          updateQuickIndentLabel();
+          if (dom.qiToggle) dom.qiToggle.addEventListener('click', () => {
+            const open = !dom.qiMenu.classList.contains('hidden');
+            dom.qiMenu.classList.toggle('hidden');
+            dom.qiToggle.setAttribute('aria-expanded', String(!open));
+          });
+        }
+
+        function buildQuickLanguage() {
+          if (!dom.qlList) return;
+          dom.qlList.innerHTML = '';
+          const langs = [
+            { value: 'tr', name: 'Türkçe', flag: '🇹🇷' },
+            { value: 'en', name: 'English', flag: '🇬🇧' },
+          ];
+          langs.forEach(l => {
+            const item = document.createElement('div');
+            item.className = 'qp-item'; item.setAttribute('role','menuitem');
+            const left = document.createElement('div'); left.className = 'qp-name'; left.textContent = `${l.name} ${l.flag}`;
+            item.appendChild(left);
+            if ((settings.language || 'tr') === l.value) item.style.borderColor = 'var(--accent)';
+            item.addEventListener('click', () => {
+              settings.language = l.value; saveSettings(); applyLanguage(settings.language);
+              if (dom.lang) dom.lang.value = l.value;
+              dom.qlMenu.classList.add('hidden'); dom.qlToggle.setAttribute('aria-expanded','false');
+              if (!dom.viewerEdit.classList.contains('hidden')) { /* no-op */ } else if (dom.input.value.trim()) { formatAction(false); }
+              trackEvent('settings_change', { event_label: 'language_quick', value: l.value });
+            });
+            dom.qlList.appendChild(item);
+          });
+          updateQuickLangLabel();
+          if (dom.qlToggle) dom.qlToggle.addEventListener('click', () => {
+            const open = !dom.qlMenu.classList.contains('hidden');
+            dom.qlMenu.classList.toggle('hidden');
+            dom.qlToggle.setAttribute('aria-expanded', String(!open));
+          });
         }
       })();
     </script>
