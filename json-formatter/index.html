@@ -543,6 +543,8 @@
             'status.copyFailed': 'Kopyalama başarısız.',
             'status.clipboardEmpty': 'Panoda metin yok.',
             'status.clipboardDenied': 'Pano erişimi reddedildi.',
+          'status.repaired': 'Bozuk JSON onarıldı ve biçimlendirildi.',
+          'status.repairFailed': 'JSON onarılamadı: {error}',
             'where.position': ' (satır {line}, sütun {column})',
             'btn.format': 'Biçimlendir',
             'btn.minify': 'Sıkıştır',
@@ -603,6 +605,8 @@
             'status.copyFailed': 'Copy failed.',
             'status.clipboardEmpty': 'No text in clipboard.',
             'status.clipboardDenied': 'Clipboard access denied.',
+          'status.repaired': 'Malformed JSON was repaired and formatted.',
+          'status.repairFailed': 'Could not repair JSON: {error}',
             'where.position': ' (line {line}, column {column})',
             'btn.format': 'Format',
             'btn.minify': 'Minify',
@@ -701,7 +705,8 @@
           dom.viewerEdit.classList.toggle('hidden', tab !== 'edit');
           dom.viewerTree.classList.toggle('hidden', tab !== 'tree');
           dom.viewerRaw.classList.toggle('hidden', tab !== 'raw');
-          if (tab !== 'edit') formatAction(false);
+          // Her tab değişiminde RAW ve Tree güncellensin (cache hissi olmasın)
+          formatAction(false);
         }));
 
         function setStatusOk(message) {
@@ -858,12 +863,197 @@
           return render(v, 0);
         }
 
+        // Bozuk JSON onarma yardımcıları (best-effort)
+        function stripJsonLikeComments(text) {
+          let out = '';
+          let inLine = false, inBlock = false, inStr = false, strQuote = '"', esc = false;
+          for (let i = 0; i < text.length; i++) {
+            const ch = text[i];
+            const next = text[i + 1];
+            if (inLine) {
+              if (ch === '\n') { inLine = false; out += ch; }
+              continue;
+            }
+            if (inBlock) {
+              if (ch === '*' && next === '/') { inBlock = false; i++; }
+              continue;
+            }
+            if (inStr) {
+              out += ch;
+              if (esc) { esc = false; continue; }
+              if (ch === '\\') { esc = true; continue; }
+              if (ch === strQuote) { inStr = false; }
+              continue;
+            }
+            if (ch === '"' || ch === "'") { inStr = true; strQuote = ch; out += ch; continue; }
+            if (ch === '/' && next === '/') { inLine = true; i++; continue; }
+            if (ch === '/' && next === '*') { inBlock = true; i++; continue; }
+            out += ch;
+          }
+          return out;
+        }
+
+        function normalizeSmartQuotes(text) {
+          return text
+            .replace(/\u201C|\u201D|\u201E|\u201F|\u2033|\u2036|\u00AB|\u00BB/g, '"')
+            .replace(/\u2018|\u2019|\u201A|\u201B/g, "'");
+        }
+
+        function replaceBacktickStrings(text) {
+          return text.replace(/`([^`\\]*(?:\\.[^`\\]*)*)`/g, (_m, inner) => {
+            const escaped = inner
+              .replace(/\\/g, '\\\\')
+              .replace(/"/g, '\\"')
+              .replace(/\n/g, '\\n')
+              .replace(/\r/g, '\\r');
+            return '"' + escaped + '"';
+          });
+        }
+
+        function replaceSingleQuotedStrings(text) {
+          return text.replace(/'([^'\\]*(?:\\.[^'\\]*)*)'/g, (_m, inner) => {
+            const unescaped = inner.replace(/\\'/g, "'");
+            const escaped = unescaped
+              .replace(/\\/g, '\\\\')
+              .replace(/"/g, '\\"')
+              .replace(/\n/g, '\\n')
+              .replace(/\r/g, '\\r');
+            return '"' + escaped + '"';
+          });
+        }
+
+        function quoteUnquotedKeys(text) {
+          return text.replace(/([\{,]\s*)([A-Za-z_][\w$-]*)\s*:/g, '$1"$2":');
+        }
+
+        function removeTrailingCommas(text) {
+          return text.replace(/,(\s*[}\]])/g, '$1');
+        }
+
+        function basicRepairs(text) {
+          let s = text;
+          s = s.replace(/^\uFEFF/, '');
+          s = normalizeSmartQuotes(s);
+          s = stripJsonLikeComments(s);
+          s = replaceBacktickStrings(s);
+          s = removeTrailingCommas(s);
+          s = s.replace(/;+(\s*)$/g, '$1');
+          s = quoteUnquotedKeys(s);
+          s = replaceSingleQuotedStrings(s);
+          return s;
+        }
+
+        function tryParseWrappedArray(text) {
+          try {
+            const wrapped = basicRepairs('[' + text.trim() + ']');
+            return { ok: true, value: JSON.parse(wrapped) };
+          } catch (e) { return { ok: false, error: e }; }
+        }
+
+        function tryParseJsonLines(text) {
+          const lines = text.split(/\r?\n/);
+          const arr = [];
+          for (let raw of lines) {
+            let line = raw.trim();
+            if (!line) continue;
+            if (line.endsWith(',')) line = line.slice(0, -1).trim();
+            const repaired = basicRepairs(line);
+            try {
+              const val = JSON.parse(repaired);
+              arr.push(val);
+            } catch (e) {
+              return { ok: false, error: e };
+            }
+          }
+          if (arr.length === 0) return { ok: false, error: 'empty' };
+          return { ok: true, value: arr };
+        }
+
+        function tryRepairJson(text) {
+          // 1) Direkt dene
+          try { return { ok: true, value: JSON.parse(text) }; } catch (e0) {}
+          // 2) Basit onarımlar
+          const basic = basicRepairs(text);
+          try { return { ok: true, value: JSON.parse(basic) }; } catch (e1) {}
+          // 3) Diziy(miş) gibi: başa-sonra köşeli parantez ekle
+          const wrapped = tryParseWrappedArray(text);
+          if (wrapped.ok) return wrapped;
+          // 4) JSON Lines
+          const lines = tryParseJsonLines(text);
+          if (lines.ok) return lines;
+          return { ok: false, error: String((wrapped.error && wrapped.error.message) || (lines.error && lines.error.message) || 'unknown') };
+        }
+
+        // Sadece boşluk/yenisatır ekleyerek (içeriğe dokunmadan) rahat okunur hale getir
+        function prettyPrintLenient(text, indentUnit) {
+          const unit = indentUnit || getIndentUnit(getIndentSpace());
+          let out = '';
+          let depth = 0;
+          let inStr = false;
+          let quote = '"';
+          let esc = false;
+          for (let i = 0; i < text.length; i++) {
+            const ch = text[i];
+            if (inStr) {
+              out += ch;
+              if (esc) { esc = false; continue; }
+              if (ch === '\\') { esc = true; continue; }
+              if (ch === quote) { inStr = false; }
+              continue;
+            }
+            if (ch === '"' || ch === "'") { inStr = true; quote = ch; out += ch; continue; }
+            if (ch === ' ' || ch === '\t' || ch === '\r' || ch === '\n') { continue; }
+            if (ch === '{' || ch === '[') {
+              out += ch + '\n' + unit.repeat(++depth);
+              continue;
+            }
+            if (ch === '}' || ch === ']') {
+              depth = Math.max(0, depth - 1);
+              out += '\n' + unit.repeat(depth) + ch;
+              continue;
+            }
+            if (ch === ',') {
+              out += ch + '\n' + unit.repeat(depth);
+              continue;
+            }
+            if (ch === ':') { out += ': '; continue; }
+            out += ch;
+          }
+          return out;
+        }
+
+        function minifyLenient(text) {
+          let out = '';
+          let inStr = false;
+          let quote = '"';
+          let esc = false;
+          for (let i = 0; i < text.length; i++) {
+            const ch = text[i];
+            if (inStr) {
+              out += ch;
+              if (esc) { esc = false; continue; }
+              if (ch === '\\') { esc = true; continue; }
+              if (ch === quote) { inStr = false; }
+              continue;
+            }
+            if (ch === '"' || ch === "'") { inStr = true; quote = ch; out += ch; continue; }
+            if (ch === ' ' || ch === '\t' || ch === '\r' || ch === '\n') { continue; }
+            out += ch;
+          }
+          return out;
+        }
+
         function formatAction(replaceInput = true) {
           const text = dom.input.value.trim();
           if (exceedsMaxSize(text)) return;
           if (!text) { setStatusOk(t('status.empty')); dom.tree.innerHTML = ''; dom.raw.textContent = ''; return; }
           const result = parseJsonSafely(text);
           if (!result.ok) {
+            // Geçersizse: pretty (lenient) uygula, input'a yaz (kullanıcı talebi: formatlasın, minify etmesin)
+            const prettyLenient = prettyPrintLenient(text, getIndentUnit(getIndentSpace()));
+            dom.raw.textContent = prettyLenient;
+            dom.tree.innerHTML = '';
+            if (replaceInput) dom.input.value = prettyLenient;
             const where = (result.line && result.column) ? t('where.position', { line: result.line, column: result.column }) : '';
             setStatusErr(t('status.jsonError', { where, error: result.error }));
             return;
@@ -888,6 +1078,11 @@
           if (!text) { setStatusOk(t('status.empty')); return; }
           const result = parseJsonSafely(text);
           if (!result.ok) {
+            // Geçersizse: minify (lenient) uygula, input'a yaz
+            const minified = minifyLenient(text);
+            dom.raw.textContent = minified;
+            dom.tree.innerHTML = '';
+            dom.input.value = minified;
             const where = (result.line && result.column) ? t('where.position', { line: result.line, column: result.column }) : '';
             setStatusErr(t('status.jsonError', { where, error: result.error }));
             return;
@@ -907,6 +1102,10 @@
           if (!text) { setStatusOk(t('status.empty')); return; }
           const result = parseJsonSafely(text);
           if (!result.ok) {
+            // Değiştirmeden lenient biçimle, ham metni göster
+            const prettyLenient = prettyPrintLenient(text, getIndentUnit(getIndentSpace()));
+            dom.raw.textContent = prettyLenient;
+            dom.tree.innerHTML = '';
             const where = (result.line && result.column) ? t('where.position', { line: result.line, column: result.column }) : '';
             setStatusErr(t('status.invalid', { where, error: result.error }));
             return;
@@ -1037,10 +1236,16 @@
 
         // Girinti ve anahtar sıralama: anında uygula
         dom.indent.addEventListener('change', () => {
-          // Sekme seçildiğinde de pretty bas, ham görünümü de bozmadan üret
+          // Sekme seçildiğinde de pretty bas
           formatAction(true);
         });
         dom.sortKeys.addEventListener('change', () => formatAction(true));
+        // Edit alanı değiştikçe RAW ve Tree anında güncellensin (lenient)
+        let inputUpdateTimer = null;
+        dom.input.addEventListener('input', () => {
+          clearTimeout(inputUpdateTimer);
+          inputUpdateTimer = setTimeout(() => formatAction(false), 200);
+        });
 
         // Dil seçimi (header)
         dom.lang.addEventListener('change', () => {

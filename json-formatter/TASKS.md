@@ -14,6 +14,7 @@ Bu dosya, projede yapılan işleri ve planlanan görevleri takip etmek için kul
 - [x] Hata konumunu (satır/sütun) tespit edip gösterme
 - [x] Ayarlar modalı (renk paletleri, max derinlik, max boyut, son oturumu hatırla)
 - [x] Çok dillilik (TR/EN) – üst çubuk ve Ayarlar'dan dil seçimi, metinlerin dinamik değişimi (localStorage ile kalıcı)
+- [x] Bozuk JSON'u onarma ve biçimlendirme (yorum temizleme, trailing comma kaldırma, tek tırnak/backtick string dönüştürme, anahtarları otomatik tırnaklama vb.)
 
 ## Sıradaki İyileştirmeler
 - [ ] Ağaç görünümünde arama/filtreleme
