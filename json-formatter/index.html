@@ -320,23 +320,6 @@
         inset: 8px;
         z-index: 2000;
       }
-
-      /* C# Model görünümü */
-      .csbar { display: flex; gap: 8px; align-items: center; border-bottom: 1px solid var(--border); padding: 8px 8px; background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.02)); flex-wrap: wrap; }
-      .csbar label { font-size: 12px; color: var(--muted); }
-      .csbar input[type="text"], .csbar select {
-        padding: 6px 10px;
-        border-radius: 8px;
-        border: 1px solid var(--border);
-        background: transparent;
-        color: var(--text);
-      }
-      pre#cs { margin: 0; padding: 12px; white-space: pre; font-size: 12px; font-family: var(--font); }
-      pre#cs .cs-keyword { color: var(--color-boolean); }
-      pre#cs .cs-type { color: var(--color-key); }
-      pre#cs .cs-string { color: var(--color-string); }
-      pre#cs .cs-number { color: var(--color-number); }
-      pre#cs .cs-comment { color: var(--muted); font-style: italic; }
     </style>
   </head>
   <body>
@@ -354,15 +337,22 @@
             <button class="btn" id="btnCollapse">Daralt</button>
           </div>
           <div class="opt">
-            <label for="indent">Girinti:</label>
+            <label for="indent" id="labelIndent">Girinti:</label>
             <select id="indent" title="Girinti">
               <option value="2">2 boşluk</option>
               <option value="4">4 boşluk</option>
               <option value="\t">Sekme</option>
             </select>
-            <label style="margin-left:10px; display:inline-flex; align-items:center; gap:6px;">
-              <input type="checkbox" id="sortKeys">Sırala
+            <label style="margin-left:10px; display:inline-flex; align-items:center; gap:6px;" id="sortKeysContainer">
+              <input type="checkbox" id="sortKeys"><span id="labelSort">Sırala</span>
             </label>
+          </div>
+          <div class="opt" id="langOpt">
+            <label for="lang" id="labelLang">Dil:</label>
+            <select id="lang" title="Dil">
+              <option value="tr">Türkçe</option>
+              <option value="en">English</option>
+            </select>
           </div>
           <div class="seg" role="group" aria-label="Dosya">
             <button class="icon-btn icon-load" id="btnLoad" aria-label="Yükle" title="JSON Yükle">
@@ -398,13 +388,12 @@
               <button class="tab-btn active" data-tab="edit">Düzenle</button>
               <button class="tab-btn" data-tab="tree">Ağaç</button>
               <button class="tab-btn" data-tab="raw">Ham</button>
-              <button class="tab-btn" data-tab="cs">C# Model</button>
             </div>
             <div class="card-header-right">
-              <div class="dim">Sürükle-bırak desteklenir</div>
+              <div class="dim" id="dragHint">Sürükle-bırak desteklenir</div>
               <div class="quick-palette" id="quickPalette">
                 <button class="qp-btn" id="qpToggle" aria-haspopup="true" aria-expanded="false" title="Renk paleti seç">
-                  <span class="qp-label">Palet</span>
+                  <span class="qp-label" id="qpLabel">Palet</span>
                   <span class="qp-swatches-inline" id="qpSwatches"></span>
                 </button>
                 <div class="qp-menu hidden" id="qpMenu" role="menu">
@@ -423,21 +412,6 @@
             <div class="viewer hidden" id="viewer-raw" style="min-height: 0;">
               <pre id="raw"></pre>
             </div>
-            <div class="viewer hidden" id="viewer-cs">
-              <div class="csbar">
-                <label>Tip</label>
-                <select id="csKind">
-                  <option value="class">class</option>
-                  <option value="record">record</option>
-                  <option value="struct">struct</option>
-                </select>
-                <label>Ad</label>
-                <input type="text" id="csRootName" value="Root" placeholder="Kök tip adı">
-                <button class="btn ok" id="btnGenCs">Oluştur</button>
-                <button class="btn" id="btnCopyCs">Kopyala</button>
-              </div>
-              <pre id="cs"></pre>
-            </div>
             <div class="status" id="status">Hazır</div>
             <div class="drop-hint" id="dropHint">JSON dosyasını bu alana sürükleyip bırakabilirsiniz.</div>
           </div>
@@ -445,10 +419,10 @@
       </div>
 
       <div class="footer">
-        <div>
+        <div id="footerLeft">
           İşlemler tamamen tarayıcınızda gerçekleşir; veri dışarı gönderilmez. İlham alınan araç: <a href="https://jsonviewer.stack.hu/" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none;">jsonviewer.stack.hu</a>
         </div>
-        <div>
+        <div id="footerRight">
           Kısayol: <span class="kbd">Ctrl</span> + <span class="kbd">Enter</span> → Biçimlendir
         </div>
       </div>
@@ -467,7 +441,14 @@
               <input type="number" id="maxSizeKB" min="10" max="51200" value="2048">
             </div>
             <div class="form-row">
-              <label for="rememberSession"><input type="checkbox" id="rememberSession"> Son oturumu hatırla</label>
+              <label for="rememberSession"><input type="checkbox" id="rememberSession"> <span id="labelRemember">Son oturumu hatırla</span></label>
+            </div>
+            <div class="form-row">
+              <label for="languageSelect" id="labelLanguage">Dil</label>
+              <select id="languageSelect">
+                <option value="tr">Türkçe</option>
+                <option value="en">English</option>
+              </select>
             </div>
             <div class="form-row">
               <label for="paletteSelect">Renk Paleti</label>
@@ -475,7 +456,7 @@
             </div>
           </div>
           <div class="form-row" style="margin-top:8px;">
-            <label>Palet Önizleme</label>
+            <label id="labelPalettePreview">Palet Önizleme</label>
             <div class="palette-grid" id="paletteGrid"></div>
           </div>
           <div class="settings-actions">
@@ -506,13 +487,15 @@
           fileInput: document.getElementById('fileInput'),
           indent: document.getElementById('indent'),
           sortKeys: document.getElementById('sortKeys'),
+          labelIndent: document.getElementById('labelIndent'),
+          labelSort: document.getElementById('labelSort'),
+          labelLang: document.getElementById('labelLang'),
+          lang: document.getElementById('lang'),
           raw: document.getElementById('raw'),
-          cs: document.getElementById('cs'),
           tree: document.getElementById('tree'),
           viewerEdit: document.getElementById('viewer-edit'),
           viewerTree: document.getElementById('viewer-tree'),
           viewerRaw: document.getElementById('viewer-raw'),
-          viewerCs: document.getElementById('viewer-cs'),
           tabs: Array.from(document.querySelectorAll('.tab-btn')),
           btnFull: document.getElementById('btnFull'),
           mainCard: document.getElementById('mainCard'),
@@ -523,16 +506,152 @@
           qpMenu: document.getElementById('qpMenu'),
           qpList: document.getElementById('qpList'),
           qpSwatches: document.getElementById('qpSwatches'),
-          csKind: document.getElementById('csKind'),
-          csRootName: document.getElementById('csRootName'),
-          btnGenCs: document.getElementById('btnGenCs'),
-          btnCopyCs: document.getElementById('btnCopyCs'),
+          qpLabel: document.getElementById('qpLabel'),
+          dragHint: document.getElementById('dragHint'),
+          dropHint: document.getElementById('dropHint'),
+          footerLeft: document.getElementById('footerLeft'),
+          footerRight: document.getElementById('footerRight'),
           inpMaxDepth: document.getElementById('maxDepth'),
           inpMaxSizeKB: document.getElementById('maxSizeKB'),
           rememberSession: document.getElementById('rememberSession'),
+          labelRemember: document.getElementById('labelRemember'),
+          labelLanguage: document.getElementById('labelLanguage'),
+          languageSelect: document.getElementById('languageSelect'),
           btnCloseSettings: document.getElementById('btnCloseSettings'),
           btnSaveSettings: document.getElementById('btnSaveSettings'),
+          settingsTitle: document.getElementById('settingsTitle'),
+          labelPalettePreview: document.getElementById('labelPalettePreview'),
         };
+
+        // i18n
+        const i18n = {
+          tr: {
+            'status.ready': 'Hazır',
+            'status.empty': 'Boş girdi.',
+            'status.formatSuccess': 'Biçimlendirme başarılı.',
+            'status.minifySuccess': 'Sıkıştırma başarılı.',
+            'status.valid': 'Geçerli JSON.',
+            'status.invalid': 'Geçersiz JSON{where}: {error}',
+            'status.jsonError': 'JSON hatası{where}: {error}',
+            'status.depthExceeded': 'Derinlik sınırı aşıldı: > {limit}',
+            'status.sizeExceeded': 'Boyut sınırı aşıldı: {kb}KB > {max}KB',
+            'status.nothingToSave': 'Kaydedilecek içerik yok.',
+            'status.cannotSaveInvalid': 'Geçersiz JSON kaydedilemez.',
+            'status.downloaded': 'Dosya indirildi: {name}',
+            'status.nothingToCopy': 'Kopyalanacak içerik yok.',
+            'status.copied': 'Panoya kopyalandı.',
+            'status.copyFailed': 'Kopyalama başarısız.',
+            'status.clipboardEmpty': 'Panoda metin yok.',
+            'status.clipboardDenied': 'Pano erişimi reddedildi.',
+            'where.position': ' (satır {line}, sütun {column})',
+            'btn.format': 'Biçimlendir',
+            'btn.minify': 'Sıkıştır',
+            'btn.validate': 'Doğrula',
+            'btn.expand': 'Genişlet',
+            'btn.collapse': 'Daralt',
+            'label.indent': 'Girinti:',
+            'indent.2': '2 boşluk',
+            'indent.4': '4 boşluk',
+            'indent.tab': 'Sekme',
+            'label.sort': 'Sırala',
+            'label.lang': 'Dil:',
+            'tab.edit': 'Düzenle',
+            'tab.tree': 'Ağaç',
+            'tab.raw': 'Ham',
+            'tooltip.format': 'Biçimlendir (Ctrl+Enter)',
+            'tooltip.minify': 'Sıkıştır (Minify)',
+            'tooltip.validate': 'Doğrula',
+            'tooltip.load': 'JSON Yükle',
+            'tooltip.save': 'JSON Kaydet',
+            'tooltip.copy': 'Kopyala',
+            'tooltip.paste': 'Yapıştır',
+            'tooltip.theme': 'Tema',
+            'tooltip.full': 'JSON tam ekran',
+            'tooltip.settings': 'Ayarlar',
+            'drag.supported': 'Sürükle-bırak desteklenir',
+            'quick.palette': 'Palet',
+            'drop.hint': 'JSON dosyasını bu alana sürükleyip bırakabilirsiniz.',
+            'footer.left': 'İşlemler tamamen tarayıcınızda gerçekleşir; veri dışarı gönderilmez. İlham alınan araç: ',
+            'footer.right.prefix': 'Kısayol:',
+            'footer.action.format': 'Biçimlendir',
+            'settings.title': 'Ayarlar',
+            'settings.maxDepth': 'Maksimum Derinlik',
+            'settings.maxSizeKB': 'Maksimum Boyut (KB)',
+            'settings.remember': 'Son oturumu hatırla',
+            'settings.palette': 'Renk Paleti',
+            'settings.preview': 'Palet Önizleme',
+            'settings.cancel': 'İptal',
+            'settings.save': 'Kaydet',
+            'settings.language': 'Dil',
+            'tree.depthCap': '… (derinlik sınırı)'
+          },
+          en: {
+            'status.ready': 'Ready',
+            'status.empty': 'Empty input.',
+            'status.formatSuccess': 'Format successful.',
+            'status.minifySuccess': 'Minify successful.',
+            'status.valid': 'Valid JSON.',
+            'status.invalid': 'Invalid JSON{where}: {error}',
+            'status.jsonError': 'JSON error{where}: {error}',
+            'status.depthExceeded': 'Depth limit exceeded: > {limit}',
+            'status.sizeExceeded': 'Size limit exceeded: {kb}KB > {max}KB',
+            'status.nothingToSave': 'Nothing to save.',
+            'status.cannotSaveInvalid': 'Cannot save invalid JSON.',
+            'status.downloaded': 'File downloaded: {name}',
+            'status.nothingToCopy': 'Nothing to copy.',
+            'status.copied': 'Copied to clipboard.',
+            'status.copyFailed': 'Copy failed.',
+            'status.clipboardEmpty': 'No text in clipboard.',
+            'status.clipboardDenied': 'Clipboard access denied.',
+            'where.position': ' (line {line}, column {column})',
+            'btn.format': 'Format',
+            'btn.minify': 'Minify',
+            'btn.validate': 'Validate',
+            'btn.expand': 'Expand',
+            'btn.collapse': 'Collapse',
+            'label.indent': 'Indent:',
+            'indent.2': '2 spaces',
+            'indent.4': '4 spaces',
+            'indent.tab': 'Tab',
+            'label.sort': 'Sort keys',
+            'label.lang': 'Language:',
+            'tab.edit': 'Edit',
+            'tab.tree': 'Tree',
+            'tab.raw': 'Raw',
+            'tooltip.format': 'Format (Ctrl+Enter)',
+            'tooltip.minify': 'Minify',
+            'tooltip.validate': 'Validate',
+            'tooltip.load': 'Load JSON',
+            'tooltip.save': 'Save JSON',
+            'tooltip.copy': 'Copy',
+            'tooltip.paste': 'Paste',
+            'tooltip.theme': 'Theme',
+            'tooltip.full': 'JSON full screen',
+            'tooltip.settings': 'Settings',
+            'drag.supported': 'Drag and drop supported',
+            'quick.palette': 'Palette',
+            'drop.hint': 'You can drag and drop a JSON file here.',
+            'footer.left': 'All operations happen in your browser; no data is sent out. Inspired by: ',
+            'footer.right.prefix': 'Shortcut:',
+            'footer.action.format': 'Format',
+            'settings.title': 'Settings',
+            'settings.maxDepth': 'Max Depth',
+            'settings.maxSizeKB': 'Max Size (KB)',
+            'settings.remember': 'Remember last session',
+            'settings.palette': 'Color Palette',
+            'settings.preview': 'Palette Preview',
+            'settings.cancel': 'Cancel',
+            'settings.save': 'Save',
+            'settings.language': 'Language',
+            'tree.depthCap': '… (depth limit)'
+          }
+        };
+
+        function t(key, vars = {}) {
+          const lang = settings.language || 'tr';
+          const base = (i18n[lang] && i18n[lang][key]) || (i18n.tr && i18n.tr[key]) || key;
+          return base.replace(/\{(\w+)\}/g, (_, k) => (vars[k] !== undefined ? String(vars[k]) : `{${k}}`));
+        }
 
         // Tema
         const savedTheme = localStorage.getItem('theme');
@@ -564,12 +683,14 @@
           rememberSession: true,
           indent: '2',
           sortKeys: false,
-          lastInput: ''
+          lastInput: '',
+          language: 'tr'
         };
         let settings = loadSettings();
         applyPalette(settings.palette);
         populatePaletteUI();
         hydrateControlsFromSettings();
+        applyLanguage(settings.language);
         buildQuickPalette();
 
         // Sekmeler (tek kart)
@@ -580,7 +701,6 @@
           dom.viewerEdit.classList.toggle('hidden', tab !== 'edit');
           dom.viewerTree.classList.toggle('hidden', tab !== 'tree');
           dom.viewerRaw.classList.toggle('hidden', tab !== 'raw');
-          dom.viewerCs.classList.toggle('hidden', tab !== 'cs');
           if (tab !== 'edit') formatAction(false);
         }));
 
@@ -629,7 +749,7 @@
         function exceedsMaxSize(text) {
           const kb = getSizeKB(text);
           if (kb > settings.maxSizeKB) {
-            setStatusErr(`Boyut sınırı aşıldı: ${kb}KB > ${settings.maxSizeKB}KB`);
+            setStatusErr(t('status.sizeExceeded', { kb, max: settings.maxSizeKB }));
             return true;
           }
           return false;
@@ -741,15 +861,15 @@
         function formatAction(replaceInput = true) {
           const text = dom.input.value.trim();
           if (exceedsMaxSize(text)) return;
-          if (!text) { setStatusOk('Boş girdi.'); dom.tree.innerHTML = ''; dom.raw.textContent = ''; return; }
+          if (!text) { setStatusOk(t('status.empty')); dom.tree.innerHTML = ''; dom.raw.textContent = ''; return; }
           const result = parseJsonSafely(text);
           if (!result.ok) {
-            const where = (result.line && result.column) ? ` (satır ${result.line}, sütun ${result.column})` : '';
-            setStatusErr(`JSON hatası${where}: ${result.error}`);
+            const where = (result.line && result.column) ? t('where.position', { line: result.line, column: result.column }) : '';
+            setStatusErr(t('status.jsonError', { where, error: result.error }));
             return;
           }
           if (exceedsMaxDepth(result.value, settings.maxDepth)) {
-            setStatusErr(`Derinlik sınırı aşıldı: > ${settings.maxDepth}`);
+            setStatusErr(t('status.depthExceeded', { limit: settings.maxDepth }));
             return;
           }
           const space = getIndentSpace();
@@ -759,40 +879,40 @@
           dom.raw.innerHTML = buildHighlightedHtml(result.value, indentUnit, dom.sortKeys.checked);
           renderTree(result.value);
           if (settings.rememberSession) { settings.lastInput = dom.input.value; saveSettings(); }
-          setStatusOk('Biçimlendirme başarılı.');
+          setStatusOk(t('status.formatSuccess'));
         }
 
         function minifyAction() {
           const text = dom.input.value.trim();
           if (exceedsMaxSize(text)) return;
-          if (!text) { setStatusOk('Boş girdi.'); return; }
+          if (!text) { setStatusOk(t('status.empty')); return; }
           const result = parseJsonSafely(text);
           if (!result.ok) {
-            const where = (result.line && result.column) ? ` (satır ${result.line}, sütun ${result.column})` : '';
-            setStatusErr(`JSON hatası${where}: ${result.error}`);
+            const where = (result.line && result.column) ? t('where.position', { line: result.line, column: result.column }) : '';
+            setStatusErr(t('status.jsonError', { where, error: result.error }));
             return;
           }
-          if (exceedsMaxDepth(result.value, settings.maxDepth)) { setStatusErr(`Derinlik sınırı aşıldı: > ${settings.maxDepth}`); return; }
+          if (exceedsMaxDepth(result.value, settings.maxDepth)) { setStatusErr(t('status.depthExceeded', { limit: settings.maxDepth })); return; }
           const minified = stringify(result.value, 0, dom.sortKeys.checked);
           dom.input.value = minified;
           dom.raw.innerHTML = buildHighlightedHtml(result.value, '', dom.sortKeys.checked);
           renderTree(result.value);
           if (settings.rememberSession) { settings.lastInput = dom.input.value; saveSettings(); }
-          setStatusOk('Sıkıştırma başarılı.');
+          setStatusOk(t('status.minifySuccess'));
         }
 
         function validateAction() {
           const text = dom.input.value.trim();
           if (exceedsMaxSize(text)) return;
-          if (!text) { setStatusOk('Boş girdi.'); return; }
+          if (!text) { setStatusOk(t('status.empty')); return; }
           const result = parseJsonSafely(text);
           if (!result.ok) {
-            const where = (result.line && result.column) ? ` (satır ${result.line}, sütun ${result.column})` : '';
-            setStatusErr(`Geçersiz JSON${where}: ${result.error}`);
+            const where = (result.line && result.column) ? t('where.position', { line: result.line, column: result.column }) : '';
+            setStatusErr(t('status.invalid', { where, error: result.error }));
             return;
           }
-          if (exceedsMaxDepth(result.value, settings.maxDepth)) { setStatusErr(`Derinlik sınırı aşıldı: > ${settings.maxDepth}`); return; }
-          setStatusOk('Geçerli JSON.');
+          if (exceedsMaxDepth(result.value, settings.maxDepth)) { setStatusErr(t('status.depthExceeded', { limit: settings.maxDepth })); return; }
+          setStatusOk(t('status.valid'));
         }
 
         function createNodeLabel(keyText, value) {
@@ -868,9 +988,9 @@
 
             if (depth >= settings.maxDepth) {
               const cap = document.createElement('li');
-              const capNode = document.createElement('div');
+            const capNode = document.createElement('div');
               capNode.className = 'node dim';
-              capNode.textContent = '… (derinlik sınırı)';
+            capNode.textContent = t('tree.depthCap');
               cap.appendChild(capNode);
               children.appendChild(cap);
             } else {
@@ -909,122 +1029,6 @@
           });
         }
 
-        // JSON → C# Model üretimi
-        function toPascalCase(name) {
-          return String(name)
-            .replace(/^[^a-zA-Z_]+/g, '')
-            .replace(/[-\s_]+(.)/g, (_, g1) => g1.toUpperCase())
-            .replace(/^(.)/, (_, g1) => g1.toUpperCase())
-            .replace(/[^a-zA-Z0-9_]/g, '');
-        }
-        function uniqueTypeName(base, used) {
-          let n = toPascalCase(base || 'Type');
-          if (!n) n = 'Type';
-          let i = 2; let t = n;
-          while (used.has(t)) { t = n + i; i++; }
-          used.add(t); return t;
-        }
-        function detectNumberType(num) {
-          if (Number.isInteger(num)) {
-            if (num >= -2147483648 && num <= 2147483647) return 'int';
-            if (num >= 0 && num <= 4294967295) return 'uint';
-            if (num >= -9007199254740991 && num <= 9007199254740991) return 'long';
-            return 'long';
-          }
-          return 'double';
-        }
-        function analyze(value, typeNames, usedNames, suggestedName) {
-          if (value === null) return { kind: 'null', type: 'object' };
-          const t = typeof value;
-          if (t === 'string') return { kind: 'string', type: 'string' };
-          if (t === 'number') return { kind: 'number', type: detectNumberType(value) };
-          if (t === 'boolean') return { kind: 'boolean', type: 'bool' };
-          if (Array.isArray(value)) {
-            if (value.length === 0) return { kind: 'array', element: { kind: 'object', type: 'object' } };
-            // Eleman türlerini dene; farklıysa object kabul et
-            let elemSchema = analyze(value[0], typeNames, usedNames, suggestedName);
-            for (let i = 1; i < value.length; i++) {
-              const next = analyze(value[i], typeNames, usedNames, suggestedName);
-              if (JSON.stringify(next) !== JSON.stringify(elemSchema)) { elemSchema = { kind: 'object', type: 'object' }; break; }
-            }
-            return { kind: 'array', element: elemSchema };
-          }
-          if (t === 'object') {
-            const typeName = uniqueTypeName(suggestedName || 'Item', usedNames);
-            const props = [];
-            Object.keys(value).forEach(k => {
-              const child = analyze(value[k], typeNames, usedNames, k);
-              props.push({ name: k, schema: child });
-            });
-            typeNames.push({ name: typeName, properties: props });
-            return { kind: 'ref', ref: typeName };
-          }
-          return { kind: 'string', type: 'string' };
-        }
-        function schemaToCSharp(schema, typeNames, rootName, kindWord) {
-          const lines = [];
-          const emitIndent = (n) => '  '.repeat(n);
-          const emitType = (s) => {
-            if (s.kind === 'ref') return `<span class="cs-type">${s.ref}</span>`;
-            if (s.kind === 'string') return `<span class="cs-type">string</span>`;
-            if (s.kind === 'number') return `<span class="cs-type">${s.type}</span>`;
-            if (s.kind === 'boolean') return `<span class="cs-type">bool</span>`;
-            if (s.kind === 'array') return emitType(s.element) + '[]';
-            if (s.kind === 'null') return `<span class="cs-type">object</span>`;
-            if (s.kind === 'object') return `<span class="cs-type">object</span>`;
-            return `<span class="cs-type">object</span>`;
-          };
-          const emitModel = (name, props) => {
-            const header = `<span class="cs-keyword">${kindWord}</span> <span class="cs-type">${name}</span>`;
-            lines.push(header);
-            lines.push('{');
-            props.forEach(p => {
-              const propType = emitType(p.schema);
-              const propName = toPascalCase(p.name);
-              lines.push(emitIndent(1) + `<span class="cs-keyword">public</span> ${propType} <span class="cs-type">${propName}</span> { <span class="cs-keyword">get</span>; <span class="cs-keyword">set</span>; }`);
-            });
-            lines.push('}');
-          };
-          // Emit all collected types first (excluding potential duplicate root re-emit)
-          const emitted = new Set();
-          typeNames.forEach(t => {
-            if (!emitted.has(t.name)) {
-              emitModel(t.name, t.properties);
-              emitted.add(t.name);
-              lines.push('');
-            }
-          });
-          // Emit root wrapper if needed
-          const rootTypeName = toPascalCase(rootName || 'Root');
-          if (schema.kind === 'ref') {
-            // If root already emitted, alias by class with same properties name
-            const found = typeNames.find(x => x.name === schema.ref);
-            if (found && found.name !== rootTypeName) {
-              emitModel(rootTypeName, found.properties);
-            }
-          } else if (schema.kind === 'array') {
-            lines.push(`<span class="cs-comment">// Root: ${emitType(schema)} (koleksiyon)</span>`);
-          } else {
-            // Primitive root
-            lines.push(`<span class="cs-comment">// Root: ${emitType(schema)}</span>`);
-          }
-          return lines.join('\n');
-        }
-        function generateCSharp() {
-          const text = dom.input.value.trim();
-          if (!text) { dom.cs.textContent = ''; return; }
-          const res = parseJsonSafely(text);
-          if (!res.ok) { setStatusErr('Geçersiz JSON'); return; }
-          const used = new Set();
-          const types = [];
-          const rootName = dom.csRootName ? (dom.csRootName.value || 'Root') : 'Root';
-          const rootSchema = analyze(res.value, types, used, rootName);
-          const kindSel = dom.csKind ? dom.csKind.value : 'class';
-          const kindWord = kindSel === 'record' ? 'public record' : (kindSel === 'struct' ? 'public struct' : 'public class');
-          const code = schemaToCSharp(rootSchema, types, rootName, kindWord);
-          dom.cs.innerHTML = code;
-        }
-
         dom.btnFormat.addEventListener('click', () => formatAction(true));
         dom.btnMinify.addEventListener('click', () => minifyAction());
         dom.btnValidate.addEventListener('click', () => validateAction());
@@ -1038,18 +1042,22 @@
         });
         dom.sortKeys.addEventListener('change', () => formatAction(true));
 
+        // Dil seçimi (header)
+        dom.lang.addEventListener('change', () => {
+          settings.language = dom.lang.value;
+          saveSettings();
+          applyLanguage(settings.language);
+          if (dom.input.value.trim() && (!dom.viewerEdit.classList.contains('hidden'))) {
+            // Sadece düzenleme görünümündeyse status'u güncelle
+          }
+          if (!dom.viewerEdit.classList.contains('hidden')) return;
+          if (dom.input.value.trim()) formatAction(false);
+        });
+
         // Ayarlar aç/kapa
         dom.btnSettings.addEventListener('click', () => openSettings());
         dom.btnCloseSettings.addEventListener('click', () => closeSettings());
         dom.btnSaveSettings.addEventListener('click', () => saveSettingsFromUI());
-
-        // C# üretim
-        if (dom.btnGenCs) dom.btnGenCs.addEventListener('click', generateCSharp);
-        if (dom.btnCopyCs) dom.btnCopyCs.addEventListener('click', async () => {
-          const code = dom.cs.textContent;
-          if (!code) return;
-          try { await navigator.clipboard.writeText(code); setStatusOk('C# kopyalandı.'); } catch { setStatusErr('Kopyalanamadı.'); }
-        });
 
         dom.input.addEventListener('keydown', (e) => {
           if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
@@ -1084,9 +1092,9 @@
         // Kaydet
         dom.btnSave.addEventListener('click', () => {
           const text = dom.input.value.trim();
-          if (!text) { setStatusErr('Kaydedilecek içerik yok.'); return; }
+          if (!text) { setStatusErr(t('status.nothingToSave')); return; }
           const res = parseJsonSafely(text);
-          if (!res.ok) { setStatusErr('Geçersiz JSON kaydedilemez.'); return; }
+          if (!res.ok) { setStatusErr(t('status.cannotSaveInvalid')); return; }
           const space = getIndentSpace();
           const content = stringify(res.value, space, dom.sortKeys.checked);
           const blob = new Blob([content], { type: 'application/json;charset=utf-8' });
@@ -1098,18 +1106,18 @@
           a.click();
           a.remove();
           URL.revokeObjectURL(url);
-          setStatusOk('Dosya indirildi: data.json');
+          setStatusOk(t('status.downloaded', { name: 'data.json' }));
         });
 
         // Kopyala
         dom.btnCopy.addEventListener('click', async () => {
           const txt = dom.raw.textContent || dom.input.value;
-          if (!txt) { setStatusErr('Kopyalanacak içerik yok.'); return; }
+          if (!txt) { setStatusErr(t('status.nothingToCopy')); return; }
           try {
             await navigator.clipboard.writeText(txt);
-            setStatusOk('Panoya kopyalandı.');
+            setStatusOk(t('status.copied'));
           } catch {
-            setStatusErr('Kopyalama başarısız.');
+            setStatusErr(t('status.copyFailed'));
           }
         });
 
@@ -1117,11 +1125,11 @@
         dom.btnPaste.addEventListener('click', async () => {
           try {
             const txt = await navigator.clipboard.readText();
-            if (!txt) { setStatusErr('Panoda metin yok.'); return; }
+            if (!txt) { setStatusErr(t('status.clipboardEmpty')); return; }
             dom.input.value = txt;
             formatAction(true);
           } catch {
-            setStatusErr('Pano erişimi reddedildi.');
+            setStatusErr(t('status.clipboardDenied'));
           }
         });
 
@@ -1205,6 +1213,7 @@
           dom.inpMaxSizeKB.value = String(settings.maxSizeKB);
           dom.rememberSession.checked = !!settings.rememberSession;
           dom.paletteSelect.value = settings.palette;
+          dom.languageSelect.value = settings.language;
           dom.settingsModal.classList.remove('hidden');
         }
         function closeSettings() { dom.settingsModal.classList.add('hidden'); }
@@ -1216,8 +1225,10 @@
           settings.palette = dom.paletteSelect.value;
           settings.indent = dom.indent.value;
           settings.sortKeys = dom.sortKeys.checked;
+          settings.language = dom.languageSelect.value;
           saveSettings();
           applyPalette(settings.palette);
+          applyLanguage(settings.language);
           closeSettings();
           if (dom.input.value.trim()) formatAction(false);
         }
@@ -1225,6 +1236,7 @@
         function hydrateControlsFromSettings() {
           dom.indent.value = settings.indent;
           dom.sortKeys.checked = !!settings.sortKeys;
+          dom.lang.value = settings.language || 'tr';
         }
 
         function loadSettings() {
@@ -1287,6 +1299,77 @@
           const inside = e.target.closest('#quickPalette');
           if (!inside) { dom.qpMenu.classList.add('hidden'); dom.qpToggle.setAttribute('aria-expanded','false'); }
         });
+
+        function applyLanguage(lang) {
+          // Header buttons text and titles
+          dom.btnFormat.textContent = t('btn.format');
+          dom.btnFormat.title = t('tooltip.format');
+          dom.btnMinify.textContent = t('btn.minify');
+          dom.btnMinify.title = t('tooltip.minify');
+          dom.btnValidate.textContent = t('btn.validate');
+          dom.btnValidate.title = t('tooltip.validate');
+          dom.btnExpand.textContent = t('btn.expand');
+          dom.btnCollapse.textContent = t('btn.collapse');
+
+          dom.btnLoad.title = t('tooltip.load');
+          dom.btnSave.title = t('tooltip.save');
+          dom.btnCopy.title = t('tooltip.copy');
+          dom.btnPaste.title = t('tooltip.paste');
+          dom.btnTheme.title = t('tooltip.theme');
+          dom.btnFull.title = t('tooltip.full');
+          dom.btnSettings.title = t('tooltip.settings');
+
+          // Indent and sort controls
+          dom.labelIndent.textContent = t('label.indent');
+          const opt2 = dom.indent.querySelector('option[value="2"]');
+          const opt4 = dom.indent.querySelector('option[value="4"]');
+          const optT = dom.indent.querySelector('option[value="\\t"], option[value="\t"]');
+          if (opt2) opt2.textContent = t('indent.2');
+          if (opt4) opt4.textContent = t('indent.4');
+          if (optT) optT.textContent = t('indent.tab');
+          if (dom.labelSort) dom.labelSort.textContent = t('label.sort');
+          if (dom.labelLang) dom.labelLang.textContent = t('label.lang');
+
+          // Tabs
+          dom.tabs.forEach(btn => {
+            const tab = btn.getAttribute('data-tab');
+            if (tab === 'edit') btn.textContent = t('tab.edit');
+            else if (tab === 'tree') btn.textContent = t('tab.tree');
+            else if (tab === 'raw') btn.textContent = t('tab.raw');
+          });
+
+          // Hints and quick palette label
+          if (dom.dragHint) dom.dragHint.textContent = t('drag.supported');
+          if (dom.qpLabel) dom.qpLabel.textContent = t('quick.palette');
+          if (dom.dropHint) dom.dropHint.textContent = t('drop.hint');
+
+          // Footer
+          if (dom.footerLeft) {
+            dom.footerLeft.innerHTML = `${t('footer.left')}<a href="https://jsonviewer.stack.hu/" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none;">jsonviewer.stack.hu</a>`;
+          }
+          if (dom.footerRight) {
+            dom.footerRight.innerHTML = `${t('footer.right.prefix')} <span class="kbd">Ctrl</span> + <span class="kbd">Enter</span> → ${t('footer.action.format')}`;
+          }
+
+          // Settings modal texts
+          if (dom.settingsTitle) dom.settingsTitle.textContent = t('settings.title');
+          const lblMaxDepth = document.querySelector('label[for="maxDepth"]');
+          const lblMaxSize = document.querySelector('label[for="maxSizeKB"]');
+          const lblPalette = document.querySelector('label[for="paletteSelect"]');
+          if (lblMaxDepth) lblMaxDepth.textContent = t('settings.maxDepth');
+          if (lblMaxSize) lblMaxSize.textContent = t('settings.maxSizeKB');
+          if (dom.labelRemember) dom.labelRemember.textContent = t('settings.remember');
+          if (lblPalette) lblPalette.textContent = t('settings.palette');
+          if (dom.labelPalettePreview) dom.labelPalettePreview.textContent = t('settings.preview');
+          if (dom.btnCloseSettings) dom.btnCloseSettings.textContent = t('settings.cancel');
+          if (dom.btnSaveSettings) dom.btnSaveSettings.textContent = t('settings.save');
+          if (dom.labelLanguage) dom.labelLanguage.textContent = t('settings.language');
+
+          // Status default
+          if (!dom.status.textContent || /^(Hazır|Ready)$/.test(dom.status.textContent)) {
+            dom.status.textContent = t('status.ready');
+          }
+        }
       })();
     </script>
   </body>
