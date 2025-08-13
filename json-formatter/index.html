@@ -79,6 +79,30 @@
       .btn.primary { background: linear-gradient(180deg, rgba(34,211,238,.15), rgba(34,211,238,.05)); border-color: rgba(34,211,238,.4); }
       .btn.ok { background: linear-gradient(180deg, rgba(52,211,153,.15), rgba(52,211,153,.05)); border-color: rgba(52,211,153,.4); }
       .btn.danger { background: linear-gradient(180deg, rgba(248,113,113,.15), rgba(248,113,113,.05)); border-color: rgba(248,113,113,.4); }
+      .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+      .icon-btn {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--border);
+        background: var(--panel);
+        color: var(--text);
+        box-shadow: var(--shadow);
+        cursor: pointer;
+        transition: transform .05s ease, filter .2s ease, border-color .2s ease, background .2s ease;
+      }
+      .icon-btn svg { width: 18px; height: 18px; display: block; fill: currentColor; }
+      .icon-btn:hover { transform: translateY(1px); filter: brightness(1.08); }
+      .icon-load { color: #0ea5e9; background: rgba(14,165,233,.12); border-color: rgba(14,165,233,.4); }
+      .icon-save { color: #22c55e; background: rgba(34,197,94,.12); border-color: rgba(34,197,94,.4); }
+      .icon-copy { color: #06b6d4; background: rgba(6,182,212,.12); border-color: rgba(6,182,212,.4); }
+      .icon-paste { color: #f59e0b; background: rgba(245,158,11,.12); border-color: rgba(245,158,11,.4); }
+      .icon-theme { color: #8b5cf6; background: rgba(139,92,246,.12); border-color: rgba(139,92,246,.4); }
+      .icon-full { color: #94a3b8; background: rgba(148,163,184,.12); border-color: rgba(148,163,184,.4); }
+      .icon-settings { color: #fb7185; background: rgba(251,113,133,.12); border-color: rgba(251,113,133,.4); }
       .seg {
         display: inline-flex;
         border: 1px solid var(--border);
@@ -296,14 +320,28 @@
             </label>
           </div>
           <div class="seg" role="group" aria-label="Dosya">
-            <button class="btn" id="btnLoad">Yükle</button>
-            <button class="btn" id="btnSave">Kaydet</button>
-            <button class="btn" id="btnCopy">Kopyala</button>
-            <button class="btn" id="btnPaste">Yapıştır</button>
+            <button class="icon-btn icon-load" id="btnLoad" aria-label="Yükle" title="JSON Yükle">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a1 1 0 0 1 1 1v8.586l2.293-2.293a1 1 0 1 1 1.414 1.414l-4.007 4.007a1.25 1.25 0 0 1-1.707 0L6.986 11.707a1 1 0 0 1 1.414-1.414L10.707 12.6V4a1 1 0 0 1 1-1z"></path><path d="M5 19a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-2a1 1 0 1 0-2 0v2H7v-2a1 1 0 1 0-2 0v2z"></path></svg>
+            </button>
+            <button class="icon-btn icon-save" id="btnSave" aria-label="Kaydet" title="JSON Kaydet">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h10l4 4v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm8 2H7v6h6V5z"></path></svg>
+            </button>
+            <button class="icon-btn icon-copy" id="btnCopy" aria-label="Kopyala" title="Kopyala">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 1H6a2 2 0 0 0-2 2v12h2V3h10V1z"></path><path d="M8 5h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zm0 2v12h10V7H8z"></path></svg>
+            </button>
+            <button class="icon-btn icon-paste" id="btnPaste" aria-label="Yapıştır" title="Yapıştır">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 4h-3.18A3 3 0 0 0 13 2h-2a3 3 0 0 0-2.82 2H5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h6v-2H5V6h2v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V6h2v5h2V6a2 2 0 0 0-2-2zM9 5a1 1 0 0 1 1-1h4a1 1 0 1 1 0 2h-4a1 1 0 0 1-1-1z"></path><path d="M21 13h-6a2 2 0 0 0-2 2v6h8a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2zm-6 8v-6h6v4h-4v2h-2z"></path></svg>
+            </button>
           </div>
-          <button class="btn" id="btnTheme" title="Tema değiştir">Tema</button>
-          <button class="btn" id="btnFull" title="JSON tam ekran">Tam Ekran</button>
-          <button class="btn" id="btnSettings" title="Ayarlar">Ayarlar</button>
+          <button class="icon-btn icon-theme" id="btnTheme" aria-label="Tema" title="Tema">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 1 0 21 12.79z"></path></svg>
+          </button>
+          <button class="icon-btn icon-full" id="btnFull" aria-label="Tam Ekran" title="JSON tam ekran">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5h2V5h3V3zm10 0h-5v2h3v3h2V3zM5 16H3v5h5v-2H5v-3zm16 0h-2v3h-3v2h5v-5z"></path></svg>
+          </button>
+          <button class="icon-btn icon-settings" id="btnSettings" aria-label="Ayarlar" title="Ayarlar">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm8.94 4a7.97 7.97 0 0 0-.14-1.52l2.02-1.57-1.9-3.29-2.41.78a8.03 8.03 0 0 0-2.64-1.53l-.4-2.51H9.53l-.4 2.51a8.03 8.03 0 0 0-2.64 1.53l-2.41-.78-1.9 3.29 2.02 1.57A7.97 7.97 0 0 0 3.06 12c0 .52.05 1.03.14 1.52l-2.02 1.57 1.9 3.29 2.41-.78c.78.64 1.67 1.16 2.64 1.53l.4 2.51h4.64l.4-2.51c.97-.37 1.86-.89 2.64-1.53l2.41.78 1.9-3.29-2.02-1.57c.09-.49.14-1 .14-1.52z"></path></svg>
+          </button>
           <input class="hidden" type="file" id="fileInput" accept="application/json,.json,text/json,text/plain">
         </div>
       </header>
@@ -721,8 +759,9 @@
         dom.btnExpand.addEventListener('click', () => { formatAction(false); expandCollapseAll(true); });
         dom.btnCollapse.addEventListener('click', () => { formatAction(false); expandCollapseAll(false); });
 
-        dom.indent.addEventListener('change', () => formatAction(false));
-        dom.sortKeys.addEventListener('change', () => formatAction(false));
+        // Girinti ve anahtar sıralama: anında uygula
+        dom.indent.addEventListener('change', () => formatAction(true));
+        dom.sortKeys.addEventListener('change', () => formatAction(true));
 
         // Ayarlar aç/kapa
         dom.btnSettings.addEventListener('click', () => openSettings());
