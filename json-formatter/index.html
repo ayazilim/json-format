@@ -189,6 +189,21 @@
       }
       .status.ok { color: var(--ok); }
       .status.err { color: var(--danger); }
+      .top-status {
+        border: 1px solid var(--border);
+        background: var(--panel);
+        padding: 4px 8px;
+        border-radius: 8px;
+        box-shadow: var(--shadow);
+        font-size: 12px;
+        max-width: 420px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-left: 8px;
+      }
+      .top-status.ok { color: var(--ok); }
+      .top-status.err { color: var(--danger); }
       .tabs { display: flex; gap: 6px; }
       .tabs button {
         padding: 6px 10px;
@@ -388,6 +403,7 @@
               <button class="tab-btn active" data-tab="edit">Düzenle</button>
               <button class="tab-btn" data-tab="tree">Ağaç</button>
               <button class="tab-btn" data-tab="raw">Ham</button>
+              <span class="top-status" id="topStatus" aria-live="polite" role="status"></span>
             </div>
             <div class="card-header-right">
               <div class="dim" id="dragHint">Sürükle-bırak desteklenir</div>
@@ -473,6 +489,7 @@
           page: document.getElementById('page'),
           input: document.getElementById('input'),
           status: document.getElementById('status'),
+          topStatus: document.getElementById('topStatus'),
           btnFormat: document.getElementById('btnFormat'),
           btnMinify: document.getElementById('btnMinify'),
           btnValidate: document.getElementById('btnValidate'),
@@ -713,11 +730,13 @@
           dom.status.classList.remove('err');
           dom.status.classList.add('ok');
           dom.status.textContent = message;
+          if (dom.topStatus) { dom.topStatus.classList.remove('err'); dom.topStatus.classList.add('ok'); dom.topStatus.textContent = message; }
         }
         function setStatusErr(message) {
           dom.status.classList.remove('ok');
           dom.status.classList.add('err');
           dom.status.textContent = message;
+          if (dom.topStatus) { dom.topStatus.classList.remove('ok'); dom.topStatus.classList.add('err'); dom.topStatus.textContent = message; }
         }
 
         function parseJsonSafely(text) {
@@ -1571,9 +1590,9 @@
           if (dom.labelLanguage) dom.labelLanguage.textContent = t('settings.language');
 
           // Status default
-          if (!dom.status.textContent || /^(Hazır|Ready)$/.test(dom.status.textContent)) {
-            dom.status.textContent = t('status.ready');
-          }
+          const readyText = t('status.ready');
+          if (!dom.status.textContent || /^(Hazır|Ready)$/.test(dom.status.textContent)) dom.status.textContent = readyText;
+          if (dom.topStatus && (!dom.topStatus.textContent || /^(Hazır|Ready)$/.test(dom.topStatus.textContent))) dom.topStatus.textContent = readyText;
         }
       })();
     </script>
