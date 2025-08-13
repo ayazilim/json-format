@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Görüntüleyici</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+
+        .fullscreen-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .fullscreen-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .controls {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .input-group {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        textarea {
+            width: 100%;
+            height: 120px;
+            padding: 15px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            resize: vertical;
+            transition: border-color 0.3s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 120px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+
+        .output-container {
+            padding: 30px;
+            min-height: 400px;
+        }
+
+        .json-viewer {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            overflow-x: auto;
+            max-height: 600px;
+            overflow-y: auto;
+            border: 1px solid #4a5568;
+        }
+
+        .json-key {
+            color: #81c7d4;
+            font-weight: bold;
+        }
+
+        .json-string {
+            color: #90cdf4;
+        }
+
+        .json-number {
+            color: #f6ad55;
+        }
+
+        .json-boolean {
+            color: #68d391;
+        }
+
+        .json-null {
+            color: #a0aec0;
+            font-style: italic;
+        }
+
+        .json-bracket {
+            color: #fbb6ce;
+            font-weight: bold;
+        }
+
+        .json-comma {
+            color: #e2e8f0;
+        }
+
+        .json-colon {
+            color: #e2e8f0;
+            margin: 0 5px;
+        }
+
+        .indent {
+            margin-left: 20px;
+        }
+
+        .collapsible {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .collapsible:hover {
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+        }
+
+        .collapsed .json-content {
+            display: none;
+        }
+
+        .toggle-icon {
+            display: inline-block;
+            width: 12px;
+            margin-right: 5px;
+            transition: transform 0.2s;
+        }
+
+        .collapsed .toggle-icon {
+            transform: rotate(-90deg);
+        }
+
+        .error {
+            background: #fed7d7;
+            color: #c53030;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 5px solid #e53e3e;
+            margin-top: 20px;
+        }
+
+        .info {
+            background: #bee3f8;
+            color: #2b6cb0;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 5px solid #3182ce;
+            text-align: center;
+            font-style: italic;
+        }
+
+        .stats {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            background: #f7fafc;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #718096;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 3px;
+        }
+
+        .stat-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        /* Ayarlar Modal */
+        .settings-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .settings-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            z-index: 2000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            width: 500px;
+            max-width: 90vw;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .modal h2 {
+            margin-bottom: 20px;
+            color: #2d3748;
+            text-align: center;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #718096;
+        }
+
+        .close-btn:hover {
+            color: #e53e3e;
+        }
+
+        .setting-group {
+            margin-bottom: 20px;
+        }
+
+        .setting-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .setting-group input, .setting-group select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #dee2e6;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .color-palettes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .color-palette {
+            border: 3px solid transparent;
+            border-radius: 10px;
+            padding: 10px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+            background: #f8f9fa;
+        }
+
+        .color-palette:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .color-palette.active {
+            border-color: #667eea;
+            background: #e6f3ff;
+        }
+
+        .palette-name {
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #495057;
+        }
+
+        .color-preview {
+            display: flex;
+            justify-content: center;
+            gap: 3px;
+            margin-bottom: 5px;
+        }
+
+        .color-sample {
+            width: 15px;
+            height: 15px;
+            border-radius: 3px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        /* Tam ekran modu */
+        .fullscreen-mode {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #2d3748;
+            z-index: 3000;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .fullscreen-content {
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+        }
+
+        .fullscreen-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .fullscreen-title {
+            font-size: 24px;
+            font-weight: 300;
+        }
+
+        .fullscreen-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .fullscreen-controls button {
+            padding: 8px 16px;
+            border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .fullscreen-controls button:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+            }
+
+            .input-group {
+                min-width: 100%;
+            }
+
+            .button-group {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .stats {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>JSON Görüntüleyici</h1>
+            <p>JSON verilerinizi güzel ve organize bir şekilde görüntüleyin</p>
+            <button class="fullscreen-btn" onclick="toggleFullscreen()" title="Tam Ekran">⛶</button>
+        </div>
+
+        <div class="controls">
+            <div class="input-group">
+                <label for="jsonInput">JSON Verisi:</label>
+                <textarea id="jsonInput" placeholder='{"isim": "Ahmet", "yaş": 30, "şehir": "İstanbul"}'></textarea>
+            </div>
+            <div class="button-group">
+                <button class="btn-primary" onclick="formatJson()">Formatla</button>
+                <button class="btn-secondary" onclick="clearAll()">Temizle</button>
+                <button class="btn-success" onclick="copyOutput()">Kopyala</button>
+            </div>
+        </div>
+
+        <div class="output-container">
+            <div id="stats" class="stats" style="display: none;">
+                <div class="stat-item">
+                    <div class="stat-label">Toplam Anahtar</div>
+                    <div class="stat-value" id="keyCount">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Dosya Boyutu</div>
+                    <div class="stat-value" id="fileSize">0 B</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Derinlik</div>
+                    <div class="stat-value" id="depth">0</div>
+                </div>
+            </div>
+
+            <div id="output">
+                <div class="info">
+                    JSON verinizi yukarıdaki alana yapıştırın ve "Formatla" butonuna tıklayın
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ayarlar Butonu -->
+    <button class="settings-btn" onclick="openSettings()" title="Ayarlar">⚙️</button>
+
+    <!-- Ayarlar Modal -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeSettings()">
+        <div class="modal" onclick="event.stopPropagation()">
+            <button class="close-btn" onclick="closeSettings()">×</button>
+            <h2>⚙️ Ayarlar</h2>
+            
+            <div class="setting-group">
+                <label for="maxDepth">Maksimum Derinlik:</label>
+                <input type="number" id="maxDepth" min="1" max="20" value="10">
+            </div>
+
+            <div class="setting-group">
+                <label for="maxSize">Maksimum Boyut (KB):</label>
+                <input type="number" id="maxSize" min="1" max="10000" value="1000">
+            </div>
+
+            <div class="setting-group">
+                <label>Renk Paleti:</label>
+                <div class="color-palettes" id="colorPalettes">
+                    <!-- Renk paletleri JavaScript ile yüklenecek -->
+                </div>
+            </div>
+
+            <div class="setting-group">
+                <button class="btn-primary" onclick="saveSettings()" style="width: 100%;">Ayarları Kaydet</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tam Ekran Modu -->
+    <div class="fullscreen-mode" id="fullscreenMode" style="display: none;">
+        <div class="fullscreen-header">
+            <div class="fullscreen-title">JSON Görüntüleyici - Tam Ekran</div>
+            <div class="fullscreen-controls">
+                <button onclick="exportJson()">📥 Dışa Aktar</button>
+                <button onclick="toggleFullscreen()">✕ Çıkış</button>
+            </div>
+        </div>
+        <div class="fullscreen-content">
+            <div id="fullscreenOutput" class="json-viewer"></div>
+        </div>
+    </div>
+
+    <script>
+        let jsonData = null;
+        let isCollapsed = false;
+        let currentPalette = 'default';
+        let settings = {
+            maxDepth: 10,
+            maxSize: 1000,
+            colorPalette: 'default',
+            rememberSettings: true
+        };
+
+        // Renk paletleri
+        const colorPalettes = {
+            default: {
+                name: 'Varsayılan',
+                background: '#2d3748',
+                text: '#e2e8f0',
+                key: '#81c7d4',
+                string: '#90cdf4',
+                number: '#f6ad55',
+                boolean: '#68d391',
+                null: '#a0aec0',
+                bracket: '#fbb6ce'
+            },
+            dark: {
+                name: 'Koyu Tema',
+                background: '#1a1a1a',
+                text: '#ffffff',
+                key: '#ff6b6b',
+                string: '#4ecdc4',
+                number: '#45b7d1',
+                boolean: '#96ceb4',
+                null: '#ffeaa7',
+                bracket: '#fd79a8'
+            },
+            light: {
+                name: 'Açık Tema',
+                background: '#ffffff',
+                text: '#2d3748',
+                key: '#d53f8c',
+                string: '#38a169',
+                number: '#dd6b20',
+                boolean: '#3182ce',
+                null: '#718096',
+                bracket: '#805ad5'
+            },
+            ocean: {
+                name: 'Okyanus',
+                background: '#0f4c75',
+                text: '#bbdae8',
+                key: '#3282b8',
+                string: '#bbe1fa',
+                number: '#1b262c',
+                boolean: '#0f3460',
+                null: '#3282b8',
+                bracket: '#bbe1fa'
+            },
+            sunset: {
+                name: 'Gün Batımı',
+                background: '#2c1810',
+                text: '#f4e4c1',
+                key: '#e07a5f',
+                string: '#f2cc8f',
+                number: '#81b29a',
+                boolean: '#3d405b',
+                null: '#e07a5f',
+                bracket: '#f4e4c1'
+            },
+            cyberpunk: {
+                name: 'Cyberpunk',
+                background: '#0d1117',
+                text: '#00ff88',
+                key: '#ff0080',
+                string: '#00d4ff',
+                number: '#ffff00',
+                boolean: '#ff8800',
+                null: '#888888',
+                bracket: '#ff0080'
+            }
+        };
+
+        // Sayfa yüklendiğinde
+        window.onload = function() {
+            loadSettings();
+            initColorPalettes();
+            
+            const exampleJson = {
+                "kullanıcı": {
+                    "id": 1,
+                    "isim": "Ahmet Yılmaz",
+                    "email": "ahmet@example.com",
+                    "yaş": 30,
+                    "aktif": true,
+                    "adres": {
+                        "şehir": "İstanbul",
+                        "ilçe": "Kadıköy",
+                        "postaKodu": "34710"
+                    },
+                    "hobiler": ["programlama", "kitap okuma", "yüzme"],
+                    "projeler": [
+                        {
+                            "id": 1,
+                            "isim": "E-ticaret Sitesi",
+                            "teknolojiler": ["ASP.NET Core", "Entity Framework", "SQL Server"],
+                            "durum": "tamamlandı"
+                        },
+                        {
+                            "id": 2,
+                            "isim": "Mobil Uygulama",
+                            "teknolojiler": ["React Native", "Firebase"],
+                            "durum": "devam ediyor"
+                        }
+                    ]
+                }
+            };
+            
+            document.getElementById('jsonInput').value = JSON.stringify(exampleJson, null, 2);
+        };
+
+        function loadSettings() {
+            const saved = localStorage.getItem('jsonViewerSettings');
+            if (saved) {
+                settings = { ...settings, ...JSON.parse(saved) };
+                currentPalette = settings.colorPalette;
+                document.getElementById('maxDepth').value = settings.maxDepth;
+                document.getElementById('maxSize').value = settings.maxSize;
+                applyColorPalette(currentPalette);
+            }
+        }
+
+        function saveSettings() {
+            settings.maxDepth = parseInt(document.getElementById('maxDepth').value);
+            settings.maxSize = parseInt(document.getElementById('maxSize').value);
+            settings.colorPalette = currentPalette;
+            
+            if (settings.rememberSettings) {
+                localStorage.setItem('jsonViewerSettings', JSON.stringify(settings));
+            }
+            
+            applyColorPalette(currentPalette);
+            closeSettings();
+            
+            // JSON'u yeniden formatla
+            if (jsonData) {
+                formatJson();
+            }
+        }
+
+        function initColorPalettes() {
+            const container = document.getElementById('colorPalettes');
+            container.innerHTML = '';
+            
+            Object.keys(colorPalettes).forEach(key => {
+                const palette = colorPalettes[key];
+                const div = document.createElement('div');
+                div.className = `color-palette ${key === currentPalette ? 'active' : ''}`;
+                div.onclick = () => selectPalette(key);
+                
+                div.innerHTML = `
+                    <div class="palette-name">${palette.name}</div>
+                    <div class="color-preview">
+                        <div class="color-sample" style="background-color: ${palette.key}"></div>
+                        <div class="color-sample" style="background-color: ${palette.string}"></div>
+                        <div class="color-sample" style="background-color: ${palette.number}"></div>
+                        <div class="color-sample" style="background-color: ${palette.boolean}"></div>
+                        <div class="color-sample" style="background-color: ${palette.bracket}"></div>
+                    </div>
+                `;
+                
+                container.appendChild(div);
+            });
+        }
+
+        function selectPalette(key) {
+            currentPalette = key;
+            document.querySelectorAll('.color-palette').forEach(el => el.classList.remove('active'));
+            document.querySelector(`.color-palette:nth-child(${Object.keys(colorPalettes).indexOf(key) + 1})`).classList.add('active');
+        }
+
+        function applyColorPalette(paletteKey) {
+            const palette = colorPalettes[paletteKey];
+            const style = document.createElement('style');
+            style.id = 'dynamic-palette';
+            
+            // Eski stil varsa kaldır
+            const oldStyle = document.getElementById('dynamic-palette');
+            if (oldStyle) oldStyle.remove();
+            
+            style.textContent = `
+                .json-viewer {
+                    background: ${palette.background} !important;
+                    color: ${palette.text} !important;
+                }
+                .json-key { color: ${palette.key} !important; }
+                .json-string { color: ${palette.string} !important; }
+                .json-number { color: ${palette.number} !important; }
+                .json-boolean { color: ${palette.boolean} !important; }
+                .json-null { color: ${palette.null} !important; }
+                .json-bracket { color: ${palette.bracket} !important; }
+                .json-comma, .json-colon { color: ${palette.text} !important; }
+            `;
+            
+            document.head.appendChild(style);
+        }
+
+        function openSettings() {
+            document.getElementById('modalOverlay').style.display = 'block';
+        }
+
+        function closeSettings() {
+            document.getElementById('modalOverlay').style.display = 'none';
+        }
+
+        function toggleFullscreen() {
+            const fullscreenMode = document.getElementById('fullscreenMode');
+            const isFullscreen = fullscreenMode.style.display !== 'none';
+            
+            if (isFullscreen) {
+                fullscreenMode.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            } else {
+                if (!jsonData) {
+                    alert('Önce JSON verisini formatlayın!');
+                    return;
+                }
+                
+                const output = document.querySelector('.json-viewer').innerHTML;
+                document.getElementById('fullscreenOutput').innerHTML = output;
+                fullscreenMode.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function exportJson() {
+            if (!jsonData) return;
+            
+            const dataStr = JSON.stringify(jsonData, null, 2);
+            const dataBlob = new Blob([dataStr], {type:'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'exported_data.json';
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function formatJson() {
+            const input = document.getElementById('jsonInput').value.trim();
+            const output = document.getElementById('output');
+            
+            if (!input) {
+                output.innerHTML = '<div class="error">Lütfen JSON verisi girin!</div>';
+                hideStats();
+                return;
+            }
+
+            // Boyut kontrolü
+            const sizeInKB = new Blob([input]).size / 1024;
+            if (sizeInKB > settings.maxSize) {
+                output.innerHTML = `<div class="error">JSON verisi çok büyük! (${Math.round(sizeInKB)}KB > ${settings.maxSize}KB)</div>`;
+                hideStats();
+                return;
+            }
+
+            try {
+                jsonData = JSON.parse(input);
+                
+                // Derinlik kontrolü
+                const depth = getDepth(jsonData);
+                if (depth > settings.maxDepth) {
+                    output.innerHTML = `<div class="error">JSON verisi çok derin! (${depth} > ${settings.maxDepth})</div>`;
+                    hideStats();
+                    return;
+                }
+                
+                const formattedHtml = formatJsonToHtml(jsonData, 0);
+                output.innerHTML = `<div class="json-viewer">${formattedHtml}</div>`;
+                showStats(input, jsonData);
+                addCollapsibleEvents();
+            } catch (error) {
+                output.innerHTML = `<div class="error">Geçersiz JSON formatı: ${error.message}</div>`;
+                hideStats();
+            }
+        }
+
+        function formatJsonToHtml(obj, level = 0) {
+            if (obj === null) {
+                return '<span class="json-null">null</span>';
+            }
+            
+            if (typeof obj === 'string') {
+                return `<span class="json-string">"${escapeHtml(obj)}"</span>`;
+            }
+            
+            if (typeof obj === 'number') {
+                return `<span class="json-number">${obj}</span>`;
+            }
+            
+            if (typeof obj === 'boolean') {
+                return `<span class="json-boolean">${obj}</span>`;
+            }
+            
+            if (Array.isArray(obj)) {
+                if (obj.length === 0) {
+                    return '<span class="json-bracket">[]</span>';
+                }
+                
+                let html = '<span class="json-bracket collapsible" onclick="toggleCollapse(this)">';
+                html += '<span class="toggle-icon">▼</span>[</span>';
+                html += '<div class="json-content">';
+                
+                obj.forEach((item, index) => {
+                    html += '<div class="indent">';
+                    html += formatJsonToHtml(item, level + 1);
+                    if (index < obj.length - 1) {
+                        html += '<span class="json-comma">,</span>';
+                    }
+                    html += '</div>';
+                });
+                
+                html += '</div><span class="json-bracket">]</span>';
+                return html;
+            }
+            
+            if (typeof obj === 'object') {
+                const keys = Object.keys(obj);
+                if (keys.length === 0) {
+                    return '<span class="json-bracket">{}</span>';
+                }
+                
+                let html = '<span class="json-bracket collapsible" onclick="toggleCollapse(this)">';
+                html += '<span class="toggle-icon">▼</span>{</span>';
+                html += '<div class="json-content">';
+                
+                keys.forEach((key, index) => {
+                    html += '<div class="indent">';
+                    html += `<span class="json-key">"${escapeHtml(key)}"</span>`;
+                    html += '<span class="json-colon">:</span>';
+                    html += formatJsonToHtml(obj[key], level + 1);
+                    if (index < keys.length - 1) {
+                        html += '<span class="json-comma">,</span>';
+                    }
+                    html += '</div>';
+                });
+                
+                html += '</div><span class="json-bracket">}</span>';
+                return html;
+            }
+            
+            return String(obj);
+        }
+
+        function toggleCollapse(element) {
+            const parent = element.closest('.json-bracket').parentElement || element.parentElement;
+            parent.classList.toggle('collapsed');
+        }
+
+        function addCollapsibleEvents() {
+            // Çift tıklama ile tümünü daralt/genişlet
+            document.addEventListener('dblclick', function(e) {
+                if (e.target.closest('.json-viewer')) {
+                    toggleAllCollapse();
+                }
+            });
+        }
+
+        function toggleAllCollapse() {
+            const collapsibles = document.querySelectorAll('.collapsible');
+            const firstCollapsible = collapsibles[0];
+            
+            if (firstCollapsible) {
+                const isCurrentlyCollapsed = firstCollapsible.parentElement.classList.contains('collapsed');
+                
+                collapsibles.forEach(element => {
+                    const parent = element.parentElement;
+                    if (isCurrentlyCollapsed) {
+                        parent.classList.remove('collapsed');
+                    } else {
+                        parent.classList.add('collapsed');
+                    }
+                });
+            }
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function countKeys(obj) {
+            let count = 0;
+            
+            function traverse(item) {
+                if (typeof item === 'object' && item !== null) {
+                    if (Array.isArray(item)) {
+                        item.forEach(traverse);
+                    } else {
+                        count += Object.keys(item).length;
+                        Object.values(item).forEach(traverse);
+                    }
+                }
+            }
+            
+            traverse(obj);
+            return count;
+        }
+
+        function getDepth(obj) {
+            if (typeof obj !== 'object' || obj === null) {
+                return 0;
+            }
+            
+            let maxDepth = 0;
+            for (let key in obj) {
+                const depth = getDepth(obj[key]);
+                maxDepth = Math.max(maxDepth, depth);
+            }
+            
+            return maxDepth + 1;
+        }
+
+        function formatBytes(bytes) {
+            if (bytes === 0) return '0 B';
+            const k = 1024;
+            const sizes = ['B', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function showStats(input, data) {
+            const stats = document.getElementById('stats');
+            const keyCount = document.getElementById('keyCount');
+            const fileSize = document.getElementById('fileSize');
+            const depth = document.getElementById('depth');
+            
+            keyCount.textContent = countKeys(data);
+            fileSize.textContent = formatBytes(new Blob([input]).size);
+            depth.textContent = getDepth(data);
+            
+            stats.style.display = 'flex';
+        }
+
+        function hideStats() {
+            document.getElementById('stats').style.display = 'none';
+        }
+
+        function clearAll() {
+            document.getElementById('jsonInput').value = '';
+            document.getElementById('output').innerHTML = '<div class="info">JSON verinizi yukarıdaki alana yapıştırın ve "Formatla" butonuna tıklayın</div>';
+            hideStats();
+        }
+
+        function copyOutput() {
+            if (!jsonData) {
+                alert('Önce JSON verisini formatlayın!');
+                return;
+            }
+            
+            const formattedJson = JSON.stringify(jsonData, null, 2);
+            navigator.clipboard.writeText(formattedJson).then(() => {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = 'Kopyalandı!';
+                btn.style.background = '#28a745';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '';
+                }, 2000);
+            }).catch(() => {
+                alert('Kopyalama başarısız oldu!');
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>JSON Formatter & Viewer</title>
+    <style>
+      :root {
+        --bg: #0f172a;
+        --panel: #111827;
+        --text: #e5e7eb;
+        --muted: #9ca3af;
+        --accent: #22d3ee;
+        --danger: #f87171;
+        --border: #1f2937;
+        --ok: #34d399;
+        --shadow: 0 6px 20px rgba(0,0,0,.35);
+        --radius: 10px;
+        --font: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      }
+      [data-theme="light"] {
+        --bg: #f6f7fb;
+        --panel: #ffffff;
+        --text: #0f172a;
+        --muted: #6b7280;
+        --accent: #0ea5e9;
+        --danger: #dc2626;
+        --border: #e5e7eb;
+        --ok: #059669;
+        --shadow: 0 8px 24px rgba(0,0,0,.08);
+      }
+      html, body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        line-height: 1.4;
+      }
+      .page {
+        display: grid;
+        grid-template-rows: auto auto 1fr auto;
+        min-height: 100vh;
+        gap: 14px;
+        padding: 16px;
+      }
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .title {
+        font-weight: 700;
+        font-size: 18px;
+        letter-spacing: .2px;
+      }
+      .toolbar {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      .btn {
+        border: 1px solid var(--border);
+        background: var(--panel);
+        color: var(--text);
+        padding: 8px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: transform .05s ease, background .2s ease, border-color .2s ease;
+        box-shadow: var(--shadow);
+        user-select: none;
+        font-weight: 600;
+      }
+      .btn:hover { border-color: var(--accent); }
+      .btn:active { transform: translateY(1px); }
+      .btn.primary { background: linear-gradient(180deg, rgba(34,211,238,.15), rgba(34,211,238,.05)); border-color: rgba(34,211,238,.4); }
+      .btn.ok { background: linear-gradient(180deg, rgba(52,211,153,.15), rgba(52,211,153,.05)); border-color: rgba(52,211,153,.4); }
+      .btn.danger { background: linear-gradient(180deg, rgba(248,113,113,.15), rgba(248,113,113,.05)); border-color: rgba(248,113,113,.4); }
+      .seg {
+        display: inline-flex;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        overflow: hidden;
+        background: var(--panel);
+        box-shadow: var(--shadow);
+      }
+      .seg > button { border: none; border-right: 1px solid var(--border); }
+      .seg > button:last-child { border-right: none; }
+      .opt {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 10px;
+        border: 1px solid var(--border);
+        background: var(--panel);
+        border-radius: 8px;
+        box-shadow: var(--shadow);
+      }
+      select, input[type="checkbox"] {
+        accent-color: var(--accent);
+      }
+      .workspace {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        min-height: 0;
+      }
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+      }
+      .card > .card-header {
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+      }
+      .card > .card-body {
+        padding: 0;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+      }
+      textarea#input {
+        flex: 1;
+        width: 100%;
+        min-height: 300px;
+        border: none;
+        outline: none;
+        resize: none;
+        padding: 14px 16px;
+        font-family: var(--font);
+        font-size: 13px;
+        line-height: 1.5;
+        background: transparent;
+        color: var(--text);
+        tab-size: 2;
+      }
+      .drop-hint {
+        font-size: 12px;
+        color: var(--muted);
+        padding: 8px 12px;
+        border-top: 1px dashed var(--border);
+      }
+      .status {
+        padding: 8px 12px;
+        font-size: 12px;
+        border-top: 1px solid var(--border);
+        background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
+      }
+      .status.ok { color: var(--ok); }
+      .status.err { color: var(--danger); }
+      .tabs { display: flex; gap: 6px; }
+      .tabs button {
+        padding: 6px 10px;
+        border-radius: 6px;
+        border: 1px solid var(--border);
+        background: transparent;
+        color: var(--text);
+        cursor: pointer;
+      }
+      .tabs button.active { background: rgba(34,211,238,.12); border-color: rgba(34,211,238,.4); }
+      .viewer {
+        position: relative;
+        overflow: auto;
+        padding: 8px 12px 12px 12px;
+        flex: 1;
+        min-height: 0;
+        font-family: var(--font);
+      }
+      pre#raw {
+        margin: 0;
+        white-space: pre;
+        font-size: 13px;
+      }
+      .tree { font-family: var(--font); font-size: 13px; }
+      .tree ul { list-style: none; padding-left: 18px; margin: 0; }
+      .tree li { position: relative; margin: 2px 0; }
+      .caret { cursor: pointer; display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; border-radius: 4px; margin-right: 6px; color: var(--muted); }
+      .caret:hover { background: rgba(255,255,255,.05); color: var(--accent); }
+      .caret::before { content: "▸"; display: inline-block; transition: transform .15s ease; font-size: 10px; }
+      .expanded > .node > .caret::before { transform: rotate(90deg); }
+      .children { display: none; border-left: 1px dashed var(--border); margin-left: 7px; padding-left: 10px; }
+      .expanded > .children { display: block; }
+      .key { color: #93c5fd; }
+      .type-string { color: #fbbf24; }
+      .type-number { color: #f472b6; }
+      .type-boolean { color: #34d399; }
+      .type-null { color: #a3a3a3; font-style: italic; }
+      .dim { color: var(--muted); }
+      .badge { color: var(--muted); font-size: 11px; border: 1px solid var(--border); padding: 1px 6px; border-radius: 999px; margin-left: 6px; }
+      .node { display: inline-flex; align-items: center; gap: 2px; }
+      .footer {
+        color: var(--muted);
+        font-size: 12px;
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+        align-items: center;
+      }
+      .kbd { border: 1px solid var(--border); padding: 0 6px; border-radius: 4px; background: rgba(255,255,255,.03); font-family: var(--font); font-size: 12px; }
+      .hidden { display: none !important; }
+      @media (max-width: 1200px) { .workspace { grid-template-columns: 1fr; } }
+    </style>
+  </head>
+  <body>
+    <div class="page" id="page">
+      <header>
+        <div class="title">JSON Formatter & Viewer</div>
+        <div class="toolbar">
+          <div class="seg" role="group" aria-label="Biçimlendirme">
+            <button class="btn primary" id="btnFormat" title="Biçimlendir (Ctrl+Enter)">Biçimlendir</button>
+            <button class="btn" id="btnMinify" title="Sıkıştır (Minify)">Sıkıştır</button>
+            <button class="btn" id="btnValidate" title="Doğrula">Doğrula</button>
+          </div>
+          <div class="seg" role="group" aria-label="Ağaç">
+            <button class="btn" id="btnExpand">Genişlet</button>
+            <button class="btn" id="btnCollapse">Daralt</button>
+          </div>
+          <div class="opt">
+            <label for="indent">Girinti:</label>
+            <select id="indent" title="Girinti">
+              <option value="2">2 boşluk</option>
+              <option value="4">4 boşluk</option>
+              <option value="\t">Sekme</option>
+            </select>
+            <label style="margin-left:10px; display:inline-flex; align-items:center; gap:6px;">
+              <input type="checkbox" id="sortKeys"> Anahtarları sırala
+            </label>
+          </div>
+          <div class="seg" role="group" aria-label="Dosya">
+            <button class="btn" id="btnLoad">Yükle</button>
+            <button class="btn" id="btnSave">Kaydet</button>
+            <button class="btn" id="btnCopy">Kopyala</button>
+            <button class="btn" id="btnPaste">Yapıştır</button>
+          </div>
+          <button class="btn" id="btnTheme" title="Tema değiştir">Tema</button>
+          <input class="hidden" type="file" id="fileInput" accept="application/json,.json,text/json,text/plain">
+        </div>
+      </header>
+
+      <div class="workspace">
+        <section class="card">
+          <div class="card-header">
+            <div><strong>Girdi</strong> <span class="dim">(JSON metni)</span></div>
+            <div class="dim">Sürükle-bırak desteklenir</div>
+          </div>
+          <div class="card-body">
+            <textarea id="input" spellcheck="false" placeholder='{"hello":"world"}'></textarea>
+            <div class="status" id="status">Hazır</div>
+            <div class="drop-hint">JSON dosyasını bu alana sürükleyip bırakabilirsiniz.</div>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-header">
+            <div class="tabs">
+              <button class="tab-btn active" data-tab="tree">Ağaç Görünümü</button>
+              <button class="tab-btn" data-tab="raw">Ham JSON</button>
+            </div>
+            <div class="dim">Salt-okunur</div>
+          </div>
+          <div class="card-body">
+            <div class="viewer" id="viewer-tree">
+              <div class="tree" id="tree"></div>
+            </div>
+            <div class="viewer hidden" id="viewer-raw">
+              <pre id="raw"></pre>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="footer">
+        <div>
+          İşlemler tamamen tarayıcınızda gerçekleşir; veri dışarı gönderilmez. İlham alınan araç: <a href="https://jsonviewer.stack.hu/" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none;">jsonviewer.stack.hu</a>
+        </div>
+        <div>
+          Kısayol: <span class="kbd">Ctrl</span> + <span class="kbd">Enter</span> → Biçimlendir
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        const dom = {
+          page: document.getElementById('page'),
+          input: document.getElementById('input'),
+          status: document.getElementById('status'),
+          btnFormat: document.getElementById('btnFormat'),
+          btnMinify: document.getElementById('btnMinify'),
+          btnValidate: document.getElementById('btnValidate'),
+          btnExpand: document.getElementById('btnExpand'),
+          btnCollapse: document.getElementById('btnCollapse'),
+          btnLoad: document.getElementById('btnLoad'),
+          btnSave: document.getElementById('btnSave'),
+          btnCopy: document.getElementById('btnCopy'),
+          btnPaste: document.getElementById('btnPaste'),
+          btnTheme: document.getElementById('btnTheme'),
+          fileInput: document.getElementById('fileInput'),
+          indent: document.getElementById('indent'),
+          sortKeys: document.getElementById('sortKeys'),
+          raw: document.getElementById('raw'),
+          tree: document.getElementById('tree'),
+          viewerTree: document.getElementById('viewer-tree'),
+          viewerRaw: document.getElementById('viewer-raw'),
+          tabs: Array.from(document.querySelectorAll('.tab-btn')),
+        };
+
+        // Tema
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+        dom.btnTheme.addEventListener('click', () => {
+          const current = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+          document.documentElement.setAttribute('data-theme', current);
+          localStorage.setItem('theme', current);
+        });
+
+        // Sekmeler
+        dom.tabs.forEach(btn => btn.addEventListener('click', () => {
+          dom.tabs.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const tab = btn.getAttribute('data-tab');
+          dom.viewerTree.classList.toggle('hidden', tab !== 'tree');
+          dom.viewerRaw.classList.toggle('hidden', tab !== 'raw');
+        }));
+
+        function setStatusOk(message) {
+          dom.status.classList.remove('err');
+          dom.status.classList.add('ok');
+          dom.status.textContent = message;
+        }
+        function setStatusErr(message) {
+          dom.status.classList.remove('ok');
+          dom.status.classList.add('err');
+          dom.status.textContent = message;
+        }
+
+        function parseJsonSafely(text) {
+          try {
+            const value = JSON.parse(text);
+            return { ok: true, value };
+          } catch (error) {
+            const msg = String(error && error.message ? error.message : error);
+            let position = null, line = null, column = null;
+            const match = msg.match(/position\s+(\d+)/i);
+            if (match) {
+              position = Number(match[1]);
+              const lc = positionToLineColumn(text, position);
+              line = lc.line; column = lc.column;
+            }
+            return { ok: false, error: msg, position, line, column };
+          }
+        }
+
+        function positionToLineColumn(text, pos) {
+          let line = 1, column = 1;
+          for (let i = 0; i < text.length && i < pos; i++) {
+            const ch = text.charAt(i);
+            if (ch === '\n') { line++; column = 1; }
+            else { column++; }
+          }
+          return { line, column };
+        }
+
+        function sortKeysDeep(value) {
+          if (Array.isArray(value)) {
+            return value.map(sortKeysDeep);
+          }
+          if (value && typeof value === 'object' && value.constructor === Object) {
+            const sorted = {};
+            Object.keys(value).sort().forEach(k => { sorted[k] = sortKeysDeep(value[k]); });
+            return sorted;
+          }
+          return value;
+        }
+
+        function stringify(value, space, sort) {
+          const v = sort ? sortKeysDeep(value) : value;
+          return JSON.stringify(v, null, space);
+        }
+
+        function formatAction(replaceInput = true) {
+          const text = dom.input.value.trim();
+          if (!text) { setStatusOk('Boş girdi.'); dom.tree.innerHTML = ''; dom.raw.textContent = ''; return; }
+          const result = parseJsonSafely(text);
+          if (!result.ok) {
+            const where = (result.line && result.column) ? ` (satır ${result.line}, sütun ${result.column})` : '';
+            setStatusErr(`JSON hatası${where}: ${result.error}`);
+            return;
+          }
+          const space = dom.indent.value === '\t' ? '\t' : Number(dom.indent.value);
+          const pretty = stringify(result.value, space, dom.sortKeys.checked);
+          if (replaceInput) dom.input.value = pretty;
+          dom.raw.textContent = pretty;
+          renderTree(result.value);
+          setStatusOk('Biçimlendirme başarılı.');
+        }
+
+        function minifyAction() {
+          const text = dom.input.value.trim();
+          if (!text) { setStatusOk('Boş girdi.'); return; }
+          const result = parseJsonSafely(text);
+          if (!result.ok) {
+            const where = (result.line && result.column) ? ` (satır ${result.line}, sütun ${result.column})` : '';
+            setStatusErr(`JSON hatası${where}: ${result.error}`);
+            return;
+          }
+          const minified = stringify(result.value, 0, dom.sortKeys.checked);
+          dom.input.value = minified;
+          dom.raw.textContent = minified;
+          renderTree(result.value);
+          setStatusOk('Sıkıştırma başarılı.');
+        }
+
+        function validateAction() {
+          const text = dom.input.value.trim();
+          if (!text) { setStatusOk('Boş girdi.'); return; }
+          const result = parseJsonSafely(text);
+          if (!result.ok) {
+            const where = (result.line && result.column) ? ` (satır ${result.line}, sütun ${result.column})` : '';
+            setStatusErr(`Geçersiz JSON${where}: ${result.error}`);
+            return;
+          }
+          setStatusOk('Geçerli JSON.');
+        }
+
+        function createNodeLabel(keyText, value) {
+          const node = document.createElement('span');
+          node.className = 'node';
+          if (keyText !== null && keyText !== undefined) {
+            const keyEl = document.createElement('span');
+            keyEl.className = 'key';
+            keyEl.textContent = typeof keyText === 'number' ? `[${keyText}]` : keyText;
+            node.appendChild(keyEl);
+            const colon = document.createElement('span');
+            colon.className = 'dim';
+            colon.textContent = ': ';
+            node.appendChild(colon);
+          }
+
+          const t = typeof value;
+          let valueEl = document.createElement('span');
+          if (value === null) {
+            valueEl.className = 'type-null';
+            valueEl.textContent = 'null';
+          } else if (t === 'string') {
+            valueEl.className = 'type-string';
+            valueEl.textContent = '"' + value + '"';
+          } else if (t === 'number') {
+            valueEl.className = 'type-number';
+            valueEl.textContent = String(value);
+          } else if (t === 'boolean') {
+            valueEl.className = 'type-boolean';
+            valueEl.textContent = String(value);
+          } else if (Array.isArray(value)) {
+            const badge = document.createElement('span');
+            badge.className = 'badge';
+            badge.textContent = `[${value.length}]`;
+            node.appendChild(document.createTextNode('[]'));
+            node.appendChild(badge);
+            return node;
+          } else if (t === 'object') {
+            const keys = Object.keys(value);
+            const badge = document.createElement('span');
+            badge.className = 'badge';
+            badge.textContent = `{${keys.length}}`;
+            node.appendChild(document.createTextNode('{}'));
+            node.appendChild(badge);
+            return node;
+          }
+          node.appendChild(valueEl);
+          return node;
+        }
+
+        function buildTree(value, key) {
+          const li = document.createElement('li');
+          const isObj = value && typeof value === 'object' && value.constructor === Object;
+          const isArr = Array.isArray(value);
+          const hasChildren = isObj ? Object.keys(value).length > 0 : (isArr ? value.length > 0 : false);
+
+          if (isObj || isArr) {
+            const head = document.createElement('div');
+            head.className = 'node';
+
+            const caret = document.createElement('span');
+            caret.className = 'caret';
+            caret.setAttribute('role', 'button');
+            caret.setAttribute('tabindex', '0');
+            head.appendChild(caret);
+
+            const label = createNodeLabel(key ?? null, value);
+            head.appendChild(label);
+            li.appendChild(head);
+
+            const children = document.createElement('ul');
+            children.className = 'children';
+
+            const list = isArr ? value : value;
+            const keys = isArr ? value.map((_, i) => i) : Object.keys(list);
+            keys.forEach(k => {
+              const child = buildTree(list[k], k);
+              children.appendChild(child);
+            });
+
+            li.appendChild(children);
+            if (hasChildren) li.classList.add('expanded');
+            caret.addEventListener('click', () => { li.classList.toggle('expanded'); });
+            caret.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); li.classList.toggle('expanded'); } });
+          } else {
+            const line = document.createElement('div');
+            line.className = 'node';
+            line.appendChild(createNodeLabel(key ?? null, value));
+            li.appendChild(line);
+          }
+
+          return li;
+        }
+
+        function renderTree(value) {
+          dom.tree.innerHTML = '';
+          const root = buildTree(value, null);
+          dom.tree.appendChild(document.createElement('ul')).appendChild(root);
+        }
+
+        function expandCollapseAll(expand) {
+          const nodes = dom.tree.querySelectorAll('li');
+          nodes.forEach(n => {
+            if (expand) n.classList.add('expanded'); else n.classList.remove('expanded');
+          });
+        }
+
+        dom.btnFormat.addEventListener('click', () => formatAction(true));
+        dom.btnMinify.addEventListener('click', () => minifyAction());
+        dom.btnValidate.addEventListener('click', () => validateAction());
+        dom.btnExpand.addEventListener('click', () => expandCollapseAll(true));
+        dom.btnCollapse.addEventListener('click', () => expandCollapseAll(false));
+
+        dom.indent.addEventListener('change', () => formatAction(false));
+        dom.sortKeys.addEventListener('change', () => formatAction(false));
+
+        dom.input.addEventListener('keydown', (e) => {
+          if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+            e.preventDefault();
+            formatAction(true);
+          }
+        });
+
+        // Dosya yükleme
+        dom.btnLoad.addEventListener('click', () => dom.fileInput.click());
+        dom.fileInput.addEventListener('change', async () => {
+          const file = dom.fileInput.files && dom.fileInput.files[0];
+          if (!file) return;
+          const text = await file.text();
+          dom.input.value = text;
+          formatAction(true);
+          dom.fileInput.value = '';
+        });
+
+        // Sürükle-bırak
+        ;['dragenter','dragover'].forEach(evt => dom.input.addEventListener(evt, (e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'copy'; }));
+        dom.input.addEventListener('drop', async (e) => {
+          e.preventDefault();
+          const file = e.dataTransfer.files && e.dataTransfer.files[0];
+          if (file) {
+            const text = await file.text();
+            dom.input.value = text;
+            formatAction(true);
+          }
+        });
+
+        // Kaydet
+        dom.btnSave.addEventListener('click', () => {
+          const text = dom.input.value.trim();
+          if (!text) { setStatusErr('Kaydedilecek içerik yok.'); return; }
+          const res = parseJsonSafely(text);
+          if (!res.ok) { setStatusErr('Geçersiz JSON kaydedilemez.'); return; }
+          const space = dom.indent.value === '\t' ? '\t' : Number(dom.indent.value);
+          const content = stringify(res.value, space, dom.sortKeys.checked);
+          const blob = new Blob([content], { type: 'application/json;charset=utf-8' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'data.json';
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          URL.revokeObjectURL(url);
+          setStatusOk('Dosya indirildi: data.json');
+        });
+
+        // Kopyala
+        dom.btnCopy.addEventListener('click', async () => {
+          const txt = dom.raw.textContent || dom.input.value;
+          if (!txt) { setStatusErr('Kopyalanacak içerik yok.'); return; }
+          try {
+            await navigator.clipboard.writeText(txt);
+            setStatusOk('Panoya kopyalandı.');
+          } catch {
+            setStatusErr('Kopyalama başarısız.');
+          }
+        });
+
+        // Yapıştır
+        dom.btnPaste.addEventListener('click', async () => {
+          try {
+            const txt = await navigator.clipboard.readText();
+            if (!txt) { setStatusErr('Panoda metin yok.'); return; }
+            dom.input.value = txt;
+            formatAction(true);
+          } catch {
+            setStatusErr('Pano erişimi reddedildi.');
+          }
+        });
+
+        // Başlangıç
+        try {
+          const example = {
+            firstName: "John",
+            lastName: "Smith",
+            age: 32,
+            address: { city: "New York", postalCode: "10021" },
+            phoneNumbers: [
+              { type: "home", number: "212 555-1234" },
+              { type: "fax", number: "646 555-4567" }
+            ]
+          };
+          dom.input.value = JSON.stringify(example, null, 2);
+          formatAction(true);
+        } catch {}
+      })();
+    </script>
+  </body>
+  </html>
+
+
