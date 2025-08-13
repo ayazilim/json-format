@@ -17,6 +17,8 @@ Bu dosya, projede yapılan işleri ve planlanan görevleri takip etmek için kul
 - [x] Bozuk JSON'u onarma ve biçimlendirme (yorum temizleme, trailing comma kaldırma, tek tırnak/backtick string dönüştürme, anahtarları otomatik tırnaklama vb.)
 - [x] Geçersiz JSON durumunda ham görünümde (RAW) renklendirme ve renk paletlerinin uygulanması (lenient pretty/minify çıktısı `innerHTML` ile renklendirildi)
 - [x] `hreflang` alternatif dil linkindeki URL düzeltildi (`?lang=en`)
+ - [x] README iki dilli (EN/TR) olacak şekilde güncellendi ve genişletildi
+ - [x] GitHub depo açıklaması (TR/EN) hazırlandı
 
 ## Sıradaki İyileştirmeler
 - [ ] Ağaç görünümünde arama/filtreleme
