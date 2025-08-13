@@ -19,7 +19,7 @@
      
      <!-- Alternate Language -->
      <link rel="alternate" hreflang="tr" href="https://jsonformat.info/?lang=tr" />
-     <link rel="alternate" hreflang="en" href="https://jsonformat.info/?lang=en/" />
+     <link rel="alternate" hreflang="en" href="https://jsonformat.info/?lang=en" />
      <link rel="alternate" hreflang="x-default" href="https://jsonformat.info/" />
      
      <!-- Open Graph / Facebook -->
@@ -1248,9 +1248,9 @@
           if (!text) { setStatusOk(t('status.empty')); dom.tree.innerHTML = ''; dom.raw.textContent = ''; return; }
           const result = parseJsonSafely(text);
           if (!result.ok) {
-            // Geçersizse: pretty (lenient) uygula, input'a yaz (kullanıcı talebi: formatlasın, minify etmesin)
+            // Geçersizse: pretty (lenient) uygula ve renklendir, input'a yaz (minify etme)
             const prettyLenient = prettyPrintLenient(text, getIndentUnit(getIndentSpace()));
-            dom.raw.textContent = prettyLenient;
+            dom.raw.innerHTML = buildInlineHighlightedHtmlFromText(prettyLenient);
             dom.tree.innerHTML = '';
             if (replaceInput) dom.input.value = prettyLenient;
             const where = (result.line && result.column) ? t('where.position', { line: result.line, column: result.column }) : '';
@@ -1280,9 +1280,9 @@
           if (!text) { setStatusOk(t('status.empty')); return; }
           const result = parseJsonSafely(text);
           if (!result.ok) {
-            // Geçersizse: minify (lenient) uygula, input'a yaz
+            // Geçersizse: minify (lenient) uygula ve renklendir, input'a yaz
             const minified = minifyLenient(text);
-            dom.raw.textContent = minified;
+            dom.raw.innerHTML = buildInlineHighlightedHtmlFromText(minified);
             dom.tree.innerHTML = '';
             dom.input.value = minified;
             const where = (result.line && result.column) ? t('where.position', { line: result.line, column: result.column }) : '';
@@ -1306,9 +1306,9 @@
           if (!text) { setStatusOk(t('status.empty')); return; }
           const result = parseJsonSafely(text);
           if (!result.ok) {
-            // Değiştirmeden lenient biçimle, ham metni göster
+            // Değiştirmeden lenient biçimle, ham metni renklendirerek göster
             const prettyLenient = prettyPrintLenient(text, getIndentUnit(getIndentSpace()));
-            dom.raw.textContent = prettyLenient;
+            dom.raw.innerHTML = buildInlineHighlightedHtmlFromText(prettyLenient);
             dom.tree.innerHTML = '';
             const where = (result.line && result.column) ? t('where.position', { line: result.line, column: result.column }) : '';
             setStatusErr(t('status.invalid', { where, error: result.error }));
