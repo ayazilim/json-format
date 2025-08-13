@@ -18,8 +18,8 @@
      <meta name="revisit-after" content="7 days">
      
      <!-- Alternate Language -->
-     <link rel="alternate" hreflang="tr" href="https://jsonformat.info/tr/" />
-     <link rel="alternate" hreflang="en" href="https://jsonformat.info/en/" />
+     <link rel="alternate" hreflang="tr" href="https://jsonformat.info/?lang=tr" />
+     <link rel="alternate" hreflang="en" href="https://jsonformat.info/en/" />g=
      <link rel="alternate" hreflang="x-default" href="https://jsonformat.info/" />
      
      <!-- Open Graph / Facebook -->
@@ -576,6 +576,9 @@
               <label for="rememberSession"><input type="checkbox" id="rememberSession"> <span id="labelRemember">Son oturumu hatırla</span></label>
             </div>
             <div class="form-row">
+              <label for="autoFormat"><input type="checkbox" id="autoFormat"> <span id="labelAutoFormat">Otomatik biçimlendir</span></label>
+            </div>
+            <div class="form-row">
               <label for="languageSelect" id="labelLanguage">Dil</label>
               <select id="languageSelect">
                 <option value="tr">Türkçe</option>
@@ -656,7 +659,9 @@
           inpMaxDepth: document.getElementById('maxDepth'),
           inpMaxSizeKB: document.getElementById('maxSizeKB'),
           rememberSession: document.getElementById('rememberSession'),
+          autoFormat: document.getElementById('autoFormat'),
           labelRemember: document.getElementById('labelRemember'),
+          labelAutoFormat: document.getElementById('labelAutoFormat'),
           labelLanguage: document.getElementById('labelLanguage'),
           languageSelect: document.getElementById('languageSelect'),
           btnCloseSettings: document.getElementById('btnCloseSettings'),
@@ -727,6 +732,7 @@
             'settings.cancel': 'İptal',
             'settings.save': 'Kaydet',
             'settings.language': 'Dil',
+          'settings.autoFormat': 'Otomatik biçimlendir',
             'tree.depthCap': '… (derinlik sınırı)'
           },
           en: {
@@ -789,6 +795,7 @@
             'settings.cancel': 'Cancel',
             'settings.save': 'Save',
             'settings.language': 'Language',
+          'settings.autoFormat': 'Auto format',
             'tree.depthCap': '… (depth limit)'
           }
         };
@@ -849,7 +856,8 @@
           indent: '2',
           sortKeys: false,
           lastInput: '',
-          language: 'tr'
+          language: 'tr',
+          autoFormat: false
         };
         let settings = loadSettings();
         // URL ?lang=tr|en parametresi gelirse dili buna göre ayarla (ayarları da güncelle)
@@ -1449,7 +1457,7 @@
         let inputUpdateTimer = null;
         dom.input.addEventListener('input', () => {
           clearTimeout(inputUpdateTimer);
-          inputUpdateTimer = setTimeout(() => formatAction(false), 200);
+          inputUpdateTimer = setTimeout(() => { if (settings.autoFormat) formatAction(false); else { syncHighlight(); } }, 200);
           syncHighlight();
         });
 
@@ -1461,7 +1469,8 @@
           if (dom.input.value.trim() && (!dom.viewerEdit.classList.contains('hidden'))) {
             // Sadece düzenleme görünümündeyse status'u güncelle
           }
-          if (!dom.viewerEdit.classList.contains('hidden')) return;
+          // Eski edit görünümü kaldırıldı
+          // if (!dom.viewerEdit.classList.contains('hidden')) return;
           if (dom.input.value.trim()) formatAction(false);
           trackEvent('settings_change', { event_label: 'language_header', value: settings.language });
         });
@@ -1503,7 +1512,7 @@
           if (!file) return;
           const text = await file.text();
           dom.input.value = text;
-          formatAction(true);
+          if (settings.autoFormat) formatAction(true); else { syncHighlight(); setStatusOk(t('status.ready')); }
           dom.fileInput.value = '';
           trackEvent('file_load', { event_label: 'file_input', value: text.length });
         });
@@ -1516,7 +1525,7 @@
           if (file) {
             const text = await file.text();
             dom.input.value = text;
-            formatAction(true);
+            if (settings.autoFormat) formatAction(true); else { syncHighlight(); setStatusOk(t('status.ready')); }
           }
         });
 
@@ -1573,7 +1582,7 @@
         try {
           if (settings.rememberSession && settings.lastInput) {
             dom.input.value = settings.lastInput;
-            formatAction(false);
+            if (settings.autoFormat) formatAction(false); else syncHighlight();
             // highlight hydrate
             try { (function(){ const el = document.getElementById('inputHighlight'); if (el) el.innerHTML = buildInlineHighlightedHtmlFromText(dom.input.value); })(); } catch {}
           } else {
@@ -1588,7 +1597,7 @@
               ]
             };
             dom.input.value = JSON.stringify(example, null, 2);
-            formatAction(true);
+            if (settings.autoFormat) formatAction(true); else syncHighlight();
             try { (function(){ const el = document.getElementById('inputHighlight'); if (el) el.innerHTML = buildInlineHighlightedHtmlFromText(dom.input.value); })(); } catch {}
           }
         } catch {}
@@ -1654,6 +1663,7 @@
           dom.inpMaxDepth.value = String(settings.maxDepth);
           dom.inpMaxSizeKB.value = String(settings.maxSizeKB);
           dom.rememberSession.checked = !!settings.rememberSession;
+          dom.autoFormat.checked = !!settings.autoFormat;
           dom.paletteSelect.value = settings.palette;
           dom.languageSelect.value = settings.language;
           dom.settingsModal.classList.remove('hidden');
@@ -1664,6 +1674,7 @@
           settings.maxDepth = Math.max(1, Number(dom.inpMaxDepth.value || defaultSettings.maxDepth));
           settings.maxSizeKB = Math.max(10, Number(dom.inpMaxSizeKB.value || defaultSettings.maxSizeKB));
           settings.rememberSession = !!dom.rememberSession.checked;
+          settings.autoFormat = !!dom.autoFormat.checked;
           settings.palette = dom.paletteSelect.value;
           settings.indent = dom.indent.value;
           settings.sortKeys = dom.sortKeys.checked;
@@ -1816,6 +1827,7 @@
           if (dom.btnCloseSettings) dom.btnCloseSettings.textContent = t('settings.cancel');
           if (dom.btnSaveSettings) dom.btnSaveSettings.textContent = t('settings.save');
           if (dom.labelLanguage) dom.labelLanguage.textContent = t('settings.language');
+          if (dom.labelAutoFormat) dom.labelAutoFormat.textContent = t('settings.autoFormat');
 
           // Status default
           const readyText = t('status.ready');
@@ -1891,7 +1903,7 @@
               settings.language = l.value; saveSettings(); applyLanguage(settings.language);
               if (dom.lang) dom.lang.value = l.value;
               dom.qlMenu.classList.add('hidden'); dom.qlToggle.setAttribute('aria-expanded','false');
-              if (!dom.viewerEdit.classList.contains('hidden')) { /* no-op */ } else if (dom.input.value.trim()) { formatAction(false); }
+              if (dom.input.value.trim()) { formatAction(false); }
               trackEvent('settings_change', { event_label: 'language_quick', value: l.value });
             });
             dom.qlList.appendChild(item);
