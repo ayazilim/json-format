@@ -298,6 +298,18 @@
       .sw { width: 14px; height: 14px; border-radius: 3px; border: 1px solid var(--border); }
       .settings-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px; }
 
+      /* Hızlı palet açılır menü */
+      .card-header-right { display: flex; align-items: center; gap: 10px; }
+      .quick-palette { position: relative; }
+      .qp-btn { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--panel); color: var(--text); cursor: pointer; }
+      .qp-swatches-inline { display: inline-flex; gap: 3px; }
+      .qp-sw { width: 12px; height: 12px; border-radius: 3px; border: 1px solid var(--border); }
+      .qp-menu { position: absolute; right: 0; top: calc(100% + 6px); background: var(--panel); border: 1px solid var(--border); border-radius: 10px; box-shadow: var(--shadow); padding: 8px; width: 280px; z-index: 1500; }
+      .qp-list { display: grid; grid-template-columns: 1fr; gap: 6px; max-height: 300px; overflow: auto; }
+      .qp-item { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.02)); cursor: pointer; }
+      .qp-item:hover { border-color: var(--accent); }
+      .qp-name { font-size: 12px; color: var(--muted); }
+
       /* Yumuşak tam ekran (yalnızca JSON kartı) */
       .body-soft-full header, .body-soft-full .footer { display: none; }
       #mainCard.fullscreen-card {
@@ -367,7 +379,18 @@
               <button class="tab-btn" data-tab="tree">Ağaç</button>
               <button class="tab-btn" data-tab="raw">Ham</button>
             </div>
-            <div class="dim">Sürükle-bırak desteklenir</div>
+            <div class="card-header-right">
+              <div class="dim">Sürükle-bırak desteklenir</div>
+              <div class="quick-palette" id="quickPalette">
+                <button class="qp-btn" id="qpToggle" aria-haspopup="true" aria-expanded="false" title="Renk paleti seç">
+                  <span class="qp-label">Palet</span>
+                  <span class="qp-swatches-inline" id="qpSwatches"></span>
+                </button>
+                <div class="qp-menu hidden" id="qpMenu" role="menu">
+                  <div class="qp-list" id="qpList"></div>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="card-body">
             <div class="viewer" id="viewer-edit">
@@ -458,6 +481,10 @@
           settingsModal: document.getElementById('settingsModal'),
           paletteSelect: document.getElementById('paletteSelect'),
           paletteGrid: document.getElementById('paletteGrid'),
+          qpToggle: document.getElementById('qpToggle'),
+          qpMenu: document.getElementById('qpMenu'),
+          qpList: document.getElementById('qpList'),
+          qpSwatches: document.getElementById('qpSwatches'),
           inpMaxDepth: document.getElementById('maxDepth'),
           inpMaxSizeKB: document.getElementById('maxSizeKB'),
           rememberSession: document.getElementById('rememberSession'),
@@ -501,6 +528,7 @@
         applyPalette(settings.palette);
         populatePaletteUI();
         hydrateControlsFromSettings();
+        buildQuickPalette();
 
         // Sekmeler (tek kart)
         dom.tabs.forEach(btn => btn.addEventListener('click', () => {
@@ -969,6 +997,54 @@
         function saveSettings() {
           try { localStorage.setItem('jf_settings', JSON.stringify(settings)); } catch {}
         }
+
+        // Hızlı palet dropdown
+        function updateQPSwatches() {
+          const pal = colorPalettes[settings.palette];
+          if (!pal) return;
+          dom.qpSwatches.innerHTML = '';
+          ['key','string','number','boolean','null'].forEach(k => {
+            const s = document.createElement('span');
+            s.className = 'qp-sw'; s.style.background = pal[k];
+            dom.qpSwatches.appendChild(s);
+          });
+        }
+        function buildQuickPalette() {
+          updateQPSwatches();
+          dom.qpList.innerHTML = '';
+          Object.keys(colorPalettes).forEach(k => {
+            const pal = colorPalettes[k];
+            const item = document.createElement('div');
+            item.className = 'qp-item';
+            item.setAttribute('role','menuitem');
+            const left = document.createElement('div');
+            left.className = 'qp-name'; left.textContent = pal.name;
+            const right = document.createElement('div');
+            right.className = 'qp-swatches-inline';
+            ['key','string','number','boolean','null'].forEach(pk => {
+              const sw = document.createElement('span'); sw.className = 'qp-sw'; sw.style.background = pal[pk]; right.appendChild(sw);
+            });
+            item.appendChild(left); item.appendChild(right);
+            if (k === settings.palette) item.style.borderColor = 'var(--accent)';
+            item.addEventListener('click', () => {
+              settings.palette = k; saveSettings(); applyPalette(k); updateQPSwatches(); buildQuickPalette();
+              dom.qpMenu.classList.add('hidden'); dom.qpToggle.setAttribute('aria-expanded','false');
+              if (!dom.viewerEdit.classList.contains('hidden')) return;
+              if (dom.input.value.trim()) formatAction(false);
+            });
+            dom.qpList.appendChild(item);
+          });
+        }
+        dom.qpToggle.addEventListener('click', () => {
+          const open = !dom.qpMenu.classList.contains('hidden');
+          dom.qpMenu.classList.toggle('hidden');
+          dom.qpToggle.setAttribute('aria-expanded', String(!open));
+        });
+        document.addEventListener('click', (e) => {
+          if (!e.target.closest || !dom.qpMenu) return;
+          const inside = e.target.closest('#quickPalette');
+          if (!inside) { dom.qpMenu.classList.add('hidden'); dom.qpToggle.setAttribute('aria-expanded','false'); }
+        });
       })();
     </script>
   </body>
