@@ -1,8 +1,9 @@
 {
-    "name": "JSON Formatter - JSONFormat.info",
+    "name": "JSON Formatters",
     "short_name": "JSON Formatter",
     "description": "Professional JSON formatter, validator and beautifier tool. Format, validate and beautify your JSON data with ease.",
     "start_url": "/",
+    "author":"Abdullah AYAZ | abayaz61@gmail.com",
     "scope": "/",
     "display": "standalone",
     "orientation": "portrait-primary",
@@ -13,7 +14,8 @@
     "categories": [
       "developer",
       "productivity",
-      "utilities"
+      "utilities",
+      "json"
     ],
     "icons": [
       {
