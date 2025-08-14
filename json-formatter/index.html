@@ -334,6 +334,7 @@
         fill: currentColor;
       }
       .icon-btn.small {
+        padding: 0;
         width: 32px;
         height: 32px;
       }
@@ -602,11 +603,8 @@
         color: var(--danger);
       }
       .top-status {
-        border: 1px solid var(--border);
-        background: var(--panel);
-        padding: 4px 8px;
+        margin-top: 8px;
         border-radius: 8px;
-        box-shadow: var(--shadow);
         font-size: 12px;
         max-width: 420px;
         white-space: nowrap;
@@ -1430,7 +1428,6 @@
                   aria-expanded="false"
                   title="Renk paleti seç"
                 >
-                  <span class="qp-label" id="qpLabel">Palet</span>
                   <span class="qp-swatches-inline" id="qpSwatches"></span>
                 </button>
                 <div class="qp-menu hidden" id="qpMenu" role="menu">
