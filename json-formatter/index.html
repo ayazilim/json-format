@@ -318,6 +318,8 @@
         border-radius: 4px;
         overflow: hidden;
       }
+      /* Hide any accidental text in icon label */
+      .qp-btn.icon-only .qp-label { font-size: 0; }
 
       /* Subtle theme-based toning for icons */
       [data-theme="light"] .icon-btn { filter: saturate(0.98) brightness(1.02); }
@@ -3170,6 +3172,9 @@
             const svg = document.getElementById('flagIcon');
             if (svg) {
               svg.innerHTML = isEn ? buildFlagTR() : buildFlagUK();
+              // Eski metin gelmişse temizle
+              const ql = document.getElementById('qlLabel');
+              if (ql) ql.childNodes.forEach(n => { if (n.nodeType === Node.TEXT_NODE) ql.removeChild(n); });
             }
           } catch {}
 
@@ -3227,7 +3232,7 @@
 
           // Quick controls labels
           updateQuickIndentLabel();
-          updateQuickLangLabel();
+          // updateQuickLangLabel kaldırıldı (icon-only). Flag SVG applyLanguage içinde güncelleniyor.
         }
 
         function updateQuickIndentLabel() {
@@ -3306,7 +3311,7 @@
           return '<g><rect width="24" height="24" fill="#012169"/><path d="M0 0l24 24M24 0L0 24" stroke="#fff" stroke-width="4"/><path d="M0 0l24 24M24 0L0 24" stroke="#C8102E" stroke-width="2"/><path d="M10 0h4v24h-4zM0 10v4h24v-4z" fill="#fff"/><path d="M11 0h2v24h-2zM0 11v2h24v-2z" fill="#C8102E"/></g>';
         }
         function buildFlagTR() {
-          return '<g><rect width="24" height="24" fill="#E30A17"/><circle cx="10" cy="12" r="5" fill="#fff"/><circle cx="11.2" cy="12" r="4" fill="#E30A17"/><path d="M14.5 12l2.6-1.2-1.6 2.2 1.6 2.2-2.6-1.2-1.6 2.2.3-2.6-2.6-1.2 2.6-1.2-.3-2.6z" fill="#fff"/></g>';
+          return '<g><rect width="24" height="24" fill="#E30A17"/><circle cx="10" cy="12" r="5" fill="#fff"/><circle cx="11.2" cy="12" r="4" fill="#E30A17"/><path d="M16.5 12l2-1-1.2 1.6 1.2 1.6-2-1-1.2 1.6.2-2-2-1 2-1-.2-2z" fill="#fff"/></g>';
         }
 
         // Worker Auto toggle: threshold input enable/disable
