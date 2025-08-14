@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="tr">
-  <head> 
-     <!-- Basic Meta Tags -->
+  <head>
+    <!-- Basic Meta Tags -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-     
-     <!-- Primary Meta Tags (Turkish) -->
+
+    <!-- Primary Meta Tags (Turkish) -->
     <title>
       JSON Formatter - JSON Düzenleyici ve Doğrulayıcı | jsonformat.info
     </title>
@@ -27,8 +27,8 @@
     <meta name="author" content="JSONFormat.info" />
     <meta name="copyright" content="© 2024 JSONFormat.info" />
     <meta name="revisit-after" content="7 days" />
-     
-     <!-- Alternate Language -->
+
+    <!-- Alternate Language -->
     <link
       rel="alternate"
       hreflang="tr"
@@ -44,8 +44,8 @@
       hreflang="x-default"
       href="https://jsonformat.info/"
     />
-     
-     <!-- Open Graph / Facebook -->
+
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://jsonformat.info/" />
     <meta
@@ -65,8 +65,8 @@
     <meta property="og:site_name" content="JSONFormat.info" />
     <meta property="og:locale" content="tr_TR" />
     <meta property="og:locale:alternate" content="en_US" />
-     
-     <!-- Twitter -->
+
+    <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://jsonformat.info/" />
     <meta
@@ -83,35 +83,35 @@
     />
     <meta name="twitter:site" content="@jsonformat" />
     <meta name="twitter:creator" content="@jsonformat" />
-     
-     <!-- Canonical URL -->
+
+    <!-- Canonical URL -->
     <link rel="canonical" href="https://jsonformat.info/" />
-     
-     <!-- Favicon -->
+
+    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#667eea" />
-     
-     <!-- DNS Prefetch -->
+
+    <!-- DNS Prefetch -->
     <link rel="dns-prefetch" href="//www.googletagmanager.com" />
     <link rel="dns-prefetch" href="//www.google-analytics.com" />
     <link rel="dns-prefetch" href="//fonts.googleapis.com" />
     <link rel="dns-prefetch" href="//cdnjs.cloudflare.com" />
-     
-     <!-- Preload Critical Resources -->
+
+    <!-- Preload Critical Resources -->
     <link rel="preload" href="/css/main.css" as="style" />
     <link rel="preload" href="/js/json-formatter.js" as="script" />
-     
-     <!-- GOOGLE ANALYTICS 4 -->
+
+    <!-- GOOGLE ANALYTICS 4 -->
     <script
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-J43L67FJFY"
     ></script>
-     <script>
-         window.dataLayer = window.dataLayer || [];
+    <script>
+      window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);
       }
@@ -121,21 +121,21 @@
         page_location: "https://jsonformat.info/",
         content_group1: "JSON Tools",
         content_group2: "Formatter",
-         });
-     </script>
-     
-     <!-- GOOGLE SEARCH CONSOLE -->
+      });
+    </script>
+
+    <!-- GOOGLE SEARCH CONSOLE -->
     <meta
       name="google-site-verification"
       content="nEMYj6IA_R51LxQf2T2PNpOP3y3Zd5ed0n9lWchWgnw"
     />
-     
-     <!-- BING WEBMASTER TOOLS -->
-   <meta name="msvalidate.01" content="37862A76E0EE2715ACCDC16AE71DD942" />
-     
-     <!-- YANDEX WEBMASTER -->
-     <meta name="yandex-verification" content="96fde976efba257c" />
-    
+
+    <!-- BING WEBMASTER TOOLS -->
+    <meta name="msvalidate.01" content="37862A76E0EE2715ACCDC16AE71DD942" />
+
+    <!-- YANDEX WEBMASTER -->
+    <meta name="yandex-verification" content="96fde976efba257c" />
+
     <title>JSON Formatter & Viewer</title>
     <style>
       :root {
@@ -216,7 +216,9 @@
         min-width: 0;
       }
       /* Dil butonunu en sağa taşı (flex order) */
-      #quickLang { order: 999; }
+      #quickLang {
+        order: 999;
+      }
       .btn {
         border: 1px solid var(--border);
         background: var(--panel);
@@ -288,25 +290,63 @@
         margin: 0 2px; /* ikonların birbirine yapışmasını önle */
       }
       /* Icon variants for actions */
-      .icon-format { color: #22c55e; background: transparent; border-color: transparent; }
-      .icon-minify { color: #0ea5e9; background: transparent; border-color: transparent; }
-      .icon-validate { color: #f59e0b; background: transparent; border-color: transparent; }
-      .icon-expand { color: #10b981; background: transparent; border-color: transparent; }
-      .icon-collapse { color: #ef4444; background: transparent; border-color: transparent; }
+      .icon-format {
+        color: #22c55e;
+        background: transparent;
+        border-color: transparent;
+      }
+      .icon-minify {
+        color: #0ea5e9;
+        background: transparent;
+        border-color: transparent;
+      }
+      .icon-validate {
+        color: #f59e0b;
+        background: transparent;
+        border-color: transparent;
+      }
+      .icon-expand {
+        color: #10b981;
+        background: transparent;
+        border-color: transparent;
+      }
+      .icon-collapse {
+        color: #ef4444;
+        background: transparent;
+        border-color: transparent;
+      }
 
       /* Icon-only quick button */
-      .qp-btn.icon-only { width: 38px; height: 38px; padding: 0; justify-content: center; }
-      .qp-btn.icon-only .qp-label { font-size: 18px; line-height: 1; }
+      .qp-btn.icon-only {
+        width: 38px;
+        height: 38px;
+        padding: 0;
+        justify-content: center;
+      }
+      .qp-btn.icon-only .qp-label {
+        font-size: 18px;
+        line-height: 1;
+      }
       .icon-btn svg {
         width: 18px;
         height: 18px;
         display: block;
         fill: currentColor;
       }
-      .icon-btn.small { width: 32px; height: 32px; }
-      .icon-btn.small svg { width: 16px; height: 16px; }
+      .icon-btn.small {
+        width: 32px;
+        height: 32px;
+      }
+      .icon-btn.small svg {
+        width: 16px;
+        height: 16px;
+      }
       /* Enlarge only the zoom icons inside small buttons */
-      #btnZoomIn svg, #btnZoomOut svg { width: 20px; height: 20px; }
+      #btnZoomIn svg,
+      #btnZoomOut svg {
+        width: 20px;
+        height: 20px;
+      }
       .qp-btn.icon-only svg {
         width: 22px;
         height: 22px;
@@ -328,21 +368,66 @@
         overflow: hidden;
       }
       /* Hide any accidental text in icon label */
-      .qp-btn.icon-only .qp-label { font-size: 0; }
+      .qp-btn.icon-only .qp-label {
+        font-size: 0;
+      }
 
       /* Subtle theme-based toning for icons */
-      [data-theme="light"] .icon-btn { filter: saturate(0.98) brightness(1.02); }
-      [data-theme="dark"] .icon-btn { filter: saturate(1.02) brightness(0.98); }
-      .icon-btn:hover { transform: translateY(0); filter: brightness(1.2); }
-      .icon-load { color: #0ea5e9; background: transparent; border-color: transparent; }
-      .icon-save { color: #22c55e; background: transparent; border-color: transparent; }
-      .icon-copy { color: #06b6d4; background: transparent; border-color: transparent; }
-      .icon-paste { color: #f59e0b; background: transparent; border-color: transparent; }
-      .icon-theme { color: #8b5cf6; background: transparent; border-color: transparent; }
-      .icon-full { color: #94a3b8; background: transparent; border-color: transparent; }
-      .icon-settings { color: #fb7185; background: transparent; border-color: transparent; }
-      .icon-zoom-in { color: #0ea5e9; background: transparent; border-color: transparent; }
-      .icon-zoom-out { color: #06b6d4; background: transparent; border-color: transparent; }
+      [data-theme="light"] .icon-btn {
+        filter: saturate(0.98) brightness(1.02);
+      }
+      [data-theme="dark"] .icon-btn {
+        filter: saturate(1.02) brightness(0.98);
+      }
+      .icon-btn:hover {
+        transform: translateY(0);
+        filter: brightness(1.2);
+      }
+      .icon-load {
+        color: #0ea5e9;
+        background: transparent;
+        border-color: transparent;
+      }
+      .icon-save {
+        color: #22c55e;
+        background: transparent;
+        border-color: transparent;
+      }
+      .icon-copy {
+        color: #06b6d4;
+        background: transparent;
+        border-color: transparent;
+      }
+      .icon-paste {
+        color: #f59e0b;
+        background: transparent;
+        border-color: transparent;
+      }
+      .icon-theme {
+        color: #8b5cf6;
+        background: transparent;
+        border-color: transparent;
+      }
+      .icon-full {
+        color: #94a3b8;
+        background: transparent;
+        border-color: transparent;
+      }
+      .icon-settings {
+        color: #fb7185;
+        background: transparent;
+        border-color: transparent;
+      }
+      .icon-zoom-in {
+        color: #0ea5e9;
+        background: transparent;
+        border-color: transparent;
+      }
+      .icon-zoom-out {
+        color: #06b6d4;
+        background: transparent;
+        border-color: transparent;
+      }
       .seg {
         display: inline-flex;
         border: 1px solid var(--border);
@@ -429,47 +514,47 @@
         min-height: 300px;
         overflow: auto;
       }
-       /* Scrollbar styling */
-       .editor,
-       .viewer,
-       .qp-list,
-       .palette-grid,
-       .settings-dialog {
-         scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
-         scrollbar-width: thin;
-       }
-       .editor::-webkit-scrollbar,
-       .viewer::-webkit-scrollbar,
-       .qp-list::-webkit-scrollbar,
-       .palette-grid::-webkit-scrollbar,
-       .settings-dialog::-webkit-scrollbar {
-         width: 10px;
-         height: 10px;
-       }
-       .editor::-webkit-scrollbar-thumb,
-       .viewer::-webkit-scrollbar-thumb,
-       .qp-list::-webkit-scrollbar-thumb,
-       .palette-grid::-webkit-scrollbar-thumb,
-       .settings-dialog::-webkit-scrollbar-thumb {
-         background-color: var(--scrollbar-thumb);
-         border-radius: 8px;
-         border: 3px solid transparent;
-         background-clip: padding-box;
-       }
-       .editor::-webkit-scrollbar-thumb:hover,
-       .viewer::-webkit-scrollbar-thumb:hover,
-       .qp-list::-webkit-scrollbar-thumb:hover,
-       .palette-grid::-webkit-scrollbar-thumb:hover,
-       .settings-dialog::-webkit-scrollbar-thumb:hover {
-         background-color: var(--scrollbar-thumb-hover);
-       }
-       .editor::-webkit-scrollbar-track,
-       .viewer::-webkit-scrollbar-track,
-       .qp-list::-webkit-scrollbar-track,
-       .palette-grid::-webkit-scrollbar-track,
-       .settings-dialog::-webkit-scrollbar-track {
-         background: var(--scrollbar-track);
-       }
+      /* Scrollbar styling */
+      .editor,
+      .viewer,
+      .qp-list,
+      .palette-grid,
+      .settings-dialog {
+        scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+        scrollbar-width: thin;
+      }
+      .editor::-webkit-scrollbar,
+      .viewer::-webkit-scrollbar,
+      .qp-list::-webkit-scrollbar,
+      .palette-grid::-webkit-scrollbar,
+      .settings-dialog::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+      }
+      .editor::-webkit-scrollbar-thumb,
+      .viewer::-webkit-scrollbar-thumb,
+      .qp-list::-webkit-scrollbar-thumb,
+      .palette-grid::-webkit-scrollbar-thumb,
+      .settings-dialog::-webkit-scrollbar-thumb {
+        background-color: var(--scrollbar-thumb);
+        border-radius: 8px;
+        border: 3px solid transparent;
+        background-clip: padding-box;
+      }
+      .editor::-webkit-scrollbar-thumb:hover,
+      .viewer::-webkit-scrollbar-thumb:hover,
+      .qp-list::-webkit-scrollbar-thumb:hover,
+      .palette-grid::-webkit-scrollbar-thumb:hover,
+      .settings-dialog::-webkit-scrollbar-thumb:hover {
+        background-color: var(--scrollbar-thumb-hover);
+      }
+      .editor::-webkit-scrollbar-track,
+      .viewer::-webkit-scrollbar-track,
+      .qp-list::-webkit-scrollbar-track,
+      .palette-grid::-webkit-scrollbar-track,
+      .settings-dialog::-webkit-scrollbar-track {
+        background: var(--scrollbar-track);
+      }
       .editor-highlight {
         position: absolute;
         inset: 0;
@@ -547,7 +632,12 @@
         color: var(--text);
         cursor: pointer;
       }
-      .tab-tools { display: inline-flex; align-items: center; gap: 6px; margin-left: 6px; }
+      .tab-tools {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-left: 6px;
+      }
       .tabs button.active {
         background: rgba(34, 211, 238, 0.12);
         border-color: rgba(34, 211, 238, 0.4);
@@ -681,22 +771,34 @@
         display: none !important;
       }
       /* Disabled form fields görünürlüğü */
-      .settings-dialog input[disabled], .settings-dialog select[disabled] {
+      .settings-dialog input[disabled],
+      .settings-dialog select[disabled] {
         opacity: 0.6;
         cursor: not-allowed;
       }
       /* A11y: görünür odak halkası */
-      .btn:focus-visible, .icon-btn:focus-visible, .tab-btn:focus-visible, .qp-btn:focus-visible {
+      .btn:focus-visible,
+      .icon-btn:focus-visible,
+      .tab-btn:focus-visible,
+      .qp-btn:focus-visible {
         outline: 2px solid var(--accent);
         outline-offset: 2px;
       }
       /* Hata satırına atla görsel ipucu */
       @keyframes flashError {
-        0% { box-shadow: inset 0 0 0 0 rgba(220,38,38,.0); }
-        50% { box-shadow: inset 0 0 0 9999px rgba(220,38,38,.08); }
-        100% { box-shadow: inset 0 0 0 0 rgba(220,38,38,.0); }
+        0% {
+          box-shadow: inset 0 0 0 0 rgba(220, 38, 38, 0);
+        }
+        50% {
+          box-shadow: inset 0 0 0 9999px rgba(220, 38, 38, 0.08);
+        }
+        100% {
+          box-shadow: inset 0 0 0 0 rgba(220, 38, 38, 0);
+        }
       }
-      .editor.flash-error { animation: flashError .8s ease; }
+      .editor.flash-error {
+        animation: flashError 0.8s ease;
+      }
       @media (max-width: 1200px) {
         .workspace {
           grid-template-columns: 1fr;
@@ -758,7 +860,9 @@
         color: var(--text);
       }
       /* Dark mode native controls: ensure proper theming */
-      [data-theme="dark"] .settings-dialog { color-scheme: dark; }
+      [data-theme="dark"] .settings-dialog {
+        color-scheme: dark;
+      }
       [data-theme="dark"] .settings-dialog select,
       [data-theme="dark"] .settings-dialog input[type="number"] {
         background-color: var(--panel);
@@ -806,11 +910,42 @@
         margin-top: 14px;
       }
       /* Indent radio pills */
-      .indent-group { display: inline-flex; gap: 8px; }
-      .radio-pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 999px; cursor: pointer; background: var(--panel); }
-      .radio-pill input { accent-color: var(--accent); }
-      .radio-pill.active { outline: 2px solid var(--accent); }
-      .indent-preview { font-family: var(--font); font-size: 12px; border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02)); color: var(--text); max-height: 140px; overflow: auto; white-space: pre; }
+      .indent-group {
+        display: inline-flex;
+        gap: 8px;
+      }
+      .radio-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 10px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        cursor: pointer;
+        background: var(--panel);
+      }
+      .radio-pill input {
+        accent-color: var(--accent);
+      }
+      .radio-pill.active {
+        outline: 2px solid var(--accent);
+      }
+      .indent-preview {
+        font-family: var(--font);
+        font-size: 12px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 8px 10px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.02),
+          rgba(0, 0, 0, 0.02)
+        );
+        color: var(--text);
+        max-height: 140px;
+        overflow: auto;
+        white-space: pre;
+      }
 
       /* Hızlı palet açılır menü */
       .card-header-right {
@@ -898,6 +1033,101 @@
         z-index: 2000;
       }
     </style>
+    <style>
+      /* Güncelleme Bildirimi Stilleri */
+      .update-notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        z-index: 10000;
+        min-width: 300px;
+        max-width: 400px;
+        animation: slideIn 0.3s ease-out;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .update-content p {
+        margin: 0 0 15px 0;
+        font-size: 16px;
+        font-weight: 500;
+        text-align: center;
+      }
+
+      .update-buttons {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+      }
+
+      .btn-update,
+      .btn-dismiss {
+        padding: 8px 20px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+      }
+
+      .btn-update {
+        background: rgba(255, 255, 255, 0.9);
+        color: #333;
+      }
+
+      .btn-update:hover {
+        background: white;
+        transform: translateY(-1px);
+      }
+
+      .btn-dismiss {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+
+      .btn-dismiss:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateY(-1px);
+      }
+
+      @keyframes slideIn {
+        from {
+          transform: translateX(400px);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      /* Mobile responsive */
+      @media (max-width: 768px) {
+        .update-notification {
+          top: 10px;
+          right: 10px;
+          left: 10px;
+          min-width: auto;
+          max-width: none;
+        }
+
+        .update-buttons {
+          flex-direction: column;
+        }
+
+        .btn-update,
+        .btn-dismiss {
+          width: 100%;
+        }
+      }
+    </style>
   </head>
   <body>
     <div class="page" id="page">
@@ -905,35 +1135,68 @@
         <div class="title">JSON Formatter & Viewer</div>
         <div class="toolbar">
           <div class="seg" role="group" aria-label="Biçimlendirme">
-            <button class="icon-btn icon-format" id="btnFormat" aria-label="Biçimlendir" title="Biçimlendir (Ctrl+Enter)">
+            <button
+              class="icon-btn icon-format"
+              id="btnFormat"
+              aria-label="Biçimlendir"
+              title="Biçimlendir (Ctrl+Enter)"
+            >
               <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M3 11h8v2H3v-2zm10.5-6.5l1.4-1.4L18 6l-1.4 1.4L13.5 4.5zM12 18l3-3 5 5-3 3-5-5zM3 6h12v2H3V6z"></path>
+                <path
+                  d="M3 11h8v2H3v-2zm10.5-6.5l1.4-1.4L18 6l-1.4 1.4L13.5 4.5zM12 18l3-3 5 5-3 3-5-5zM3 6h12v2H3V6z"
+                ></path>
               </svg>
             </button>
-            <button class="icon-btn icon-minify" id="btnMinify" aria-label="Sıkıştır" title="Sıkıştır (Minify)">
+            <button
+              class="icon-btn icon-minify"
+              id="btnMinify"
+              aria-label="Sıkıştır"
+              title="Sıkıştır (Minify)"
+            >
               <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M7 10H3V7h4V3h3v4h4v3h-4v4H7v-4zm14 7h-4v4h-3v-4h-4v-3h4v-4h3v4h4v3z"></path>
+                <path
+                  d="M7 10H3V7h4V3h3v4h4v3h-4v4H7v-4zm14 7h-4v4h-3v-4h-4v-3h4v-4h3v4h4v3z"
+                ></path>
               </svg>
             </button>
-            <button class="icon-btn icon-validate" id="btnValidate" aria-label="Doğrula" title="Doğrula">
+            <button
+              class="icon-btn icon-validate"
+              id="btnValidate"
+              aria-label="Doğrula"
+              title="Doğrula"
+            >
               <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20zm-1.5 13.2l6-6-1.4-1.4-4.6 4.6-2.2-2.2-1.4 1.4 3.6 3.6z"></path>
+                <path
+                  d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20zm-1.5 13.2l6-6-1.4-1.4-4.6 4.6-2.2-2.2-1.4 1.4 3.6 3.6z"
+                ></path>
               </svg>
             </button>
           </div>
           <div class="seg" role="group" aria-label="Tree">
-            <button class="icon-btn icon-expand" id="btnExpand" aria-label="Genişlet" title="Genişlet">
+            <button
+              class="icon-btn icon-expand"
+              id="btnExpand"
+              aria-label="Genişlet"
+              title="Genişlet"
+            >
               <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M4 4h6v2H6v4H4V4zm10 0h6v6h-2V6h-4V4zM4 14h2v4h4v2H4v-6zm14 0h2v6h-6v-2h4v-4z"></path>
+                <path
+                  d="M4 4h6v2H6v4H4V4zm10 0h6v6h-2V6h-4V4zM4 14h2v4h4v2H4v-6zm14 0h2v6h-6v-2h4v-4z"
+                ></path>
               </svg>
             </button>
-            <button class="icon-btn icon-collapse" id="btnCollapse" aria-label="Daralt" title="Daralt">
+            <button
+              class="icon-btn icon-collapse"
+              id="btnCollapse"
+              aria-label="Daralt"
+              title="Daralt"
+            >
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M6 11h12v2H6v-2z"></path>
               </svg>
             </button>
           </div>
-          
+
           <div class="opt hidden">
             <label for="indent" id="labelIndent">Girinti:</label>
             <select id="indent" title="Girinti">
@@ -962,7 +1225,7 @@
               <option value="en">English</option>
             </select>
           </div>
-          
+
           <div class="quick-select" id="quickLang">
             <button
               class="qp-btn icon-only"
@@ -1080,17 +1343,49 @@
         <section class="card" id="mainCard">
           <div class="card-header">
             <div class="tabs" role="tablist" aria-label="Görünümler">
-              <button class="tab-btn active" id="tab-raw" role="tab" aria-selected="true" aria-controls="viewer-raw" data-tab="raw">Raw</button>
-              <button class="tab-btn" id="tab-tree" role="tab" aria-selected="false" aria-controls="viewer-tree" data-tab="tree">Ağaç</button>
+              <button
+                class="tab-btn active"
+                id="tab-raw"
+                role="tab"
+                aria-selected="true"
+                aria-controls="viewer-raw"
+                data-tab="raw"
+              >
+                Raw
+              </button>
+              <button
+                class="tab-btn"
+                id="tab-tree"
+                role="tab"
+                aria-selected="false"
+                aria-controls="viewer-tree"
+                data-tab="tree"
+              >
+                Ağaç
+              </button>
               <span class="tab-tools" id="tabTools">
-                <button class="icon-btn icon-zoom-in small" id="btnZoomIn" aria-label="Yakınlaştır" title="Yakınlaştır">
+                <button
+                  class="icon-btn icon-zoom-in small"
+                  id="btnZoomIn"
+                  aria-label="Yakınlaştır"
+                  title="Yakınlaştır"
+                >
                   <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79L20 21.5 21.5 20 15.5 14zM10 13H9V10H6V9h3V6h1v3h3v1h-3v3z"></path>
+                    <path
+                      d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79L20 21.5 21.5 20 15.5 14zM10 13H9V10H6V9h3V6h1v3h3v1h-3v3z"
+                    ></path>
                   </svg>
                 </button>
-                <button class="icon-btn icon-zoom-out small" id="btnZoomOut" aria-label="Uzaklaştır" title="Uzaklaştır">
+                <button
+                  class="icon-btn icon-zoom-out small"
+                  id="btnZoomOut"
+                  aria-label="Uzaklaştır"
+                  title="Uzaklaştır"
+                >
                   <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79L20 21.5 21.5 20 15.5 14zM7 9h6v1H7z"></path>
+                    <path
+                      d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79L20 21.5 21.5 20 15.5 14zM7 9h6v1H7z"
+                    ></path>
                   </svg>
                 </button>
               </span>
@@ -1101,7 +1396,7 @@
                 role="status"
               ></span>
             </div>
-            <div class="card-header-right"> 
+            <div class="card-header-right">
               <div class="quick-palette" id="quickPalette">
                 <button
                   class="qp-btn"
@@ -1120,7 +1415,14 @@
             </div>
           </div>
           <div class="card-body">
-            <div class="viewer" id="viewer-raw" role="tabpanel" aria-labelledby="tab-raw" tabindex="0" style="min-height: 0">
+            <div
+              class="viewer"
+              id="viewer-raw"
+              role="tabpanel"
+              aria-labelledby="tab-raw"
+              tabindex="0"
+              style="min-height: 0"
+            >
               <div class="editor" id="editorWrap">
                 <pre id="inputHighlight" class="editor-highlight"></pre>
                 <textarea
@@ -1130,7 +1432,13 @@
                 ></textarea>
               </div>
             </div>
-            <div class="viewer hidden" id="viewer-tree" role="tabpanel" aria-labelledby="tab-tree" tabindex="0">
+            <div
+              class="viewer hidden"
+              id="viewer-tree"
+              role="tabpanel"
+              aria-labelledby="tab-tree"
+              tabindex="0"
+            >
               <div class="tree" id="tree"></div>
             </div>
             <div class="status" id="status">Hazır</div>
@@ -1143,14 +1451,14 @@
 
       <div class="footer">
         <div id="footerLeft">
-          İşlemler tamamen tarayıcınızda gerçekleşir; veri dışarı gönderilmez. 
+          İşlemler tamamen tarayıcınızda gerçekleşir; veri dışarı gönderilmez.
         </div>
         <div id="footerRight">
           Kısayol: <span class="kbd">Ctrl</span> +
           <span class="kbd">Enter</span> → Biçimlendir
         </div>
       </div>
-      
+
       <!-- Ayarlar Modal -->
       <div
         id="settingsModal"
@@ -1197,21 +1505,45 @@
             </div>
             <div class="form-row">
               <label id="labelIndentModal">Girinti</label>
-              <div id="indentGroup" role="radiogroup" aria-labelledby="labelIndentModal" class="indent-group">
-                <label class="radio-pill"><input type="radio" name="indentChoice" value="2" /> 2</label>
-                <label class="radio-pill"><input type="radio" name="indentChoice" value="4" /> 4</label>
-                <label class="radio-pill"><input type="radio" name="indentChoice" value="\t" /> Sekme</label>
+              <div
+                id="indentGroup"
+                role="radiogroup"
+                aria-labelledby="labelIndentModal"
+                class="indent-group"
+              >
+                <label class="radio-pill"
+                  ><input type="radio" name="indentChoice" value="2" /> 2</label
+                >
+                <label class="radio-pill"
+                  ><input type="radio" name="indentChoice" value="4" /> 4</label
+                >
+                <label class="radio-pill"
+                  ><input type="radio" name="indentChoice" value="\t" />
+                  Sekme</label
+                >
               </div>
-              <div id="indentPreview" class="indent-preview" style="margin-top:8px"></div>
+              <div
+                id="indentPreview"
+                class="indent-preview"
+                style="margin-top: 8px"
+              ></div>
             </div>
             <div class="form-row">
               <label for="paletteSelect">Renk Paleti</label>
               <select id="paletteSelect"></select>
             </div>
             <div class="form-row">
-              <label for="workerThresholdKB" id="labelWorkerThreshold">Worker Eşiği (KB)</label>
-              <input type="number" id="workerThresholdKB" min="0" max="102400" value="1024" />
-          </div>
+              <label for="workerThresholdKB" id="labelWorkerThreshold"
+                >Worker Eşiği (KB)</label
+              >
+              <input
+                type="number"
+                id="workerThresholdKB"
+                min="0"
+                max="102400"
+                value="1024"
+              />
+            </div>
             <div class="form-row">
               <label for="workerAuto">
                 <input type="checkbox" id="workerAuto" />
@@ -1236,13 +1568,23 @@
         // Renkler için yardımcı: hex -> rgba(alpha)
         function hexToRgba(hex, alpha) {
           try {
-            const h = hex.replace('#', '');
-            const bigint = parseInt(h.length === 3 ? h.split('').map(c => c + c).join('') : h, 16);
+            const h = hex.replace("#", "");
+            const bigint = parseInt(
+              h.length === 3
+                ? h
+                    .split("")
+                    .map((c) => c + c)
+                    .join("")
+                : h,
+              16
+            );
             const r = (bigint >> 16) & 255;
             const g = (bigint >> 8) & 255;
             const b = bigint & 255;
             return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-          } catch { return `rgba(34, 211, 238, ${alpha})`; }
+          } catch {
+            return `rgba(34, 211, 238, ${alpha})`;
+          }
         }
         const dom = {
           page: document.getElementById("page"),
@@ -1263,7 +1605,7 @@
           fileInput: document.getElementById("fileInput"),
           indent: document.getElementById("indent"),
           indentModal: document.getElementById("indentModal"), // legacy if exists
-          indentGroup: document.getElementById('indentGroup'),
+          indentGroup: document.getElementById("indentGroup"),
           sortKeys: document.getElementById("sortKeys"),
           labelIndent: document.getElementById("labelIndent"),
           labelIndentModal: document.getElementById("labelIndentModal"),
@@ -1311,8 +1653,8 @@
           btnSaveSettings: document.getElementById("btnSaveSettings"),
           settingsTitle: document.getElementById("settingsTitle"),
           labelPalettePreview: document.getElementById("labelPalettePreview"),
-            workerThresholdKB: document.getElementById("workerThresholdKB"),
-            workerAuto: document.getElementById("workerAuto"),
+          workerThresholdKB: document.getElementById("workerThresholdKB"),
+          workerAuto: document.getElementById("workerAuto"),
         };
 
         // i18n
@@ -1488,7 +1830,11 @@
           // theme-color meta eşitle
           try {
             const meta = document.querySelector('meta[name="theme-color"]');
-            if (meta) meta.setAttribute('content', current === 'dark' ? '#0f172a' : '#f6f7fb');
+            if (meta)
+              meta.setAttribute(
+                "content",
+                current === "dark" ? "#0f172a" : "#f6f7fb"
+              );
           } catch {}
           trackEvent("ui_theme_toggle", {
             event_category: "ui",
@@ -1638,13 +1984,19 @@
         };
         // Tema entegrasyonu: sistem temasını başlangıçta algıla
         try {
-          const sysDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-          const stored = localStorage.getItem('theme');
-          const current = stored || (sysDark ? 'dark' : 'light');
-          document.documentElement.setAttribute('data-theme', current);
+          const sysDark =
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches;
+          const stored = localStorage.getItem("theme");
+          const current = stored || (sysDark ? "dark" : "light");
+          document.documentElement.setAttribute("data-theme", current);
           // theme-color meta güncelle
           const meta = document.querySelector('meta[name="theme-color"]');
-          if (meta) meta.setAttribute('content', current === 'dark' ? '#0f172a' : '#f6f7fb');
+          if (meta)
+            meta.setAttribute(
+              "content",
+              current === "dark" ? "#0f172a" : "#f6f7fb"
+            );
         } catch {}
         let settings = loadSettings();
         // URL ?lang=tr|en parametresi gelirse dili buna göre ayarla (ayarları da güncelle)
@@ -1676,8 +2028,8 @@
             const tab = btn.getAttribute("data-tab");
             dom.viewerRaw.classList.toggle("hidden", tab !== "raw");
             dom.viewerTree.classList.toggle("hidden", tab !== "tree");
-          // Her tab değişiminde RAW ve Tree güncellensin (cache hissi olmasın)
-          formatAction(false);
+            // Her tab değişiminde RAW ve Tree güncellensin (cache hissi olmasın)
+            formatAction(false);
           })
         );
 
@@ -1702,24 +2054,33 @@
           }
           // Hata satırına atla: line/column bilgisini statüden yakalamaya çalış
           try {
-            const m = String(message || '').match(/\(satır\s(\d+),\s+sütun\s(\d+)\)|\(line\s(\d+),\s+column\s(\d+)\)/i);
+            const m = String(message || "").match(
+              /\(satır\s(\d+),\s+sütun\s(\d+)\)|\(line\s(\d+),\s+column\s(\d+)\)/i
+            );
             const line = Number(m && (m[1] || m[3]));
             const col = Number(m && (m[2] || m[4]));
             if (Number.isFinite(line)) {
               // textarea scroll to line
               const ta = dom.input;
-              const before = ta.value.split(/\r?\n/).slice(0, Math.max(0, line - 1)).join("\n");
-              const pos = before.length + (line > 1 ? 1 : 0) + Math.max(0, (Number.isFinite(col) ? col - 1 : 0));
+              const before = ta.value
+                .split(/\r?\n/)
+                .slice(0, Math.max(0, line - 1))
+                .join("\n");
+              const pos =
+                before.length +
+                (line > 1 ? 1 : 0) +
+                Math.max(0, Number.isFinite(col) ? col - 1 : 0);
               ta.focus();
-              if (typeof ta.setSelectionRange === 'function') ta.setSelectionRange(pos, pos);
+              if (typeof ta.setSelectionRange === "function")
+                ta.setSelectionRange(pos, pos);
               // basit görünür scroll
               const lineHeight = 20; // yaklaşık
               ta.scrollTop = Math.max(0, (line - 2) * lineHeight);
-              const editor = document.getElementById('editorWrap');
+              const editor = document.getElementById("editorWrap");
               if (editor) {
-                editor.classList.remove('flash-error');
+                editor.classList.remove("flash-error");
                 void editor.offsetWidth; // reflow
-                editor.classList.add('flash-error');
+                editor.classList.add("flash-error");
               }
             }
           } catch {}
@@ -1728,14 +2089,21 @@
         // Büyük JSON performansı: varsa Web Worker ile parse et, yoksa ana iş parçacığına düş
         let parseWorker = null;
         try {
-          parseWorker = new Worker('worker.js');
+          parseWorker = new Worker("worker.js");
         } catch {}
         function parseJsonSafely(text) {
-          const threshold = Math.max(0, Number(settings.workerThresholdKB || 0)) * 1024;
+          const threshold =
+            Math.max(0, Number(settings.workerThresholdKB || 0)) * 1024;
           const auto = !!settings.workerAuto;
           const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-          const cores = (navigator.hardwareConcurrency || 2);
-          const autoThreshold = Math.max(512 * 1024, Math.min(8 * 1024 * 1024, Math.floor((cores >= 8 ? 2 : 1) * 1024 * 1024)));
+          const cores = navigator.hardwareConcurrency || 2;
+          const autoThreshold = Math.max(
+            512 * 1024,
+            Math.min(
+              8 * 1024 * 1024,
+              Math.floor((cores >= 8 ? 2 : 1) * 1024 * 1024)
+            )
+          );
           const finalThreshold = auto ? autoThreshold : threshold;
           if (parseWorker && text && text.length > finalThreshold) {
             // eşik üstünde worker kullan
@@ -1766,29 +2134,41 @@
             const onMessage = (e) => {
               const data = e.data || {};
               if (data.id !== id) return;
-              parseWorker.removeEventListener('message', onMessage);
+              parseWorker.removeEventListener("message", onMessage);
               if (data.ok) resolve({ ok: true, value: data.value });
-              else resolve({ ok: false, error: data.error, position: data.position, line: data.line, column: data.column });
+              else
+                resolve({
+                  ok: false,
+                  error: data.error,
+                  position: data.position,
+                  line: data.line,
+                  column: data.column,
+                });
             };
             try {
-              parseWorker.addEventListener('message', onMessage);
+              parseWorker.addEventListener("message", onMessage);
               parseWorker.postMessage({ id, text });
             } catch {
               // Worker başarısızsa normal parse'a dön
               try {
                 const value = JSON.parse(text);
                 resolve({ ok: true, value });
-          } catch (error) {
-            const msg = String(error && error.message ? error.message : error);
-            let position = null, line = null, column = null;
-            const match = msg.match(/position\s+(\d+)/i);
-            if (match) {
-              position = Number(match[1]);
-              const lc = positionToLineColumn(text, position);
-              line = lc.line; column = lc.column;
-            }
+              } catch (error) {
+                const msg = String(
+                  error && error.message ? error.message : error
+                );
+                let position = null,
+                  line = null,
+                  column = null;
+                const match = msg.match(/position\s+(\d+)/i);
+                if (match) {
+                  position = Number(match[1]);
+                  const lc = positionToLineColumn(text, position);
+                  line = lc.line;
+                  column = lc.column;
+                }
                 resolve({ ok: false, error: msg, position, line, column });
-          }
+              }
             }
           });
         }
@@ -2042,8 +2422,8 @@
               out += ch;
               if (esc) {
                 esc = false;
-              continue;
-            }
+                continue;
+              }
               if (ch === "\\") {
                 esc = true;
                 continue;
@@ -2195,12 +2575,12 @@
               out += ch;
               if (esc) {
                 esc = false;
-              continue;
-            }
+                continue;
+              }
               if (ch === "\\") {
                 esc = true;
-              continue;
-            }
+                continue;
+              }
               if (ch === quote) {
                 inStr = false;
               }
@@ -2248,8 +2628,8 @@
               out += ch;
               if (esc) {
                 esc = false;
-              continue;
-            }
+                continue;
+              }
               if (ch === "\\") {
                 esc = true;
                 continue;
@@ -2580,28 +2960,37 @@
         let treeFontSize = 13;
         let editorFontSize = 13;
         const applyTreeZoom = () => {
-          document.documentElement.style.setProperty('--tree-font-size', treeFontSize + 'px');
+          document.documentElement.style.setProperty(
+            "--tree-font-size",
+            treeFontSize + "px"
+          );
         };
         const applyEditorZoom = () => {
-          document.documentElement.style.setProperty('--editor-font-size', editorFontSize + 'px');
+          document.documentElement.style.setProperty(
+            "--editor-font-size",
+            editorFontSize + "px"
+          );
         };
         const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
         const zoomStep = 1;
-        const minSize = 10, maxSize = 24;
-        const btnZoomIn = document.getElementById('btnZoomIn');
-        const btnZoomOut = document.getElementById('btnZoomOut');
-        if (btnZoomIn) btnZoomIn.addEventListener('click', () => { 
-          treeFontSize = clamp(treeFontSize + zoomStep, minSize, maxSize);
-          editorFontSize = clamp(editorFontSize + zoomStep, minSize, maxSize);
-          applyTreeZoom();
-          applyEditorZoom();
-        });
-        if (btnZoomOut) btnZoomOut.addEventListener('click', () => { 
-          treeFontSize = clamp(treeFontSize - zoomStep, minSize, maxSize);
-          editorFontSize = clamp(editorFontSize - zoomStep, minSize, maxSize);
-          applyTreeZoom();
-          applyEditorZoom();
-        });
+        const minSize = 10,
+          maxSize = 24;
+        const btnZoomIn = document.getElementById("btnZoomIn");
+        const btnZoomOut = document.getElementById("btnZoomOut");
+        if (btnZoomIn)
+          btnZoomIn.addEventListener("click", () => {
+            treeFontSize = clamp(treeFontSize + zoomStep, minSize, maxSize);
+            editorFontSize = clamp(editorFontSize + zoomStep, minSize, maxSize);
+            applyTreeZoom();
+            applyEditorZoom();
+          });
+        if (btnZoomOut)
+          btnZoomOut.addEventListener("click", () => {
+            treeFontSize = clamp(treeFontSize - zoomStep, minSize, maxSize);
+            editorFontSize = clamp(editorFontSize - zoomStep, minSize, maxSize);
+            applyTreeZoom();
+            applyEditorZoom();
+          });
         // Click tracking
         dom.btnFormat.addEventListener("click", () =>
           trackEvent("ui_click", {
@@ -2646,24 +3035,39 @@
         }
         // Radio pills change handler
         if (dom.indentGroup) {
-          dom.indentGroup.querySelectorAll('input[name="indentChoice"]').forEach(inp => {
-            inp.addEventListener('change', () => {
-              dom.indentGroup.querySelectorAll('label.radio-pill').forEach(l => l.classList.remove('active'));
-              if (inp.parentElement) inp.parentElement.classList.add('active');
-              settings.indent = inp.value;
-              saveSettings();
-              if (dom.input.value.trim()) formatAction(true);
-              trackEvent('settings_change', { event_label: 'indent_modal', value: settings.indent });
-              try {
-                const pv = document.getElementById('indentPreview');
-                if (pv) {
-                  const example = { hello: 'world', arr: [1, true, null], obj: { a: 1, b: 2 } };
-                  const space = (settings.indent === '\t' ? '\t' : Number(settings.indent) || 2);
-                  pv.textContent = JSON.stringify(example, null, space);
-                }
-              } catch {}
+          dom.indentGroup
+            .querySelectorAll('input[name="indentChoice"]')
+            .forEach((inp) => {
+              inp.addEventListener("change", () => {
+                dom.indentGroup
+                  .querySelectorAll("label.radio-pill")
+                  .forEach((l) => l.classList.remove("active"));
+                if (inp.parentElement)
+                  inp.parentElement.classList.add("active");
+                settings.indent = inp.value;
+                saveSettings();
+                if (dom.input.value.trim()) formatAction(true);
+                trackEvent("settings_change", {
+                  event_label: "indent_modal",
+                  value: settings.indent,
+                });
+                try {
+                  const pv = document.getElementById("indentPreview");
+                  if (pv) {
+                    const example = {
+                      hello: "world",
+                      arr: [1, true, null],
+                      obj: { a: 1, b: 2 },
+                    };
+                    const space =
+                      settings.indent === "\t"
+                        ? "\t"
+                        : Number(settings.indent) || 2;
+                    pv.textContent = JSON.stringify(example, null, space);
+                  }
+                } catch {}
+              });
             });
-          });
         }
         dom.sortKeys.addEventListener("change", () => {
           formatAction(true);
@@ -2729,7 +3133,7 @@
             e.preventDefault();
             formatAction(true);
           }
-          if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S')) {
+          if ((e.ctrlKey || e.metaKey) && (e.key === "s" || e.key === "S")) {
             e.preventDefault();
             dom.btnSave.click();
           }
@@ -2916,8 +3320,8 @@
 
         // PWA: Service Worker kaydı
         try {
-          if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js').catch(() => {});
+          if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("/sw.js").catch(() => {});
           }
         } catch {}
 
@@ -2946,8 +3350,8 @@
           root.setProperty("--color-boolean", pal.boolean);
           root.setProperty("--color-null", pal.null);
           // Scrollbar renklerini palete göre ayarla (thumb: key rengi baz alınır)
-          root.setProperty('--scrollbar-thumb', hexToRgba(pal.key, 0.5));
-          root.setProperty('--scrollbar-thumb-hover', hexToRgba(pal.key, 0.8));
+          root.setProperty("--scrollbar-thumb", hexToRgba(pal.key, 0.5));
+          root.setProperty("--scrollbar-thumb-hover", hexToRgba(pal.key, 0.8));
           trackEvent("palette_apply", { event_label: key });
         }
 
@@ -3007,48 +3411,72 @@
           // Radio pills: set active based on settings.indent
           try {
             if (dom.indentGroup) {
-              dom.indentGroup.querySelectorAll('label.radio-pill').forEach(l => l.classList.remove('active'));
-              const sel = dom.indentGroup.querySelector(`input[name="indentChoice"][value="${settings.indent.replace("\\","\\\\")}"]`);
-              if (sel) { sel.checked = true; sel.parentElement.classList.add('active'); }
+              dom.indentGroup
+                .querySelectorAll("label.radio-pill")
+                .forEach((l) => l.classList.remove("active"));
+              const sel = dom.indentGroup.querySelector(
+                `input[name="indentChoice"][value="${settings.indent.replace(
+                  "\\",
+                  "\\\\"
+                )}"]`
+              );
+              if (sel) {
+                sel.checked = true;
+                sel.parentElement.classList.add("active");
+              }
             }
           } catch {}
           // Indent preview
           try {
-            const pv = document.getElementById('indentPreview');
+            const pv = document.getElementById("indentPreview");
             if (pv) {
-              const example = { hello: 'world', arr: [1, true, null], obj: { a: 1, b: 2 } };
-              const space = (settings.indent === '\t' ? '\t' : Number(settings.indent) || 2);
+              const example = {
+                hello: "world",
+                arr: [1, true, null],
+                obj: { a: 1, b: 2 },
+              };
+              const space =
+                settings.indent === "\t" ? "\t" : Number(settings.indent) || 2;
               pv.textContent = JSON.stringify(example, null, space);
             }
           } catch {}
           const wt = Number(settings.workerThresholdKB);
-          const wtEl = document.getElementById('workerThresholdKB');
-          const lblWT = document.getElementById('labelWorkerThreshold');
-          const lblAuto = document.getElementById('labelWorkerAuto');
-          if (wtEl) wtEl.value = String(Number.isFinite(wt) ? wt : defaultSettings.workerThresholdKB);
-          if (lblWT) lblWT.textContent = t('settings.workerThreshold');
-          if (lblAuto) lblAuto.textContent = t('settings.workerAuto');
+          const wtEl = document.getElementById("workerThresholdKB");
+          const lblWT = document.getElementById("labelWorkerThreshold");
+          const lblAuto = document.getElementById("labelWorkerAuto");
+          if (wtEl)
+            wtEl.value = String(
+              Number.isFinite(wt) ? wt : defaultSettings.workerThresholdKB
+            );
+          if (lblWT) lblWT.textContent = t("settings.workerThreshold");
+          if (lblAuto) lblAuto.textContent = t("settings.workerAuto");
           if (dom.workerAuto) dom.workerAuto.checked = !!settings.workerAuto;
           if (wtEl && dom.workerAuto) wtEl.disabled = !!dom.workerAuto.checked;
           // Açıklama ekle: Otomatik eşiğin nasıl çalıştığı
           try {
-            let hint = document.getElementById('workerHint');
+            let hint = document.getElementById("workerHint");
             if (!hint) {
-              const row = document.createElement('div');
-              row.className = 'form-row';
-              hint = document.createElement('div');
-              hint.id = 'workerHint';
-              hint.style.fontSize = '12px';
-              hint.style.color = 'var(--muted)';
+              const row = document.createElement("div");
+              row.className = "form-row";
+              hint = document.createElement("div");
+              hint.id = "workerHint";
+              hint.style.fontSize = "12px";
+              hint.style.color = "var(--muted)";
               row.appendChild(hint);
-              const grid = document.querySelector('.settings-grid');
+              const grid = document.querySelector(".settings-grid");
               if (grid) grid.appendChild(row);
             }
-            const cores = (navigator.hardwareConcurrency || 2);
-            const autoKB = Math.round(Math.max(512, Math.min(8192, Math.floor((cores >= 8 ? 2048 : 1024)) )));
-            hint.textContent = settings.language === 'en'
-              ? `Automatic uses a dynamic threshold (~${autoKB} KB) based on your device.`
-              : `Otomatik, cihazınıza göre dinamik bir eşik (~${autoKB} KB) kullanır.`;
+            const cores = navigator.hardwareConcurrency || 2;
+            const autoKB = Math.round(
+              Math.max(
+                512,
+                Math.min(8192, Math.floor(cores >= 8 ? 2048 : 1024))
+              )
+            );
+            hint.textContent =
+              settings.language === "en"
+                ? `Automatic uses a dynamic threshold (~${autoKB} KB) based on your device.`
+                : `Otomatik, cihazınıza göre dinamik bir eşik (~${autoKB} KB) kullanır.`;
           } catch {}
           dom.settingsModal.classList.remove("hidden");
         }
@@ -3068,11 +3496,21 @@
           settings.rememberSession = !!dom.rememberSession.checked;
           settings.autoFormat = !!dom.autoFormat.checked;
           settings.palette = dom.paletteSelect.value;
-          settings.indent = dom.indentModal && dom.indentModal.value ? dom.indentModal.value : settings.indent;
+          settings.indent =
+            dom.indentModal && dom.indentModal.value
+              ? dom.indentModal.value
+              : settings.indent;
           settings.sortKeys = dom.sortKeys.checked;
           settings.language = dom.languageSelect.value;
-          const wtEl = document.getElementById('workerThresholdKB');
-          const wt = Math.max(0, Number(wtEl && wtEl.value ? wtEl.value : defaultSettings.workerThresholdKB));
+          const wtEl = document.getElementById("workerThresholdKB");
+          const wt = Math.max(
+            0,
+            Number(
+              wtEl && wtEl.value
+                ? wtEl.value
+                : defaultSettings.workerThresholdKB
+            )
+          );
           settings.workerThresholdKB = wt;
           settings.workerAuto = !!(dom.workerAuto && dom.workerAuto.checked);
           saveSettings();
@@ -3168,7 +3606,11 @@
               buildQuickPalette();
               dom.qpMenu.classList.add("hidden");
               dom.qpToggle.setAttribute("aria-expanded", "false");
-              if (dom.viewerEdit && !dom.viewerEdit.classList.contains("hidden")) return;
+              if (
+                dom.viewerEdit &&
+                !dom.viewerEdit.classList.contains("hidden")
+              )
+                return;
               if (dom.input.value.trim()) formatAction(false);
               trackEvent("settings_change", {
                 event_label: "palette_quick_dropdown",
@@ -3241,13 +3683,16 @@
           if (dom.qlToggle) dom.qlToggle.title = t("settings.language");
           // Dil bayrağı (icon-only): toggle mantığı (SVG ile)
           try {
-            const isEn = (settings.language === 'en');
-            const svg = document.getElementById('flagIcon');
+            const isEn = settings.language === "en";
+            const svg = document.getElementById("flagIcon");
             if (svg) {
               svg.innerHTML = isEn ? buildFlagTR() : buildFlagUK();
               // Eski metin gelmişse temizle
-              const ql = document.getElementById('qlLabel');
-              if (ql) ql.childNodes.forEach(n => { if (n.nodeType === Node.TEXT_NODE) ql.removeChild(n); });
+              const ql = document.getElementById("qlLabel");
+              if (ql)
+                ql.childNodes.forEach((n) => {
+                  if (n.nodeType === Node.TEXT_NODE) ql.removeChild(n);
+                });
             }
           } catch {}
 
@@ -3278,7 +3723,11 @@
           if (dom.labelRemember)
             dom.labelRemember.textContent = t("settings.remember");
           if (lblPalette) lblPalette.textContent = t("settings.palette");
-          if (dom.labelIndentModal) dom.labelIndentModal.textContent = t('label.indent').replace(':','');
+          if (dom.labelIndentModal)
+            dom.labelIndentModal.textContent = t("label.indent").replace(
+              ":",
+              ""
+            );
           if (dom.labelPalettePreview)
             dom.labelPalettePreview.textContent = t("settings.preview");
           if (dom.btnCloseSettings)
@@ -3365,18 +3814,21 @@
               const open = !dom.qiMenu.classList.contains("hidden");
               dom.qiMenu.classList.toggle("hidden");
               dom.qiToggle.setAttribute("aria-expanded", String(!open));
-          });
+            });
         }
 
         function buildQuickLanguage() {
           // Toggle butonu kullanıyoruz; listeyi kaldırdık
           if (dom.qlToggle)
             dom.qlToggle.addEventListener("click", () => {
-              settings.language = (settings.language === 'en' ? 'tr' : 'en');
+              settings.language = settings.language === "en" ? "tr" : "en";
               saveSettings();
               applyLanguage(settings.language);
               if (dom.input.value.trim()) formatAction(false);
-              trackEvent("settings_change", { event_label: "language_toggle", value: settings.language });
+              trackEvent("settings_change", {
+                event_label: "language_toggle",
+                value: settings.language,
+              });
             });
         }
 
@@ -3393,11 +3845,121 @@
           const updateDisabled = () => {
             dom.workerThresholdKB.disabled = !!dom.workerAuto.checked;
           };
-          dom.workerAuto.addEventListener('change', updateDisabled);
+          dom.workerAuto.addEventListener("change", updateDisabled);
           // İlk yüklemede de uygula
-          try { updateDisabled(); } catch {}
+          try {
+            updateDisabled();
+          } catch {}
         }
       })();
     </script>
+    <script>
+      // Service Worker Registration ve Güncelleme Yönetimi
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker
+            .register("/sw.js")
+            .then(function (registration) {
+              console.log("ServiceWorker registration successful");
+
+              // Güncelleme kontrolü
+              registration.addEventListener("updatefound", function () {
+                const newWorker = registration.installing;
+
+                newWorker.addEventListener("statechange", function () {
+                  if (newWorker.state === "installed") {
+                    if (navigator.serviceWorker.controller) {
+                      // Yeni versiyon mevcut - kullanıcıya bildir
+                      showUpdateNotification();
+                    }
+                  }
+                });
+              });
+
+              // Periyodik güncelleme kontrolü
+              setInterval(() => {
+                registration.update();
+              }, 60000); // Her dakika kontrol et
+            })
+            .catch(function (err) {
+              console.log("ServiceWorker registration failed: ", err);
+            });
+        });
+
+        // Service Worker'dan gelen mesajları dinle
+        navigator.serviceWorker.addEventListener("message", function (event) {
+          if (event.data && event.data.type === "UPDATE_AVAILABLE") {
+            showUpdateNotification(event.data.version);
+          }
+        });
+      }
+
+      // Güncelleme bildirimi göster
+      function showUpdateNotification(version) {
+        // Toast notification veya modal göster
+        const notification = document.createElement("div");
+        notification.className = "update-notification";
+        notification.innerHTML = `
+    <div class="update-content">
+      <p>🚀 Yeni bir versiyon mevcut!</p>
+      <div class="update-buttons">
+        <button onclick="updateApp()" class="btn-update">Güncelle</button>
+        <button onclick="dismissUpdate()" class="btn-dismiss">Daha Sonra</button>
+      </div>
+    </div>
+  `;
+
+        document.body.appendChild(notification);
+
+        // Auto-hide after 10 seconds
+        setTimeout(() => {
+          if (notification.parentNode) {
+            dismissUpdate();
+          }
+        }, 10000);
+      }
+
+      // Uygulamayı güncelle
+      function updateApp() {
+        if ("serviceWorker" in navigator) {
+          navigator.serviceWorker.getRegistration().then((registration) => {
+            if (registration && registration.waiting) {
+              registration.waiting.postMessage({ type: "SKIP_WAITING" });
+              window.location.reload();
+            }
+          });
+        }
+      }
+
+      // Bildirimi kapat
+      function dismissUpdate() {
+        const notification = document.querySelector(".update-notification");
+        if (notification) {
+          notification.remove();
+        }
+      }
+
+      // Background Sync için (destekleniyorsa)
+      if (
+        "serviceWorker" in navigator &&
+        "sync" in window.ServiceWorkerRegistration.prototype
+      ) {
+        navigator.serviceWorker.ready.then((registration) => {
+          // Periyodik güncelleme kontrolü için sync event kaydet
+          return registration.sync.register("update-check");
+        });
+      }
+
+      // Page Visibility API ile güncelleme kontrolü
+      document.addEventListener("visibilitychange", function () {
+        if (!document.hidden && "serviceWorker" in navigator) {
+          navigator.serviceWorker.getRegistration().then((registration) => {
+            if (registration) {
+              registration.update();
+            }
+          });
+        }
+      });
+    </script>
   </body>
-  </html>
+</html>
