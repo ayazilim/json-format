@@ -1,10 +1,9 @@
-const CACHE_NAME = 'json-formatter-v1.1'; // Versiyon numarasını her güncellemede artırın
+const CACHE_NAME = 'json-formatter-v1.0';
 const urlsToCache = [
   '/', 
   '/?lang=tr',
   '/?lang=en', 
   '/favicon.ico',
-  '/icons/',
   '/icons/icon.png',  
   '/icons/android-chrome-192x192.png',  
   '/icons/android-chrome-512x512.png',  
@@ -12,11 +11,11 @@ const urlsToCache = [
   '/icons/favicon.png',  
   '/icons/favicon-16x16.png',  
   '/icons/favicon-32x32.png',  
-
   '/site.webmanifest',
   '/sitemap.xml',
   '/screenshots/desktop-1280x720.png',
-  '/screenshots/mobile-750x1334.png', 
+  '/screenshots/mobile-750x1334.png',
+  '/worker.js' // JSON worker dosyasını da ekleyin
 ];
 
 // Install event - yeni cache oluştur
