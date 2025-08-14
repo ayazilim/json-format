@@ -778,6 +778,14 @@
         background: transparent;
         color: var(--text);
       }
+      /* Dark mode native controls: ensure proper theming */
+      [data-theme="dark"] .settings-dialog { color-scheme: dark; }
+      [data-theme="dark"] .settings-dialog select,
+      [data-theme="dark"] .settings-dialog input[type="number"] {
+        background-color: var(--panel);
+        color: var(--text);
+        border-color: var(--border);
+      }
       .palette-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
