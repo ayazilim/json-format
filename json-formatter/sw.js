@@ -88,6 +88,15 @@ self.addEventListener('message', function(event) {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }
+  
+  // Tüm client'ları yeniden yükle
+  if (event.data && event.data.type === 'RELOAD_ALL_CLIENTS') {
+    self.clients.matchAll().then(clients => {
+      clients.forEach(client => {
+        client.postMessage({ type: 'FORCE_RELOAD' });
+      });
+    });
+  }
 });
 
 // Periyodik güncelleme kontrolü (eğer Background Sync destekleniyorsa)

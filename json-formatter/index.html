@@ -1059,6 +1059,31 @@
         text-align: center;
       }
 
+      .update-note {
+        font-size: 14px !important;
+        opacity: 0.8;
+        margin: 0 0 10px 0 !important;
+      }
+
+      .update-spinner {
+        width: 30px;
+        height: 30px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-top: 3px solid white;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 10px auto;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
       .update-buttons {
         display: flex;
         gap: 10px;
@@ -3891,6 +3916,11 @@
           if (event.data && event.data.type === "UPDATE_AVAILABLE") {
             showUpdateNotification(event.data.version);
           }
+
+          // Force reload mesajı
+          if (event.data && event.data.type === "FORCE_RELOAD") {
+            window.location.reload();
+          }
         });
       }
 
@@ -3902,8 +3932,9 @@
         notification.innerHTML = `
     <div class="update-content">
       <p>🚀 Yeni bir versiyon mevcut!</p>
+      <p class="update-note">💡 Uygulama güncellenip yeniden başlatılacak</p>
       <div class="update-buttons">
-        <button onclick="updateApp()" class="btn-update">Güncelle</button>
+        <button onclick="updateApp()" class="btn-update">Güncelle ve Yeniden Başlat</button>
         <button onclick="dismissUpdate()" class="btn-dismiss">Daha Sonra</button>
       </div>
     </div>
@@ -3911,22 +3942,97 @@
 
         document.body.appendChild(notification);
 
-        // Auto-hide after 10 seconds
+        // Auto-hide after 15 seconds (biraz daha uzun süre)
         setTimeout(() => {
           if (notification.parentNode) {
             dismissUpdate();
           }
-        }, 10000);
+        }, 15000);
       }
 
-      // Uygulamayı güncelle
+      // Gelişmiş yeniden başlatma fonksiyonu
+      function performHardRestart() {
+        // 1. Tüm cache'leri temizle (mümkünse)
+        if ("caches" in window) {
+          caches.keys().then((names) => {
+            names.forEach((name) => {
+              if (name.includes("json-formatter")) {
+                caches.delete(name);
+              }
+            });
+          });
+        }
+        // 2. Local storage temizle (eğer uygulama kullanıyorsa)
+        try {
+          localStorage.clear();
+          sessionStorage.clear();
+        } catch (e) {
+          console.log("Storage clear failed:", e);
+        }
+
+        // 3. Service Worker'ı yeniden kaydet
+        if ("serviceWorker" in navigator) {
+          navigator.serviceWorker.getRegistrations().then((registrations) => {
+            registrations.forEach((registration) => {
+              if (registration.scope.includes(window.location.origin)) {
+                registration.unregister().then(() => {
+                  // Yeni service worker kaydet
+                  navigator.serviceWorker.register("/sw.js").then(() => {
+                    // Son olarak sayfayı yenile
+                    window.location.href =
+                      window.location.href + "?v=" + Date.now();
+                  });
+                });
+              }
+            });
+          });
+        } else {
+          // Service Worker desteklenmiyorsa sadece sayfa yenile
+          window.location.href = window.location.href + "?v=" + Date.now();
+        }
+      } // updateApp fonksiyonunu değiştir
       function updateApp() {
         if ("serviceWorker" in navigator) {
+          // Loading göstergesi ekle
+          showUpdateProgress();
+
           navigator.serviceWorker.getRegistration().then((registration) => {
             if (registration && registration.waiting) {
+              // Service Worker'a güncelleme mesajı gönder
               registration.waiting.postMessage({ type: "SKIP_WAITING" });
-              window.location.reload();
+
+              // 2 saniye sonra hard restart yap
+              setTimeout(() => {
+                performHardRestart();
+              }, 2000);
             }
+          });
+        }
+      }
+
+      // Loading göstergesi
+      function showUpdateProgress() {
+        const notification = document.querySelector(".update-notification");
+        if (notification) {
+          notification.innerHTML = `
+      <div class="update-content">
+        <p>⏳ Güncelleniyor...</p>
+        <p class="update-note">Uygulama yeniden başlatılıyor</p>
+        <div class="update-spinner"></div>
+      </div>
+    `;
+        }
+      }
+
+      // Tüm client'ları yeniden yükle
+      function reloadAllClients() {
+        // Önce mevcut sayfayı yenile
+        window.location.reload();
+
+        // Eğer mümkünse diğer sekmeleri de yenile
+        if ("serviceWorker" in navigator) {
+          navigator.serviceWorker.controller?.postMessage({
+            type: "RELOAD_ALL_CLIENTS",
           });
         }
       }
