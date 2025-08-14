@@ -215,6 +215,8 @@
         align-items: center;
         min-width: 0;
       }
+      /* Dil butonunu en sağa taşı (flex order) */
+      #quickLang { order: 999; }
       .btn {
         border: 1px solid var(--border);
         background: var(--panel);
@@ -1092,9 +1094,9 @@
             title="Ayarlar"
           >
             <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path
-                d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm8.94 4a7.97 7.97 0 0 0-.14-1.52l2.02-1.57-1.9-3.29-2.41.78a8.03 8.03 0 0 0-2.64-1.53l-.4-2.51H9.53l-.4 2.51a8.03 8.03 0 0 0-2.64 1.53l-2.41-.78-1.9 3.29 2.02 1.57A7.97 7.97 0 0 0 3.06 12c0 .52.05 1.03.14 1.52l-2.02 1.57 1.9 3.29 2.41-.78c.78.64 1.67 1.16 2.64 1.53l.4 2.51h4.64l.4-2.51c.97-.37 1.86-.89 2.64-1.53l2.41.78 1.9-3.29-2.02-1.57c.09-.49.14-1 .14-1.52z"
-              ></path>
+              <!-- Sliders icon (light/dark uyumlu, currentColor kullanır) -->
+              <path d="M4 6h10v2H4zM4 16h10v2H4zM16 10h4v2h-4z"></path>
+              <path d="M9 4h2v6H9zM13 12h2v6h-2z"></path>
             </svg>
           </button>
           <input
