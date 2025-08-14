@@ -32,3 +32,7 @@ Bu dosya, projede yapılan işleri ve planlanan görevleri takip etmek için kul
 ## Notlar
 - Uygulama tamamen istemci tarafında çalışır, ağ üzerinden veri göndermez.
 - İlham alınan araç: [jsonviewer.stack.hu](https://jsonviewer.stack.hu/)
+
+## Yapılan Son Düzenlemeler
+- [x] Footer yüksekliği düşürüldü (`--footer-h: 56px`) ve `page` konteyneri yüksekliği `calc(100vh - var(--footer-h))` ile ayarlandı; boş durumda gereksiz dikey scrollbar engellendi.
+- [x] Editör highlight katmanının (`.editor-highlight`) `overflow` değeri `hidden` yapıldı; iç içe scrollbar görünümü kaldırıldı. 

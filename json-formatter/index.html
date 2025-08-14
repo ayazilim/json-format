@@ -1,92 +1,141 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="tr">
-  <head> 
-     <!-- Basic Meta Tags -->
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-     
-     <!-- Primary Meta Tags (Turkish) -->
-     <title>JSON Formatter - JSON Düzenleyici ve Doğrulayıcı | jsonformat.info</title>
-     <meta name="title" content="JSON Formatter - JSON Düzenleyici ve Doğrulayıcı | jsonformat.info">
-     <meta name="description" content="Ücretsiz JSON formatter ve validator aracı. JSON verilerinizi düzenleyin, doğrulayın ve güzelleştirin. Hızlı, güvenli ve kullanıcı dostu online JSON düzenleyici.">
-     <meta name="keywords" content="json formatter, json düzenleyici, json validator, json doğrulayıcı, json beautifier, json parser, online json araç, ücretsiz json formatter, json minify">
-     <meta name="robots" content="index, follow">
-     <meta name="language" content="Turkish">
-     <meta name="author" content="JSONFormat.info">
-     <meta name="copyright" content="© 2024 JSONFormat.info">
-     <meta name="revisit-after" content="7 days">
-     
-     <!-- Alternate Language -->
-     <link rel="alternate" hreflang="tr" href="https://jsonformat.info/?lang=tr" />
-     <link rel="alternate" hreflang="en" href="https://jsonformat.info/?lang=en" />
-     <link rel="alternate" hreflang="x-default" href="https://jsonformat.info/" />
-     
-     <!-- Open Graph / Facebook -->
-     <meta property="og:type" content="website">
-     <meta property="og:url" content="https://jsonformat.info/">
-     <meta property="og:title" content="JSON Formatter - JSON Düzenleyici ve Doğrulayıcı">
-     <meta property="og:description" content="Ücretsiz JSON formatter ve validator aracı. JSON verilerinizi düzenleyin, doğrulayın ve güzelleştirin.">
-     <meta property="og:image" content="https://jsonformat.info/screenshot/desktop-1280x720.png">
-     <meta property="og:image:width" content="1200">
-     <meta property="og:image:height" content="630">
-     <meta property="og:site_name" content="JSONFormat.info">
-     <meta property="og:locale" content="tr_TR">
-     <meta property="og:locale:alternate" content="en_US">
-     
-     <!-- Twitter -->
-     <meta property="twitter:card" content="summary_large_image">
-     <meta property="twitter:url" content="https://jsonformat.info/">
-     <meta property="twitter:title" content="JSON Formatter - JSON Düzenleyici ve Doğrulayıcı">
-     <meta property="twitter:description" content="Ücretsiz JSON formatter ve validator aracı. JSON verilerinizi düzenleyin, doğrulayın ve güzelleştirin.">
-     <meta property="twitter:image" content="https://jsonformat.info/screenshot/desktop-1280x720.png">
-     <meta name="twitter:site" content="@jsonformat">
-     <meta name="twitter:creator" content="@jsonformat">
-     
-     <!-- Canonical URL -->
-     <link rel="canonical" href="https://jsonformat.info/">
-     
-     <!-- Favicon -->
-     <link rel="icon" type="image/x-icon" href="/favicon.ico">
-     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-     <link rel="manifest" href="/site.webmanifest">
-     <meta name="theme-color" content="#667eea">
-     
-     <!-- DNS Prefetch -->
-     <link rel="dns-prefetch" href="//www.googletagmanager.com">
-     <link rel="dns-prefetch" href="//www.google-analytics.com">
-     <link rel="dns-prefetch" href="//fonts.googleapis.com">
-     <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
-     
-     <!-- Preload Critical Resources -->
-     <link rel="preload" href="/css/main.css" as="style">
-     <link rel="preload" href="/js/json-formatter.js" as="script">
-     
-     <!-- GOOGLE ANALYTICS 4 -->
-     <script async src="https://www.googletagmanager.com/gtag/js?id=G-J43L67FJFY"></script>
-     <script>
-         window.dataLayer = window.dataLayer || [];
-         function gtag(){dataLayer.push(arguments);}
-         gtag('js', new Date());
-         gtag('config', 'G-J43L67FJFY', {
-             page_title: 'JSON Formatter - Ana Sayfa',
-             page_location: 'https://jsonformat.info/',
-             content_group1: 'JSON Tools',
-             content_group2: 'Formatter'
-         });
-     </script>
-     
-     <!-- GOOGLE SEARCH CONSOLE -->
-   <meta name="google-site-verification" content="nEMYj6IA_R51LxQf2T2PNpOP3y3Zd5ed0n9lWchWgnw" />
-     
-     <!-- BING WEBMASTER TOOLS -->
-   <meta name="msvalidate.01" content="37862A76E0EE2715ACCDC16AE71DD942" />
-     
-     <!-- YANDEX WEBMASTER -->
-     <meta name="yandex-verification" content="96fde976efba257c" />
-    
+  <head>
+    <!-- Basic Meta Tags -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Primary Meta Tags (Turkish) -->
+    <title>
+      JSON Formatter - JSON Düzenleyici ve Doğrulayıcı | jsonformat.info
+    </title>
+    <meta
+      name="title"
+      content="JSON Formatter - JSON Düzenleyici ve Doğrulayıcı | jsonformat.info"
+    />
+    <meta
+      name="description"
+      content="Ücretsiz JSON formatter ve validator aracı. JSON verilerinizi düzenleyin, doğrulayın ve güzelleştirin. Hızlı, güvenli ve kullanıcı dostu online JSON düzenleyici."
+    />
+    <meta
+      name="keywords"
+      content="json formatter, json düzenleyici, json validator, json doğrulayıcı, json beautifier, json parser, online json araç, ücretsiz json formatter, json minify"
+    />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="Turkish" />
+    <meta name="author" content="JSONFormat.info" />
+    <meta name="copyright" content="© 2024 JSONFormat.info" />
+    <meta name="revisit-after" content="7 days" />
+
+    <!-- Alternate Language -->
+    <link
+      rel="alternate"
+      hreflang="tr"
+      href="https://jsonformat.info/?lang=tr"
+    />
+    <link
+      rel="alternate"
+      hreflang="en"
+      href="https://jsonformat.info/?lang=en"
+    />
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href="https://jsonformat.info/"
+    />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://jsonformat.info/" />
+    <meta
+      property="og:title"
+      content="JSON Formatter - JSON Düzenleyici ve Doğrulayıcı"
+    />
+    <meta
+      property="og:description"
+      content="Ücretsiz JSON formatter ve validator aracı. JSON verilerinizi düzenleyin, doğrulayın ve güzelleştirin."
+    />
+    <meta
+      property="og:image"
+      content="https://jsonformat.info/screenshot/desktop-1280x720.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="JSONFormat.info" />
+    <meta property="og:locale" content="tr_TR" />
+    <meta property="og:locale:alternate" content="en_US" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://jsonformat.info/" />
+    <meta
+      property="twitter:title"
+      content="JSON Formatter - JSON Düzenleyici ve Doğrulayıcı"
+    />
+    <meta
+      property="twitter:description"
+      content="Ücretsiz JSON formatter ve validator aracı. JSON verilerinizi düzenleyin, doğrulayın ve güzelleştirin."
+    />
+    <meta
+      property="twitter:image"
+      content="https://jsonformat.info/screenshot/desktop-1280x720.png"
+    />
+    <meta name="twitter:site" content="@jsonformat" />
+    <meta name="twitter:creator" content="@jsonformat" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://jsonformat.info/" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#667eea" />
+
+    <!-- DNS Prefetch -->
+    <link rel="dns-prefetch" href="//www.googletagmanager.com" />
+    <link rel="dns-prefetch" href="//www.google-analytics.com" />
+    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com" />
+
+    <!-- Preload Critical Resources -->
+    <link rel="preload" href="/css/main.css" as="style" />
+    <link rel="preload" href="/js/json-formatter.js" as="script" />
+
+    <!-- GOOGLE ANALYTICS 4 -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-J43L67FJFY"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-J43L67FJFY", {
+        page_title: "JSON Formatter - Ana Sayfa",
+        page_location: "https://jsonformat.info/",
+        content_group1: "JSON Tools",
+        content_group2: "Formatter",
+      });
+    </script>
+
+    <!-- GOOGLE SEARCH CONSOLE -->
+    <meta
+      name="google-site-verification"
+      content="nEMYj6IA_R51LxQf2T2PNpOP3y3Zd5ed0n9lWchWgnw"
+    />
+
+    <!-- BING WEBMASTER TOOLS -->
+    <meta name="msvalidate.01" content="37862A76E0EE2715ACCDC16AE71DD942" />
+
+    <!-- YANDEX WEBMASTER -->
+    <meta name="yandex-verification" content="96fde976efba257c" />
+
     <title>JSON Formatter & Viewer</title>
     <style>
       :root {
@@ -98,10 +147,11 @@
         --danger: #f87171;
         --border: #1f2937;
         --ok: #34d399;
-        --shadow: 0 6px 20px rgba(0,0,0,.35);
+        --shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
         --radius: 10px;
-        --font: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-        --footer-h: 72px;
+        --font: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+          "Liberation Mono", "Courier New", monospace;
+        --footer-h: 56px;
       }
       [data-theme="light"] {
         --bg: #f6f7fb;
@@ -112,17 +162,20 @@
         --danger: #dc2626;
         --border: #e5e7eb;
         --ok: #059669;
-        --shadow: 0 8px 24px rgba(0,0,0,.08);
+        --shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
       }
-      html, body {
+      html,
+      body {
         height: 100%;
       }
       body {
         margin: 0;
         background: var(--bg);
         color: var(--text);
-        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto,
+          Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
         line-height: 1.4;
+        overflow: hidden;
       }
       .page {
         display: grid;
@@ -140,7 +193,7 @@
       .title {
         font-weight: 700;
         font-size: 18px;
-        letter-spacing: .2px;
+        letter-spacing: 0.2px;
       }
       .toolbar {
         display: flex;
@@ -155,17 +208,53 @@
         padding: 8px 12px;
         border-radius: 8px;
         cursor: pointer;
-        transition: transform .05s ease, background .2s ease, border-color .2s ease;
+        transition: transform 0.05s ease, background 0.2s ease,
+          border-color 0.2s ease;
         box-shadow: var(--shadow);
         user-select: none;
         font-weight: 600;
       }
-      .btn:hover { border-color: var(--accent); }
-      .btn:active { transform: translateY(1px); }
-      .btn.primary { background: linear-gradient(180deg, rgba(34,211,238,.15), rgba(34,211,238,.05)); border-color: rgba(34,211,238,.4); }
-      .btn.ok { background: linear-gradient(180deg, rgba(52,211,153,.15), rgba(52,211,153,.05)); border-color: rgba(52,211,153,.4); }
-      .btn.danger { background: linear-gradient(180deg, rgba(248,113,113,.15), rgba(248,113,113,.05)); border-color: rgba(248,113,113,.4); }
-      .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+      .btn:hover {
+        border-color: var(--accent);
+      }
+      .btn:active {
+        transform: translateY(1px);
+      }
+      .btn.primary {
+        background: linear-gradient(
+          180deg,
+          rgba(34, 211, 238, 0.15),
+          rgba(34, 211, 238, 0.05)
+        );
+        border-color: rgba(34, 211, 238, 0.4);
+      }
+      .btn.ok {
+        background: linear-gradient(
+          180deg,
+          rgba(52, 211, 153, 0.15),
+          rgba(52, 211, 153, 0.05)
+        );
+        border-color: rgba(52, 211, 153, 0.4);
+      }
+      .btn.danger {
+        background: linear-gradient(
+          180deg,
+          rgba(248, 113, 113, 0.15),
+          rgba(248, 113, 113, 0.05)
+        );
+        border-color: rgba(248, 113, 113, 0.4);
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
       .icon-btn {
         width: 38px;
         height: 38px;
@@ -178,17 +267,54 @@
         color: var(--text);
         box-shadow: var(--shadow);
         cursor: pointer;
-        transition: transform .05s ease, filter .2s ease, border-color .2s ease, background .2s ease;
+        transition: transform 0.05s ease, filter 0.2s ease,
+          border-color 0.2s ease, background 0.2s ease;
       }
-      .icon-btn svg { width: 18px; height: 18px; display: block; fill: currentColor; }
-      .icon-btn:hover { transform: translateY(1px); filter: brightness(1.08); }
-      .icon-load { color: #0ea5e9; background: rgba(14,165,233,.12); border-color: rgba(14,165,233,.4); }
-      .icon-save { color: #22c55e; background: rgba(34,197,94,.12); border-color: rgba(34,197,94,.4); }
-      .icon-copy { color: #06b6d4; background: rgba(6,182,212,.12); border-color: rgba(6,182,212,.4); }
-      .icon-paste { color: #f59e0b; background: rgba(245,158,11,.12); border-color: rgba(245,158,11,.4); }
-      .icon-theme { color: #8b5cf6; background: rgba(139,92,246,.12); border-color: rgba(139,92,246,.4); }
-      .icon-full { color: #94a3b8; background: rgba(148,163,184,.12); border-color: rgba(148,163,184,.4); }
-      .icon-settings { color: #fb7185; background: rgba(251,113,133,.12); border-color: rgba(251,113,133,.4); }
+      .icon-btn svg {
+        width: 18px;
+        height: 18px;
+        display: block;
+        fill: currentColor;
+      }
+      .icon-btn:hover {
+        transform: translateY(1px);
+        filter: brightness(1.08);
+      }
+      .icon-load {
+        color: #0ea5e9;
+        background: rgba(14, 165, 233, 0.12);
+        border-color: rgba(14, 165, 233, 0.4);
+      }
+      .icon-save {
+        color: #22c55e;
+        background: rgba(34, 197, 94, 0.12);
+        border-color: rgba(34, 197, 94, 0.4);
+      }
+      .icon-copy {
+        color: #06b6d4;
+        background: rgba(6, 182, 212, 0.12);
+        border-color: rgba(6, 182, 212, 0.4);
+      }
+      .icon-paste {
+        color: #f59e0b;
+        background: rgba(245, 158, 11, 0.12);
+        border-color: rgba(245, 158, 11, 0.4);
+      }
+      .icon-theme {
+        color: #8b5cf6;
+        background: rgba(139, 92, 246, 0.12);
+        border-color: rgba(139, 92, 246, 0.4);
+      }
+      .icon-full {
+        color: #94a3b8;
+        background: rgba(148, 163, 184, 0.12);
+        border-color: rgba(148, 163, 184, 0.4);
+      }
+      .icon-settings {
+        color: #fb7185;
+        background: rgba(251, 113, 133, 0.12);
+        border-color: rgba(251, 113, 133, 0.4);
+      }
       .seg {
         display: inline-flex;
         border: 1px solid var(--border);
@@ -197,8 +323,13 @@
         background: var(--panel);
         box-shadow: var(--shadow);
       }
-      .seg > button { border: none; border-right: 1px solid var(--border); }
-      .seg > button:last-child { border-right: none; }
+      .seg > button {
+        border: none;
+        border-right: 1px solid var(--border);
+      }
+      .seg > button:last-child {
+        border-right: none;
+      }
       .opt {
         display: flex;
         align-items: center;
@@ -209,7 +340,8 @@
         border-radius: 8px;
         box-shadow: var(--shadow);
       }
-      select, input[type="checkbox"] {
+      select,
+      input[type="checkbox"] {
         accent-color: var(--accent);
       }
       .workspace {
@@ -246,7 +378,7 @@
       textarea#input {
         flex: 1;
         width: 100%;
-        height: 100%;
+        height: 98%;
         min-height: 300px;
         border: none;
         outline: none;
@@ -259,8 +391,15 @@
         color: transparent;
         caret-color: var(--text);
         tab-size: 2;
+        overflow-x: hidden;
+        box-sizing: border-box;
       }
-      .editor { position: relative; height: 100%; min-height: 300px; }
+      .editor {
+        position: relative;
+        height: 100%;
+        min-height: 300px;
+        overflow: auto;
+      }
       .editor-highlight {
         position: absolute;
         inset: 0;
@@ -275,6 +414,15 @@
         pointer-events: none;
         color: var(--text);
         tab-size: 2;
+        box-sizing: border-box;
+      }
+      .editor-highlight {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+      .editor-highlight::-webkit-scrollbar {
+        width: 0;
+        height: 0;
       }
       .drop-hint {
         font-size: 12px;
@@ -286,10 +434,18 @@
         padding: 8px 12px;
         font-size: 12px;
         border-top: 1px solid var(--border);
-        background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.02),
+          rgba(0, 0, 0, 0.02)
+        );
       }
-      .status.ok { color: var(--ok); }
-      .status.err { color: var(--danger); }
+      .status.ok {
+        color: var(--ok);
+      }
+      .status.err {
+        color: var(--danger);
+      }
       .top-status {
         border: 1px solid var(--border);
         background: var(--panel);
@@ -303,9 +459,16 @@
         text-overflow: ellipsis;
         margin-left: 8px;
       }
-      .top-status.ok { color: var(--ok); }
-      .top-status.err { color: var(--danger); }
-      .tabs { display: flex; gap: 6px; }
+      .top-status.ok {
+        color: var(--ok);
+      }
+      .top-status.err {
+        color: var(--danger);
+      }
+      .tabs {
+        display: flex;
+        gap: 6px;
+      }
       .tabs button {
         padding: 6px 10px;
         border-radius: 6px;
@@ -314,10 +477,13 @@
         color: var(--text);
         cursor: pointer;
       }
-      .tabs button.active { background: rgba(34,211,238,.12); border-color: rgba(34,211,238,.4); }
+      .tabs button.active {
+        background: rgba(34, 211, 238, 0.12);
+        border-color: rgba(34, 211, 238, 0.4);
+      }
       .viewer {
         position: relative;
-        overflow: auto;
+        overflow: hidden;
         padding: 8px 12px 12px 12px;
         flex: 1;
         min-height: 0;
@@ -325,7 +491,10 @@
         display: flex;
         flex-direction: column;
       }
-      .workspace > .card { height: 100%; min-height: 0; }
+      .workspace > .card {
+        height: 100%;
+        min-height: 0;
+      }
       pre#raw {
         margin: 0;
         white-space: pre-wrap;
@@ -334,23 +503,84 @@
         max-width: 100%;
         font-size: 13px;
       }
-      .tree { font-family: var(--font); font-size: 13px; }
-      .tree ul { list-style: none; padding-left: 18px; margin: 0; }
-      .tree li { position: relative; margin: 2px 0; }
-      .caret { cursor: pointer; display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; border-radius: 4px; margin-right: 6px; color: var(--muted); }
-      .caret:hover { background: rgba(255,255,255,.05); color: var(--accent); }
-      .caret::before { content: "▸"; display: inline-block; transition: transform .15s ease; font-size: 10px; }
-      .expanded > .node > .caret::before { transform: rotate(90deg); }
-      .children { display: none; border-left: 1px dashed var(--border); margin-left: 7px; padding-left: 10px; }
-      .expanded > .children { display: block; }
-      .key { color: var(--color-key, #93c5fd); }
-      .type-string { color: var(--color-string, #fbbf24); }
-      .type-number { color: var(--color-number, #f472b6); }
-      .type-boolean { color: var(--color-boolean, #34d399); }
-      .type-null { color: var(--color-null, #a3a3a3); font-style: italic; }
-      .dim { color: var(--muted); }
-      .badge { color: var(--muted); font-size: 11px; border: 1px solid var(--border); padding: 1px 6px; border-radius: 999px; margin-left: 6px; }
-      .node { display: inline-flex; align-items: center; gap: 2px; }
+      .tree {
+        font-family: var(--font);
+        font-size: 13px;
+      }
+      .tree ul {
+        list-style: none;
+        padding-left: 18px;
+        margin: 0;
+      }
+      .tree li {
+        position: relative;
+        margin: 2px 0;
+      }
+      .caret {
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 16px;
+        height: 16px;
+        border-radius: 4px;
+        margin-right: 6px;
+        color: var(--muted);
+      }
+      .caret:hover {
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--accent);
+      }
+      .caret::before {
+        content: "▸";
+        display: inline-block;
+        transition: transform 0.15s ease;
+        font-size: 10px;
+      }
+      .expanded > .node > .caret::before {
+        transform: rotate(90deg);
+      }
+      .children {
+        display: none;
+        border-left: 1px dashed var(--border);
+        margin-left: 7px;
+        padding-left: 10px;
+      }
+      .expanded > .children {
+        display: block;
+      }
+      .key {
+        color: var(--color-key, #93c5fd);
+      }
+      .type-string {
+        color: var(--color-string, #fbbf24);
+      }
+      .type-number {
+        color: var(--color-number, #f472b6);
+      }
+      .type-boolean {
+        color: var(--color-boolean, #34d399);
+      }
+      .type-null {
+        color: var(--color-null, #a3a3a3);
+        font-style: italic;
+      }
+      .dim {
+        color: var(--muted);
+      }
+      .badge {
+        color: var(--muted);
+        font-size: 11px;
+        border: 1px solid var(--border);
+        padding: 1px 6px;
+        border-radius: 999px;
+        margin-left: 6px;
+      }
+      .node {
+        display: inline-flex;
+        align-items: center;
+        gap: 2px;
+      }
       .footer {
         color: var(--muted);
         font-size: 12px;
@@ -368,15 +598,28 @@
         border-top: 1px solid var(--border);
         z-index: 900;
       }
-      .kbd { border: 1px solid var(--border); padding: 0 6px; border-radius: 4px; background: rgba(255,255,255,.03); font-family: var(--font); font-size: 12px; }
-      .hidden { display: none !important; }
-      @media (max-width: 1200px) { .workspace { grid-template-columns: 1fr; } }
+      .kbd {
+        border: 1px solid var(--border);
+        padding: 0 6px;
+        border-radius: 4px;
+        background: rgba(255, 255, 255, 0.03);
+        font-family: var(--font);
+        font-size: 12px;
+      }
+      .hidden {
+        display: none !important;
+      }
+      @media (max-width: 1200px) {
+        .workspace {
+          grid-template-columns: 1fr;
+        }
+      }
 
       /* Ayarlar modalı */
       .settings-overlay {
         position: fixed;
         inset: 0;
-        background: rgba(0,0,0,.5);
+        background: rgba(0, 0, 0, 0.5);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -392,46 +635,154 @@
         box-shadow: var(--shadow);
         padding: 16px;
       }
-      .settings-title { font-weight: 700; margin: 4px 0 12px 0; font-size: 16px; }
-      .settings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-      .form-row { display: flex; flex-direction: column; gap: 6px; }
-      .form-row label { font-size: 12px; color: var(--muted); }
-      .form-row input[type="number"], .form-row select {
+      .settings-title {
+        font-weight: 700;
+        margin: 4px 0 12px 0;
+        font-size: 16px;
+      }
+      .settings-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .form-row {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .form-row label {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .form-row input[type="number"],
+      .form-row select {
         padding: 8px 10px;
         border-radius: 8px;
         border: 1px solid var(--border);
         background: transparent;
         color: var(--text);
       }
-      .palette-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; }
+      .palette-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+        gap: 10px;
+      }
       .palette {
         border: 1px solid var(--border);
         border-radius: 10px;
         padding: 8px;
-        background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.02));
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.02),
+          rgba(0, 0, 0, 0.02)
+        );
         cursor: pointer;
       }
-      .palette.active { outline: 2px solid var(--accent); }
-      .palette-name { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
-      .swatches { display: flex; gap: 4px; }
-      .sw { width: 14px; height: 14px; border-radius: 3px; border: 1px solid var(--border); }
-      .settings-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px; }
+      .palette.active {
+        outline: 2px solid var(--accent);
+      }
+      .palette-name {
+        font-size: 12px;
+        color: var(--muted);
+        margin-bottom: 6px;
+      }
+      .swatches {
+        display: flex;
+        gap: 4px;
+      }
+      .sw {
+        width: 14px;
+        height: 14px;
+        border-radius: 3px;
+        border: 1px solid var(--border);
+      }
+      .settings-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+        margin-top: 14px;
+      }
 
       /* Hızlı palet açılır menü */
-      .card-header-right { display: flex; align-items: center; gap: 10px; }
-      .quick-palette { position: relative; }
-      .qp-btn { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--panel); color: var(--text); cursor: pointer; }
-      .qp-swatches-inline { display: inline-flex; gap: 3px; }
-      .qp-sw { width: 12px; height: 12px; border-radius: 3px; border: 1px solid var(--border); }
-      .quick-select { position: relative; }
-      .qp-menu { position: absolute; right: 0; top: calc(100% + 6px); background: var(--panel); border: 1px solid var(--border); border-radius: 10px; box-shadow: var(--shadow); padding: 8px; width: 280px; z-index: 1500; }
-      .qp-list { display: grid; grid-template-columns: 1fr; gap: 6px; max-height: 300px; overflow: auto; }
-      .qp-item { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.02)); cursor: pointer; }
-      .qp-item:hover { border-color: var(--accent); }
-      .qp-name { font-size: 12px; color: var(--muted); }
+      .card-header-right {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .quick-palette {
+        position: relative;
+      }
+      .qp-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 10px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--panel);
+        color: var(--text);
+        cursor: pointer;
+      }
+      .qp-swatches-inline {
+        display: inline-flex;
+        gap: 3px;
+      }
+      .qp-sw {
+        width: 12px;
+        height: 12px;
+        border-radius: 3px;
+        border: 1px solid var(--border);
+      }
+      .quick-select {
+        position: relative;
+      }
+      .qp-menu {
+        position: absolute;
+        right: 0;
+        top: calc(100% + 6px);
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        box-shadow: var(--shadow);
+        padding: 8px;
+        width: 280px;
+        z-index: 1500;
+      }
+      .qp-list {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 6px;
+        max-height: 300px;
+        overflow: auto;
+      }
+      .qp-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 8px 10px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.02),
+          rgba(0, 0, 0, 0.02)
+        );
+        cursor: pointer;
+      }
+      .qp-item:hover {
+        border-color: var(--accent);
+      }
+      .qp-name {
+        font-size: 12px;
+        color: var(--muted);
+      }
 
       /* Yumuşak tam ekran (yalnızca JSON kartı) */
-      .body-soft-full header, .body-soft-full .footer { display: none; }
+      .body-soft-full header,
+      .body-soft-full .footer {
+        display: none;
+      }
       #mainCard.fullscreen-card {
         position: fixed;
         inset: 8px;
@@ -445,9 +796,19 @@
         <div class="title">JSON Formatter & Viewer</div>
         <div class="toolbar">
           <div class="seg" role="group" aria-label="Biçimlendirme">
-            <button class="btn primary" id="btnFormat" title="Biçimlendir (Ctrl+Enter)">Biçimlendir</button>
-            <button class="btn" id="btnMinify" title="Sıkıştır (Minify)">Sıkıştır</button>
-            <button class="btn" id="btnValidate" title="Doğrula">Doğrula</button>
+            <button
+              class="btn primary"
+              id="btnFormat"
+              title="Biçimlendir (Ctrl+Enter)"
+            >
+              Biçimlendir
+            </button>
+            <button class="btn" id="btnMinify" title="Sıkıştır (Minify)">
+              Sıkıştır
+            </button>
+            <button class="btn" id="btnValidate" title="Doğrula">
+              Doğrula
+            </button>
           </div>
           <div class="seg" role="group" aria-label="Tree">
             <button class="btn" id="btnExpand">Genişlet</button>
@@ -460,8 +821,18 @@
               <option value="4">4 boşluk</option>
               <option value="\t">Sekme</option>
             </select>
-            <label style="margin-left:10px; display:inline-flex; align-items:center; gap:6px;" id="sortKeysContainer">
-              <input type="checkbox" id="sortKeys"><span id="labelSort">Sırala</span>
+            <label
+              style="
+                margin-left: 10px;
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+              "
+              id="sortKeysContainer"
+            >
+              <input type="checkbox" id="sortKeys" /><span id="labelSort"
+                >Sırala</span
+              >
             </label>
           </div>
           <div class="opt hidden" id="langOpt">
@@ -472,7 +843,13 @@
             </select>
           </div>
           <div class="quick-select" id="quickIndent">
-            <button class="qp-btn" id="qiToggle" aria-haspopup="true" aria-expanded="false" title="Girinti">
+            <button
+              class="qp-btn"
+              id="qiToggle"
+              aria-haspopup="true"
+              aria-expanded="false"
+              title="Girinti"
+            >
               <span class="qp-label" id="qiLabel">Girinti: 2</span>
             </button>
             <div class="qp-menu hidden" id="qiMenu" role="menu">
@@ -480,7 +857,13 @@
             </div>
           </div>
           <div class="quick-select" id="quickLang">
-            <button class="qp-btn" id="qlToggle" aria-haspopup="true" aria-expanded="false" title="Dil">
+            <button
+              class="qp-btn"
+              id="qlToggle"
+              aria-haspopup="true"
+              aria-expanded="false"
+              title="Dil"
+            >
               <span class="qp-label" id="qlLabel">Türkçe 🇹🇷</span>
             </button>
             <div class="qp-menu hidden" id="qlMenu" role="menu">
@@ -488,29 +871,102 @@
             </div>
           </div>
           <div class="seg" role="group" aria-label="Dosya">
-            <button class="icon-btn icon-load" id="btnLoad" aria-label="Yükle" title="JSON Yükle">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a1 1 0 0 1 1 1v8.586l2.293-2.293a1 1 0 1 1 1.414 1.414l-4.007 4.007a1.25 1.25 0 0 1-1.707 0L6.986 11.707a1 1 0 0 1 1.414-1.414L10.707 12.6V4a1 1 0 0 1 1-1z"></path><path d="M5 19a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-2a1 1 0 1 0-2 0v2H7v-2a1 1 0 1 0-2 0v2z"></path></svg>
+            <button
+              class="icon-btn icon-load"
+              id="btnLoad"
+              aria-label="Yükle"
+              title="JSON Yükle"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M12 3a1 1 0 0 1 1 1v8.586l2.293-2.293a1 1 0 1 1 1.414 1.414l-4.007 4.007a1.25 1.25 0 0 1-1.707 0L6.986 11.707a1 1 0 0 1 1.414-1.414L10.707 12.6V4a1 1 0 0 1 1-1z"
+                ></path>
+                <path
+                  d="M5 19a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-2a1 1 0 1 0-2 0v2H7v-2a1 1 0 1 0-2 0v2z"
+                ></path>
+              </svg>
             </button>
-            <button class="icon-btn icon-save" id="btnSave" aria-label="Kaydet" title="JSON Kaydet">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h10l4 4v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm8 2H7v6h6V5z"></path></svg>
+            <button
+              class="icon-btn icon-save"
+              id="btnSave"
+              aria-label="Kaydet"
+              title="JSON Kaydet"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M5 3h10l4 4v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm8 2H7v6h6V5z"
+                ></path>
+              </svg>
             </button>
-            <button class="icon-btn icon-copy" id="btnCopy" aria-label="Kopyala" title="Kopyala">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 1H6a2 2 0 0 0-2 2v12h2V3h10V1z"></path><path d="M8 5h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zm0 2v12h10V7H8z"></path></svg>
+            <button
+              class="icon-btn icon-copy"
+              id="btnCopy"
+              aria-label="Kopyala"
+              title="Kopyala"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M16 1H6a2 2 0 0 0-2 2v12h2V3h10V1z"></path>
+                <path
+                  d="M8 5h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zm0 2v12h10V7H8z"
+                ></path>
+              </svg>
             </button>
-            <button class="icon-btn icon-paste" id="btnPaste" aria-label="Yapıştır" title="Yapıştır">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 4h-3.18A3 3 0 0 0 13 2h-2a3 3 0 0 0-2.82 2H5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h6v-2H5V6h2v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V6h2v5h2V6a2 2 0 0 0-2-2zM9 5a1 1 0 0 1 1-1h4a1 1 0 1 1 0 2h-4a1 1 0 0 1-1-1z"></path><path d="M21 13h-6a2 2 0 0 0-2 2v6h8a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2zm-6 8v-6h6v4h-4v2h-2z"></path></svg>
+            <button
+              class="icon-btn icon-paste"
+              id="btnPaste"
+              aria-label="Yapıştır"
+              title="Yapıştır"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  d="M19 4h-3.18A3 3 0 0 0 13 2h-2a3 3 0 0 0-2.82 2H5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h6v-2H5V6h2v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V6h2v5h2V6a2 2 0 0 0-2-2zM9 5a1 1 0 0 1 1-1h4a1 1 0 1 1 0 2h-4a1 1 0 0 1-1-1z"
+                ></path>
+                <path
+                  d="M21 13h-6a2 2 0 0 0-2 2v6h8a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2zm-6 8v-6h6v4h-4v2h-2z"
+                ></path>
+              </svg>
             </button>
           </div>
-          <button class="icon-btn icon-theme" id="btnTheme" aria-label="Tema" title="Tema">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 1 0 21 12.79z"></path></svg>
+          <button
+            class="icon-btn icon-theme"
+            id="btnTheme"
+            aria-label="Tema"
+            title="Tema"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 1 0 21 12.79z"></path>
+            </svg>
           </button>
-          <button class="icon-btn icon-full" id="btnFull" aria-label="Tam Ekran" title="JSON tam ekran">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5h2V5h3V3zm10 0h-5v2h3v3h2V3zM5 16H3v5h5v-2H5v-3zm16 0h-2v3h-3v2h5v-5z"></path></svg>
+          <button
+            class="icon-btn icon-full"
+            id="btnFull"
+            aria-label="Tam Ekran"
+            title="JSON tam ekran"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M8 3H3v5h2V5h3V3zm10 0h-5v2h3v3h2V3zM5 16H3v5h5v-2H5v-3zm16 0h-2v3h-3v2h5v-5z"
+              ></path>
+            </svg>
           </button>
-          <button class="icon-btn icon-settings" id="btnSettings" aria-label="Ayarlar" title="Ayarlar">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm8.94 4a7.97 7.97 0 0 0-.14-1.52l2.02-1.57-1.9-3.29-2.41.78a8.03 8.03 0 0 0-2.64-1.53l-.4-2.51H9.53l-.4 2.51a8.03 8.03 0 0 0-2.64 1.53l-2.41-.78-1.9 3.29 2.02 1.57A7.97 7.97 0 0 0 3.06 12c0 .52.05 1.03.14 1.52l-2.02 1.57 1.9 3.29 2.41-.78c.78.64 1.67 1.16 2.64 1.53l.4 2.51h4.64l.4-2.51c.97-.37 1.86-.89 2.64-1.53l2.41.78 1.9-3.29-2.02-1.57c.09-.49.14-1 .14-1.52z"></path></svg>
+          <button
+            class="icon-btn icon-settings"
+            id="btnSettings"
+            aria-label="Ayarlar"
+            title="Ayarlar"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm8.94 4a7.97 7.97 0 0 0-.14-1.52l2.02-1.57-1.9-3.29-2.41.78a8.03 8.03 0 0 0-2.64-1.53l-.4-2.51H9.53l-.4 2.51a8.03 8.03 0 0 0-2.64 1.53l-2.41-.78-1.9 3.29 2.02 1.57A7.97 7.97 0 0 0 3.06 12c0 .52.05 1.03.14 1.52l-2.02 1.57 1.9 3.29 2.41-.78c.78.64 1.67 1.16 2.64 1.53l.4 2.51h4.64l.4-2.51c.97-.37 1.86-.89 2.64-1.53l2.41.78 1.9-3.29-2.02-1.57c.09-.49.14-1 .14-1.52z"
+              ></path>
+            </svg>
           </button>
-          <input class="hidden" type="file" id="fileInput" accept="application/json,.json,text/json,text/plain">
+          <input
+            class="hidden"
+            type="file"
+            id="fileInput"
+            accept="application/json,.json,text/json,text/plain"
+          />
         </div>
       </header>
 
@@ -520,11 +976,22 @@
             <div class="tabs">
               <button class="tab-btn active" data-tab="raw">Raw</button>
               <button class="tab-btn" data-tab="tree">Ağaç</button>
-              <span class="top-status" id="topStatus" aria-live="polite" role="status"></span>
+              <span
+                class="top-status"
+                id="topStatus"
+                aria-live="polite"
+                role="status"
+              ></span>
             </div>
-            <div class="card-header-right"> 
+            <div class="card-header-right">
               <div class="quick-palette" id="quickPalette">
-                <button class="qp-btn" id="qpToggle" aria-haspopup="true" aria-expanded="false" title="Renk paleti seç">
+                <button
+                  class="qp-btn"
+                  id="qpToggle"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  title="Renk paleti seç"
+                >
                   <span class="qp-label" id="qpLabel">Palet</span>
                   <span class="qp-swatches-inline" id="qpSwatches"></span>
                 </button>
@@ -535,48 +1002,73 @@
             </div>
           </div>
           <div class="card-body">
-            <div class="viewer" id="viewer-raw" style="min-height: 0;">
+            <div class="viewer" id="viewer-raw" style="min-height: 0">
               <div class="editor" id="editorWrap">
                 <pre id="inputHighlight" class="editor-highlight"></pre>
-                <textarea id="input" spellcheck="false" placeholder='{"hello":"world"}'></textarea>
+                <textarea
+                  id="input"
+                  spellcheck="false"
+                  placeholder='{"hello":"world"}'
+                ></textarea>
               </div>
             </div>
             <div class="viewer hidden" id="viewer-tree">
               <div class="tree" id="tree"></div>
             </div>
             <div class="status" id="status">Hazır</div>
-            <div class="drop-hint" id="dropHint">JSON dosyasını bu alana sürükleyip bırakabilirsiniz.</div>
+            <div class="drop-hint" id="dropHint">
+              JSON dosyasını bu alana sürükleyip bırakabilirsiniz.
+            </div>
           </div>
         </section>
       </div>
 
       <div class="footer">
         <div id="footerLeft">
-          İşlemler tamamen tarayıcınızda gerçekleşir; veri dışarı gönderilmez. 
+          İşlemler tamamen tarayıcınızda gerçekleşir; veri dışarı gönderilmez.
         </div>
         <div id="footerRight">
-          Kısayol: <span class="kbd">Ctrl</span> + <span class="kbd">Enter</span> → Biçimlendir
+          Kısayol: <span class="kbd">Ctrl</span> +
+          <span class="kbd">Enter</span> → Biçimlendir
         </div>
       </div>
-      
+
       <!-- Ayarlar Modal -->
-      <div id="settingsModal" class="settings-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+      <div
+        id="settingsModal"
+        class="settings-overlay hidden"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="settingsTitle"
+      >
         <div class="settings-dialog">
           <div class="settings-title" id="settingsTitle">Ayarlar</div>
           <div class="settings-grid">
             <div class="form-row">
               <label for="maxDepth">Maksimum Derinlik</label>
-              <input type="number" id="maxDepth" min="1" max="100" value="32">
+              <input type="number" id="maxDepth" min="1" max="100" value="32" />
             </div>
             <div class="form-row">
               <label for="maxSizeKB">Maksimum Boyut (KB)</label>
-              <input type="number" id="maxSizeKB" min="10" max="51200" value="2048">
+              <input
+                type="number"
+                id="maxSizeKB"
+                min="10"
+                max="51200"
+                value="2048"
+              />
             </div>
             <div class="form-row">
-              <label for="rememberSession"><input type="checkbox" id="rememberSession"> <span id="labelRemember">Son oturumu hatırla</span></label>
+              <label for="rememberSession"
+                ><input type="checkbox" id="rememberSession" />
+                <span id="labelRemember">Son oturumu hatırla</span></label
+              >
             </div>
             <div class="form-row">
-              <label for="autoFormat"><input type="checkbox" id="autoFormat"> <span id="labelAutoFormat">Otomatik biçimlendir</span></label>
+              <label for="autoFormat"
+                ><input type="checkbox" id="autoFormat" />
+                <span id="labelAutoFormat">Otomatik biçimlendir</span></label
+              >
             </div>
             <div class="form-row">
               <label for="languageSelect" id="labelLanguage">Dil</label>
@@ -590,7 +1082,7 @@
               <select id="paletteSelect"></select>
             </div>
           </div>
-          <div class="form-row" style="margin-top:8px;">
+          <div class="form-row" style="margin-top: 8px">
             <label id="labelPalettePreview">Palet Önizleme</label>
             <div class="palette-grid" id="paletteGrid"></div>
           </div>
@@ -605,267 +1097,390 @@
     <script>
       (function () {
         const dom = {
-          page: document.getElementById('page'),
-          input: document.getElementById('input'),
-          status: document.getElementById('status'),
-          topStatus: document.getElementById('topStatus'),
-          btnFormat: document.getElementById('btnFormat'),
-          btnMinify: document.getElementById('btnMinify'),
-          btnValidate: document.getElementById('btnValidate'),
-          btnExpand: document.getElementById('btnExpand'),
-          btnCollapse: document.getElementById('btnCollapse'),
-          btnLoad: document.getElementById('btnLoad'),
-          btnSave: document.getElementById('btnSave'),
-          btnCopy: document.getElementById('btnCopy'),
-          btnPaste: document.getElementById('btnPaste'),
-          btnTheme: document.getElementById('btnTheme'),
-          btnSettings: document.getElementById('btnSettings'),
-          fileInput: document.getElementById('fileInput'),
-          indent: document.getElementById('indent'),
-          sortKeys: document.getElementById('sortKeys'),
-          labelIndent: document.getElementById('labelIndent'),
-          labelSort: document.getElementById('labelSort'),
-          labelLang: document.getElementById('labelLang'),
-          lang: document.getElementById('lang'),
-          raw: document.getElementById('inputHighlight'),
-          tree: document.getElementById('tree'),
+          page: document.getElementById("page"),
+          input: document.getElementById("input"),
+          status: document.getElementById("status"),
+          topStatus: document.getElementById("topStatus"),
+          btnFormat: document.getElementById("btnFormat"),
+          btnMinify: document.getElementById("btnMinify"),
+          btnValidate: document.getElementById("btnValidate"),
+          btnExpand: document.getElementById("btnExpand"),
+          btnCollapse: document.getElementById("btnCollapse"),
+          btnLoad: document.getElementById("btnLoad"),
+          btnSave: document.getElementById("btnSave"),
+          btnCopy: document.getElementById("btnCopy"),
+          btnPaste: document.getElementById("btnPaste"),
+          btnTheme: document.getElementById("btnTheme"),
+          btnSettings: document.getElementById("btnSettings"),
+          fileInput: document.getElementById("fileInput"),
+          indent: document.getElementById("indent"),
+          sortKeys: document.getElementById("sortKeys"),
+          labelIndent: document.getElementById("labelIndent"),
+          labelSort: document.getElementById("labelSort"),
+          labelLang: document.getElementById("labelLang"),
+          lang: document.getElementById("lang"),
+          raw: document.getElementById("inputHighlight"),
+          tree: document.getElementById("tree"),
           viewerEdit: null,
-          viewerTree: document.getElementById('viewer-tree'),
-          viewerRaw: document.getElementById('viewer-raw'),
-          tabs: Array.from(document.querySelectorAll('.tab-btn')),
-          btnFull: document.getElementById('btnFull'),
-          mainCard: document.getElementById('mainCard'),
-          settingsModal: document.getElementById('settingsModal'),
-          paletteSelect: document.getElementById('paletteSelect'),
-          paletteGrid: document.getElementById('paletteGrid'),
-          qpToggle: document.getElementById('qpToggle'),
-          qpMenu: document.getElementById('qpMenu'),
-          qpList: document.getElementById('qpList'),
-          qpSwatches: document.getElementById('qpSwatches'),
-          qpLabel: document.getElementById('qpLabel'),
-          dragHint: document.getElementById('dragHint'),
-          dropHint: document.getElementById('dropHint'),
-          footerLeft: document.getElementById('footerLeft'),
-          footerRight: document.getElementById('footerRight'),
+          viewerTree: document.getElementById("viewer-tree"),
+          viewerRaw: document.getElementById("viewer-raw"),
+          tabs: Array.from(document.querySelectorAll(".tab-btn")),
+          btnFull: document.getElementById("btnFull"),
+          mainCard: document.getElementById("mainCard"),
+          settingsModal: document.getElementById("settingsModal"),
+          paletteSelect: document.getElementById("paletteSelect"),
+          paletteGrid: document.getElementById("paletteGrid"),
+          qpToggle: document.getElementById("qpToggle"),
+          qpMenu: document.getElementById("qpMenu"),
+          qpList: document.getElementById("qpList"),
+          qpSwatches: document.getElementById("qpSwatches"),
+          qpLabel: document.getElementById("qpLabel"),
+          dragHint: document.getElementById("dragHint"),
+          dropHint: document.getElementById("dropHint"),
+          footerLeft: document.getElementById("footerLeft"),
+          footerRight: document.getElementById("footerRight"),
           // Quick indent/lang
-          qiToggle: document.getElementById('qiToggle'),
-          qiMenu: document.getElementById('qiMenu'),
-          qiList: document.getElementById('qiList'),
-          qiLabel: document.getElementById('qiLabel'),
-          qlToggle: document.getElementById('qlToggle'),
-          qlMenu: document.getElementById('qlMenu'),
-          qlList: document.getElementById('qlList'),
-          qlLabel: document.getElementById('qlLabel'),
-          inpMaxDepth: document.getElementById('maxDepth'),
-          inpMaxSizeKB: document.getElementById('maxSizeKB'),
-          rememberSession: document.getElementById('rememberSession'),
-          autoFormat: document.getElementById('autoFormat'),
-          labelRemember: document.getElementById('labelRemember'),
-          labelAutoFormat: document.getElementById('labelAutoFormat'),
-          labelLanguage: document.getElementById('labelLanguage'),
-          languageSelect: document.getElementById('languageSelect'),
-          btnCloseSettings: document.getElementById('btnCloseSettings'),
-          btnSaveSettings: document.getElementById('btnSaveSettings'),
-          settingsTitle: document.getElementById('settingsTitle'),
-          labelPalettePreview: document.getElementById('labelPalettePreview'),
+          qiToggle: document.getElementById("qiToggle"),
+          qiMenu: document.getElementById("qiMenu"),
+          qiList: document.getElementById("qiList"),
+          qiLabel: document.getElementById("qiLabel"),
+          qlToggle: document.getElementById("qlToggle"),
+          qlMenu: document.getElementById("qlMenu"),
+          qlList: document.getElementById("qlList"),
+          qlLabel: document.getElementById("qlLabel"),
+          inpMaxDepth: document.getElementById("maxDepth"),
+          inpMaxSizeKB: document.getElementById("maxSizeKB"),
+          rememberSession: document.getElementById("rememberSession"),
+          autoFormat: document.getElementById("autoFormat"),
+          labelRemember: document.getElementById("labelRemember"),
+          labelAutoFormat: document.getElementById("labelAutoFormat"),
+          labelLanguage: document.getElementById("labelLanguage"),
+          languageSelect: document.getElementById("languageSelect"),
+          btnCloseSettings: document.getElementById("btnCloseSettings"),
+          btnSaveSettings: document.getElementById("btnSaveSettings"),
+          settingsTitle: document.getElementById("settingsTitle"),
+          labelPalettePreview: document.getElementById("labelPalettePreview"),
         };
 
         // i18n
         const i18n = {
           tr: {
-            'status.ready': 'Hazır',
-            'status.empty': 'Boş girdi.',
-            'status.formatSuccess': 'Biçimlendirme başarılı.',
-            'status.minifySuccess': 'Sıkıştırma başarılı.',
-            'status.valid': 'Geçerli JSON.',
-            'status.invalid': 'Geçersiz JSON{where}: {error}',
-            'status.jsonError': 'JSON hatası{where}: {error}',
-            'status.depthExceeded': 'Derinlik sınırı aşıldı: > {limit}',
-            'status.sizeExceeded': 'Boyut sınırı aşıldı: {kb}KB > {max}KB',
-            'status.nothingToSave': 'Kaydedilecek içerik yok.',
-            'status.cannotSaveInvalid': 'Geçersiz JSON kaydedilemez.',
-            'status.downloaded': 'Dosya indirildi: {name}',
-            'status.nothingToCopy': 'Kopyalanacak içerik yok.',
-            'status.copied': 'Panoya kopyalandı.',
-            'status.copyFailed': 'Kopyalama başarısız.',
-            'status.clipboardEmpty': 'Panoda metin yok.',
-            'status.clipboardDenied': 'Pano erişimi reddedildi.',
-          'status.repaired': 'Bozuk JSON onarıldı ve biçimlendirildi.',
-          'status.repairFailed': 'JSON onarılamadı: {error}',
-            'where.position': ' (satır {line}, sütun {column})',
-            'btn.format': 'Biçimlendir',
-            'btn.minify': 'Sıkıştır',
-            'btn.validate': 'Doğrula',
-            'btn.expand': 'Genişlet',
-            'btn.collapse': 'Daralt',
-            'label.indent': 'Girinti:',
-            'indent.2': '2 boşluk',
-            'indent.4': '4 boşluk',
-            'indent.tab': 'Sekme',
-            'label.sort': 'Sırala',
-            'label.lang': 'Dil:',
-            'tab.edit': 'Düzenle',
-            'tab.tree': 'Tree',
-            'tab.raw': 'Raw',
-            'tooltip.format': 'Biçimlendir (Ctrl+Enter)',
-            'tooltip.minify': 'Sıkıştır (Minify)',
-            'tooltip.validate': 'Doğrula',
-            'tooltip.load': 'JSON Yükle',
-            'tooltip.save': 'JSON Kaydet',
-            'tooltip.copy': 'Kopyala',
-            'tooltip.paste': 'Yapıştır',
-            'tooltip.theme': 'Tema',
-            'tooltip.full': 'JSON tam ekran',
-            'tooltip.settings': 'Ayarlar',
-            'drag.supported': 'Sürükle-bırak desteklenir',
-            'quick.palette': 'Palet',
-            'drop.hint': 'JSON dosyasını bu alana sürükleyip bırakabilirsiniz.',
-            'footer.left': 'İşlemler tamamen tarayıcınızda gerçekleşir; veri dışarı gönderilmez. ',
-            'footer.right.prefix': 'Kısayol:',
-            'footer.action.format': 'Biçimlendir',
-            'settings.title': 'Ayarlar',
-            'settings.maxDepth': 'Maksimum Derinlik',
-            'settings.maxSizeKB': 'Maksimum Boyut (KB)',
-            'settings.remember': 'Son oturumu hatırla',
-            'settings.palette': 'Renk Paleti',
-            'settings.preview': 'Palet Önizleme',
-            'settings.cancel': 'İptal',
-            'settings.save': 'Kaydet',
-            'settings.language': 'Dil',
-          'settings.autoFormat': 'Otomatik biçimlendir',
-            'tree.depthCap': '… (derinlik sınırı)'
+            "status.ready": "Hazır",
+            "status.empty": "Boş girdi.",
+            "status.formatSuccess": "Biçimlendirme başarılı.",
+            "status.minifySuccess": "Sıkıştırma başarılı.",
+            "status.valid": "Geçerli JSON.",
+            "status.invalid": "Geçersiz JSON{where}: {error}",
+            "status.jsonError": "JSON hatası{where}: {error}",
+            "status.depthExceeded": "Derinlik sınırı aşıldı: > {limit}",
+            "status.sizeExceeded": "Boyut sınırı aşıldı: {kb}KB > {max}KB",
+            "status.nothingToSave": "Kaydedilecek içerik yok.",
+            "status.cannotSaveInvalid": "Geçersiz JSON kaydedilemez.",
+            "status.downloaded": "Dosya indirildi: {name}",
+            "status.nothingToCopy": "Kopyalanacak içerik yok.",
+            "status.copied": "Panoya kopyalandı.",
+            "status.copyFailed": "Kopyalama başarısız.",
+            "status.clipboardEmpty": "Panoda metin yok.",
+            "status.clipboardDenied": "Pano erişimi reddedildi.",
+            "status.repaired": "Bozuk JSON onarıldı ve biçimlendirildi.",
+            "status.repairFailed": "JSON onarılamadı: {error}",
+            "where.position": " (satır {line}, sütun {column})",
+            "btn.format": "Biçimlendir",
+            "btn.minify": "Sıkıştır",
+            "btn.validate": "Doğrula",
+            "btn.expand": "Genişlet",
+            "btn.collapse": "Daralt",
+            "label.indent": "Girinti:",
+            "indent.2": "2 boşluk",
+            "indent.4": "4 boşluk",
+            "indent.tab": "Sekme",
+            "label.sort": "Sırala",
+            "label.lang": "Dil:",
+            "tab.edit": "Düzenle",
+            "tab.tree": "Tree",
+            "tab.raw": "Raw",
+            "tooltip.format": "Biçimlendir (Ctrl+Enter)",
+            "tooltip.minify": "Sıkıştır (Minify)",
+            "tooltip.validate": "Doğrula",
+            "tooltip.load": "JSON Yükle",
+            "tooltip.save": "JSON Kaydet",
+            "tooltip.copy": "Kopyala",
+            "tooltip.paste": "Yapıştır",
+            "tooltip.theme": "Tema",
+            "tooltip.full": "JSON tam ekran",
+            "tooltip.settings": "Ayarlar",
+            "drag.supported": "Sürükle-bırak desteklenir",
+            "quick.palette": "Palet",
+            "drop.hint": "JSON dosyasını bu alana sürükleyip bırakabilirsiniz.",
+            "footer.left":
+              "İşlemler tamamen tarayıcınızda gerçekleşir; veri dışarı gönderilmez. ",
+            "footer.right.prefix": "Kısayol:",
+            "footer.action.format": "Biçimlendir",
+            "settings.title": "Ayarlar",
+            "settings.maxDepth": "Maksimum Derinlik",
+            "settings.maxSizeKB": "Maksimum Boyut (KB)",
+            "settings.remember": "Son oturumu hatırla",
+            "settings.palette": "Renk Paleti",
+            "settings.preview": "Palet Önizleme",
+            "settings.cancel": "İptal",
+            "settings.save": "Kaydet",
+            "settings.language": "Dil",
+            "settings.autoFormat": "Otomatik biçimlendir",
+            "tree.depthCap": "… (derinlik sınırı)",
           },
           en: {
-            'status.ready': 'Ready',
-            'status.empty': 'Empty input.',
-            'status.formatSuccess': 'Format successful.',
-            'status.minifySuccess': 'Minify successful.',
-            'status.valid': 'Valid JSON.',
-            'status.invalid': 'Invalid JSON{where}: {error}',
-            'status.jsonError': 'JSON error{where}: {error}',
-            'status.depthExceeded': 'Depth limit exceeded: > {limit}',
-            'status.sizeExceeded': 'Size limit exceeded: {kb}KB > {max}KB',
-            'status.nothingToSave': 'Nothing to save.',
-            'status.cannotSaveInvalid': 'Cannot save invalid JSON.',
-            'status.downloaded': 'File downloaded: {name}',
-            'status.nothingToCopy': 'Nothing to copy.',
-            'status.copied': 'Copied to clipboard.',
-            'status.copyFailed': 'Copy failed.',
-            'status.clipboardEmpty': 'No text in clipboard.',
-            'status.clipboardDenied': 'Clipboard access denied.',
-          'status.repaired': 'Malformed JSON was repaired and formatted.',
-          'status.repairFailed': 'Could not repair JSON: {error}',
-            'where.position': ' (line {line}, column {column})',
-            'btn.format': 'Format',
-            'btn.minify': 'Minify',
-            'btn.validate': 'Validate',
-            'btn.expand': 'Expand',
-            'btn.collapse': 'Collapse',
-            'label.indent': 'Indent:',
-            'indent.2': '2 spaces',
-            'indent.4': '4 spaces',
-            'indent.tab': 'Tab',
-            'label.sort': 'Sort keys',
-            'label.lang': 'Language:',
-            'tab.edit': 'Edit',
-            'tab.tree': 'Tree',
-            'tab.raw': 'Raw',
-            'tooltip.format': 'Format (Ctrl+Enter)',
-            'tooltip.minify': 'Minify',
-            'tooltip.validate': 'Validate',
-            'tooltip.load': 'Load JSON',
-            'tooltip.save': 'Save JSON',
-            'tooltip.copy': 'Copy',
-            'tooltip.paste': 'Paste',
-            'tooltip.theme': 'Theme',
-            'tooltip.full': 'JSON full screen',
-            'tooltip.settings': 'Settings',
-            'drag.supported': 'Drag and drop supported',
-            'quick.palette': 'Palette',
-            'drop.hint': 'You can drag and drop a JSON file here.',
-            'footer.left': 'All operations happen in your browser; no data is sent out.',
-            'footer.right.prefix': 'Shortcut:',
-            'footer.action.format': 'Format',
-            'settings.title': 'Settings',
-            'settings.maxDepth': 'Max Depth',
-            'settings.maxSizeKB': 'Max Size (KB)',
-            'settings.remember': 'Remember last session',
-            'settings.palette': 'Color Palette',
-            'settings.preview': 'Palette Preview',
-            'settings.cancel': 'Cancel',
-            'settings.save': 'Save',
-            'settings.language': 'Language',
-          'settings.autoFormat': 'Auto format',
-            'tree.depthCap': '… (depth limit)'
-          }
+            "status.ready": "Ready",
+            "status.empty": "Empty input.",
+            "status.formatSuccess": "Format successful.",
+            "status.minifySuccess": "Minify successful.",
+            "status.valid": "Valid JSON.",
+            "status.invalid": "Invalid JSON{where}: {error}",
+            "status.jsonError": "JSON error{where}: {error}",
+            "status.depthExceeded": "Depth limit exceeded: > {limit}",
+            "status.sizeExceeded": "Size limit exceeded: {kb}KB > {max}KB",
+            "status.nothingToSave": "Nothing to save.",
+            "status.cannotSaveInvalid": "Cannot save invalid JSON.",
+            "status.downloaded": "File downloaded: {name}",
+            "status.nothingToCopy": "Nothing to copy.",
+            "status.copied": "Copied to clipboard.",
+            "status.copyFailed": "Copy failed.",
+            "status.clipboardEmpty": "No text in clipboard.",
+            "status.clipboardDenied": "Clipboard access denied.",
+            "status.repaired": "Malformed JSON was repaired and formatted.",
+            "status.repairFailed": "Could not repair JSON: {error}",
+            "where.position": " (line {line}, column {column})",
+            "btn.format": "Format",
+            "btn.minify": "Minify",
+            "btn.validate": "Validate",
+            "btn.expand": "Expand",
+            "btn.collapse": "Collapse",
+            "label.indent": "Indent:",
+            "indent.2": "2 spaces",
+            "indent.4": "4 spaces",
+            "indent.tab": "Tab",
+            "label.sort": "Sort keys",
+            "label.lang": "Language:",
+            "tab.edit": "Edit",
+            "tab.tree": "Tree",
+            "tab.raw": "Raw",
+            "tooltip.format": "Format (Ctrl+Enter)",
+            "tooltip.minify": "Minify",
+            "tooltip.validate": "Validate",
+            "tooltip.load": "Load JSON",
+            "tooltip.save": "Save JSON",
+            "tooltip.copy": "Copy",
+            "tooltip.paste": "Paste",
+            "tooltip.theme": "Theme",
+            "tooltip.full": "JSON full screen",
+            "tooltip.settings": "Settings",
+            "drag.supported": "Drag and drop supported",
+            "quick.palette": "Palette",
+            "drop.hint": "You can drag and drop a JSON file here.",
+            "footer.left":
+              "All operations happen in your browser; no data is sent out.",
+            "footer.right.prefix": "Shortcut:",
+            "footer.action.format": "Format",
+            "settings.title": "Settings",
+            "settings.maxDepth": "Max Depth",
+            "settings.maxSizeKB": "Max Size (KB)",
+            "settings.remember": "Remember last session",
+            "settings.palette": "Color Palette",
+            "settings.preview": "Palette Preview",
+            "settings.cancel": "Cancel",
+            "settings.save": "Save",
+            "settings.language": "Language",
+            "settings.autoFormat": "Auto format",
+            "tree.depthCap": "… (depth limit)",
+          },
         };
 
         function t(key, vars = {}) {
-          const lang = settings.language || 'tr';
-          const base = (i18n[lang] && i18n[lang][key]) || (i18n.tr && i18n.tr[key]) || key;
-          return base.replace(/\{(\w+)\}/g, (_, k) => (vars[k] !== undefined ? String(vars[k]) : `{${k}}`));
+          const lang = settings.language || "tr";
+          const base =
+            (i18n[lang] && i18n[lang][key]) || (i18n.tr && i18n.tr[key]) || key;
+          return base.replace(/\{(\w+)\}/g, (_, k) =>
+            vars[k] !== undefined ? String(vars[k]) : `{${k}}`
+          );
         }
 
         // Analytics helper
         function trackEvent(name, params = {}) {
           try {
-            if (typeof gtag === 'function') {
-              const p = { event_category: 'tool_usage', lang: settings.language, ...params };
-              gtag('event', name, p);
+            if (typeof gtag === "function") {
+              const p = {
+                event_category: "tool_usage",
+                lang: settings.language,
+                ...params,
+              };
+              gtag("event", name, p);
             }
           } catch {}
         }
 
         // Tema
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
-        dom.btnTheme.addEventListener('click', () => {
-          const current = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-          document.documentElement.setAttribute('data-theme', current);
-          localStorage.setItem('theme', current);
-          trackEvent('ui_theme_toggle', { event_category: 'ui', event_label: current === 'light' ? 'to_light' : 'to_dark' });
+        const savedTheme = localStorage.getItem("theme");
+        if (savedTheme)
+          document.documentElement.setAttribute("data-theme", savedTheme);
+        dom.btnTheme.addEventListener("click", () => {
+          const current =
+            document.documentElement.getAttribute("data-theme") === "light"
+              ? "dark"
+              : "light";
+          document.documentElement.setAttribute("data-theme", current);
+          localStorage.setItem("theme", current);
+          trackEvent("ui_theme_toggle", {
+            event_category: "ui",
+            event_label: current === "light" ? "to_light" : "to_dark",
+          });
         });
 
         // Renk paletleri
         const colorPalettes = {
-          classic: { name: 'Klasik', key: '#93c5fd', string: '#fbbf24', number: '#f472b6', boolean: '#34d399', null: '#a3a3a3' },
-          ocean:   { name: 'Okyanus', key: '#38bdf8', string: '#a7f3d0', number: '#7dd3fc', boolean: '#60a5fa', null: '#94a3b8' },
-          sunset:  { name: 'Gün Batımı', key: '#fb7185', string: '#f59e0b', number: '#f472b6', boolean: '#84cc16', null: '#a3a3a3' },
-          cyber:   { name: 'Cyberpunk', key: '#22d3ee', string: '#f0abfc', number: '#f97316', boolean: '#a3e635', null: '#9ca3af' },
-          forest:  { name: 'Orman', key: '#86efac', string: '#fde68a', number: '#93c5fd', boolean: '#34d399', null: '#a3a3a3' },
-          light:   { name: 'Açık', key: '#2563eb', string: '#059669', number: '#b45309', boolean: '#047857', null: '#6b7280' },
-          solar:   { name: 'Solar', key: '#b58900', string: '#2aa198', number: '#cb4b16', boolean: '#859900', null: '#657b83' },
-          pastel:  { name: 'Pastel', key: '#7c7cf5', string: '#ffb3ba', number: '#bae1ff', boolean: '#baffc9', null: '#cfcfcf' },
-          neon:    { name: 'Neon', key: '#39ff14', string: '#ff2079', number: '#00e5ff', boolean: '#ffe700', null: '#bbbbbb' },
-          grayscale: { name: 'Gri Ton', key: '#9ca3af', string: '#d1d5db', number: '#a3a3a3', boolean: '#e5e7eb', null: '#6b7280' },
+          classic: {
+            name: "Klasik",
+            key: "#93c5fd",
+            string: "#fbbf24",
+            number: "#f472b6",
+            boolean: "#34d399",
+            null: "#a3a3a3",
+          },
+          ocean: {
+            name: "Okyanus",
+            key: "#38bdf8",
+            string: "#a7f3d0",
+            number: "#7dd3fc",
+            boolean: "#60a5fa",
+            null: "#94a3b8",
+          },
+          sunset: {
+            name: "Gün Batımı",
+            key: "#fb7185",
+            string: "#f59e0b",
+            number: "#f472b6",
+            boolean: "#84cc16",
+            null: "#a3a3a3",
+          },
+          cyber: {
+            name: "Cyberpunk",
+            key: "#22d3ee",
+            string: "#f0abfc",
+            number: "#f97316",
+            boolean: "#a3e635",
+            null: "#9ca3af",
+          },
+          forest: {
+            name: "Orman",
+            key: "#86efac",
+            string: "#fde68a",
+            number: "#93c5fd",
+            boolean: "#34d399",
+            null: "#a3a3a3",
+          },
+          light: {
+            name: "Açık",
+            key: "#2563eb",
+            string: "#059669",
+            number: "#b45309",
+            boolean: "#047857",
+            null: "#6b7280",
+          },
+          solar: {
+            name: "Solar",
+            key: "#b58900",
+            string: "#2aa198",
+            number: "#cb4b16",
+            boolean: "#859900",
+            null: "#657b83",
+          },
+          pastel: {
+            name: "Pastel",
+            key: "#7c7cf5",
+            string: "#ffb3ba",
+            number: "#bae1ff",
+            boolean: "#baffc9",
+            null: "#cfcfcf",
+          },
+          neon: {
+            name: "Neon",
+            key: "#39ff14",
+            string: "#ff2079",
+            number: "#00e5ff",
+            boolean: "#ffe700",
+            null: "#bbbbbb",
+          },
+          grayscale: {
+            name: "Gri Ton",
+            key: "#9ca3af",
+            string: "#d1d5db",
+            number: "#a3a3a3",
+            boolean: "#e5e7eb",
+            null: "#6b7280",
+          },
           // Yeni – Koyu temalar için belirgin
-          vividDark: { name: 'Koyu (Belirgin)', key: '#7dd3fc', string: '#f472b6', number: '#fbbf24', boolean: '#34d399', null: '#d1d5db' },
-          midnight: { name: 'Gece', key: '#8ab4f8', string: '#ff8ab4', number: '#ffd166', boolean: '#4ade80', null: '#9aa0a6' },
+          vividDark: {
+            name: "Koyu (Belirgin)",
+            key: "#7dd3fc",
+            string: "#f472b6",
+            number: "#fbbf24",
+            boolean: "#34d399",
+            null: "#d1d5db",
+          },
+          midnight: {
+            name: "Gece",
+            key: "#8ab4f8",
+            string: "#ff8ab4",
+            number: "#ffd166",
+            boolean: "#4ade80",
+            null: "#9aa0a6",
+          },
           // Yeni – Açık temalar için belirgin
-          vividLight: { name: 'Açık (Belirgin)', key: '#1d4ed8', string: '#d97706', number: '#b91c1c', boolean: '#16a34a', null: '#475569' },
-          daylight: { name: 'Gün Işığı', key: '#0ea5e9', string: '#16a34a', number: '#b45309', boolean: '#10b981', null: '#6b7280' },
+          vividLight: {
+            name: "Açık (Belirgin)",
+            key: "#1d4ed8",
+            string: "#d97706",
+            number: "#b91c1c",
+            boolean: "#16a34a",
+            null: "#475569",
+          },
+          daylight: {
+            name: "Gün Işığı",
+            key: "#0ea5e9",
+            string: "#16a34a",
+            number: "#b45309",
+            boolean: "#10b981",
+            null: "#6b7280",
+          },
           // Ek – Monokai
-          monokai: { name: 'Monokai', key: '#a6e22e', string: '#e6db74', number: '#ae81ff', boolean: '#66d9ef', null: '#75715e' },
+          monokai: {
+            name: "Monokai",
+            key: "#a6e22e",
+            string: "#e6db74",
+            number: "#ae81ff",
+            boolean: "#66d9ef",
+            null: "#75715e",
+          },
         };
 
         const defaultSettings = {
           maxDepth: 32,
           maxSizeKB: 2048,
-          palette: 'classic',
+          palette: "classic",
           rememberSession: true,
-          indent: '2',
+          indent: "2",
           sortKeys: false,
-          lastInput: '',
-          language: 'tr',
-          autoFormat: false
+          lastInput: "",
+          language: "tr",
+          autoFormat: false,
         };
         let settings = loadSettings();
         // URL ?lang=tr|en parametresi gelirse dili buna göre ayarla (ayarları da güncelle)
         try {
-          const qsLang = new URLSearchParams(window.location.search).get('lang');
+          const qsLang = new URLSearchParams(window.location.search).get(
+            "lang"
+          );
           if (qsLang) {
             const normalized = String(qsLang).toLowerCase();
-            if (normalized === 'tr' || normalized === 'en') {
+            if (normalized === "tr" || normalized === "en") {
               settings.language = normalized;
               saveSettings();
             }
@@ -880,27 +1495,37 @@
         buildQuickLanguage();
 
         // Sekmeler (tek kart)
-        dom.tabs.forEach(btn => btn.addEventListener('click', () => {
-          dom.tabs.forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          const tab = btn.getAttribute('data-tab');
-          dom.viewerRaw.classList.toggle('hidden', tab !== 'raw');
-          dom.viewerTree.classList.toggle('hidden', tab !== 'tree');
-          // Her tab değişiminde RAW ve Tree güncellensin (cache hissi olmasın)
-          formatAction(false);
-        }));
+        dom.tabs.forEach((btn) =>
+          btn.addEventListener("click", () => {
+            dom.tabs.forEach((b) => b.classList.remove("active"));
+            btn.classList.add("active");
+            const tab = btn.getAttribute("data-tab");
+            dom.viewerRaw.classList.toggle("hidden", tab !== "raw");
+            dom.viewerTree.classList.toggle("hidden", tab !== "tree");
+            // Her tab değişiminde RAW ve Tree güncellensin (cache hissi olmasın)
+            formatAction(false);
+          })
+        );
 
         function setStatusOk(message) {
-          dom.status.classList.remove('err');
-          dom.status.classList.add('ok');
+          dom.status.classList.remove("err");
+          dom.status.classList.add("ok");
           dom.status.textContent = message;
-          if (dom.topStatus) { dom.topStatus.classList.remove('err'); dom.topStatus.classList.add('ok'); dom.topStatus.textContent = message; }
+          if (dom.topStatus) {
+            dom.topStatus.classList.remove("err");
+            dom.topStatus.classList.add("ok");
+            dom.topStatus.textContent = message;
+          }
         }
         function setStatusErr(message) {
-          dom.status.classList.remove('ok');
-          dom.status.classList.add('err');
+          dom.status.classList.remove("ok");
+          dom.status.classList.add("err");
           dom.status.textContent = message;
-          if (dom.topStatus) { dom.topStatus.classList.remove('ok'); dom.topStatus.classList.add('err'); dom.topStatus.textContent = message; }
+          if (dom.topStatus) {
+            dom.topStatus.classList.remove("ok");
+            dom.topStatus.classList.add("err");
+            dom.topStatus.textContent = message;
+          }
         }
 
         function parseJsonSafely(text) {
@@ -909,35 +1534,49 @@
             return { ok: true, value };
           } catch (error) {
             const msg = String(error && error.message ? error.message : error);
-            let position = null, line = null, column = null;
+            let position = null,
+              line = null,
+              column = null;
             const match = msg.match(/position\s+(\d+)/i);
             if (match) {
               position = Number(match[1]);
               const lc = positionToLineColumn(text, position);
-              line = lc.line; column = lc.column;
+              line = lc.line;
+              column = lc.column;
             }
             return { ok: false, error: msg, position, line, column };
           }
         }
 
         function positionToLineColumn(text, pos) {
-          let line = 1, column = 1;
+          let line = 1,
+            column = 1;
           for (let i = 0; i < text.length && i < pos; i++) {
             const ch = text.charAt(i);
-            if (ch === '\n') { line++; column = 1; }
-            else { column++; }
+            if (ch === "\n") {
+              line++;
+              column = 1;
+            } else {
+              column++;
+            }
           }
           return { line, column };
         }
 
         function getSizeKB(text) {
-          try { return Math.ceil(new Blob([text]).size / 1024); } catch { return Math.ceil(text.length / 1024); }
+          try {
+            return Math.ceil(new Blob([text]).size / 1024);
+          } catch {
+            return Math.ceil(text.length / 1024);
+          }
         }
 
         function exceedsMaxSize(text) {
           const kb = getSizeKB(text);
           if (kb > settings.maxSizeKB) {
-            setStatusErr(t('status.sizeExceeded', { kb, max: settings.maxSizeKB }));
+            setStatusErr(
+              t("status.sizeExceeded", { kb, max: settings.maxSizeKB })
+            );
             return true;
           }
           return false;
@@ -946,13 +1585,17 @@
         function exceedsMaxDepth(value, limit) {
           function walk(v, depth) {
             if (depth > limit) return true;
-            if (!v || typeof v !== 'object') return false;
+            if (!v || typeof v !== "object") return false;
             if (Array.isArray(v)) {
-              for (let i = 0; i < v.length; i++) { if (walk(v[i], depth + 1)) return true; }
+              for (let i = 0; i < v.length; i++) {
+                if (walk(v[i], depth + 1)) return true;
+              }
               return false;
             }
             const keys = Object.keys(v);
-            for (let i = 0; i < keys.length; i++) { if (walk(v[keys[i]], depth + 1)) return true; }
+            for (let i = 0; i < keys.length; i++) {
+              if (walk(v[keys[i]], depth + 1)) return true;
+            }
             return false;
           }
           return walk(value, 1);
@@ -962,9 +1605,17 @@
           if (Array.isArray(value)) {
             return value.map(sortKeysDeep);
           }
-          if (value && typeof value === 'object' && value.constructor === Object) {
+          if (
+            value &&
+            typeof value === "object" &&
+            value.constructor === Object
+          ) {
             const sorted = {};
-            Object.keys(value).sort().forEach(k => { sorted[k] = sortKeysDeep(value[k]); });
+            Object.keys(value)
+              .sort()
+              .forEach((k) => {
+                sorted[k] = sortKeysDeep(value[k]);
+              });
             return sorted;
           }
           return value;
@@ -977,25 +1628,32 @@
 
         function getIndentSpace() {
           const v = dom.indent.value;
-          if (v === '\\t' || v === '\t' || v === '\u0009' || v === '\\u0009' || v === '\u0009') return '\t';
+          if (
+            v === "\\t" ||
+            v === "\t" ||
+            v === "\u0009" ||
+            v === "\\u0009" ||
+            v === "\u0009"
+          )
+            return "\t";
           const n = Number(v);
           if (Number.isFinite(n) && n > 0) return n;
           return 2;
         }
 
         function getIndentUnit(space) {
-          if (space === '\t') return '\t';
-          if (typeof space === 'number' && space > 0) return ' '.repeat(space);
-          return '';
+          if (space === "\t") return "\t";
+          if (typeof space === "number" && space > 0) return " ".repeat(space);
+          return "";
         }
 
         function escapeHtml(str) {
           return String(str)
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#39;');
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#39;");
         }
 
         // Editörde satır içi renklendirme (ham metin için basit yaklaşım)
@@ -1003,14 +1661,29 @@
           // Basit JSON token’ları: string, number, boolean, null, key
           let html = escapeHtml(text);
           // string (çift tırnak içi)
-          html = html.replace(/&quot;([^"\\]|\\.)*&quot;/g, (m) => `<span class="type-string">${m}</span>`);
+          html = html.replace(
+            /&quot;([^"\\]|\\.)*&quot;/g,
+            (m) => `<span class="type-string">${m}</span>`
+          );
           // numbers
-          html = html.replace(/\b-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?\b/g, (m) => `<span class="type-number">${m}</span>`);
+          html = html.replace(
+            /\b-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?\b/g,
+            (m) => `<span class="type-number">${m}</span>`
+          );
           // booleans and null
-          html = html.replace(/\btrue\b|\bfalse\b/g, (m) => `<span class="type-boolean">${m}</span>`);
-          html = html.replace(/\bnull\b/g, (m) => `<span class="type-null">${m}</span>`);
+          html = html.replace(
+            /\btrue\b|\bfalse\b/g,
+            (m) => `<span class="type-boolean">${m}</span>`
+          );
+          html = html.replace(
+            /\bnull\b/g,
+            (m) => `<span class="type-null">${m}</span>`
+          );
           // keys: "key":
-          html = html.replace(/(&quot;[^&]*?&quot;)\s*:/g, (m, g1) => `<span class="key">${g1}</span>:`);
+          html = html.replace(
+            /(&quot;[^&]*?&quot;)\s*:/g,
+            (m, g1) => `<span class="key">${g1}</span>:`
+          );
           return html;
         }
 
@@ -1020,41 +1693,74 @@
           function render(val, depth) {
             const t = typeof val;
             if (val === null) return '<span class="type-null">null</span>';
-            if (t === 'string') return '<span class="type-string">' + escapeHtml(JSON.stringify(val)) + '</span>';
-            if (t === 'number') return '<span class="type-number">' + String(val) + '</span>';
-            if (t === 'boolean') return '<span class="type-boolean">' + String(val) + '</span>';
+            if (t === "string")
+              return (
+                '<span class="type-string">' +
+                escapeHtml(JSON.stringify(val)) +
+                "</span>"
+              );
+            if (t === "number")
+              return '<span class="type-number">' + String(val) + "</span>";
+            if (t === "boolean")
+              return '<span class="type-boolean">' + String(val) + "</span>";
             if (Array.isArray(val)) {
-              if (val.length === 0) return '[]';
+              if (val.length === 0) return "[]";
               if (compact) {
-                return '[' + val.map(item => render(item, depth + 1)).join(',') + ']';
+                return (
+                  "[" +
+                  val.map((item) => render(item, depth + 1)).join(",") +
+                  "]"
+                );
               }
               const indent = indentUnit.repeat(depth);
               const nextIndent = indentUnit.repeat(depth + 1);
-              let out = '[\n';
+              let out = "[\n";
               for (let i = 0; i < val.length; i++) {
-                out += nextIndent + render(val[i], depth + 1) + (i < val.length - 1 ? ',' : '') + '\n';
+                out +=
+                  nextIndent +
+                  render(val[i], depth + 1) +
+                  (i < val.length - 1 ? "," : "") +
+                  "\n";
               }
-              out += indent + ']';
+              out += indent + "]";
               return out;
             }
-            if (t === 'object') {
+            if (t === "object") {
               const keys = Object.keys(val);
-              if (keys.length === 0) return '{}';
+              if (keys.length === 0) return "{}";
               if (compact) {
-                return '{' + keys.map((k, i) => {
-                  const keyHtml = '<span class="key">' + escapeHtml(JSON.stringify(k)) + '</span>';
-                  return keyHtml + ':' + render(val[k], depth + 1);
-                }).join(',') + '}';
+                return (
+                  "{" +
+                  keys
+                    .map((k, i) => {
+                      const keyHtml =
+                        '<span class="key">' +
+                        escapeHtml(JSON.stringify(k)) +
+                        "</span>";
+                      return keyHtml + ":" + render(val[k], depth + 1);
+                    })
+                    .join(",") +
+                  "}"
+                );
               }
               const indent = indentUnit.repeat(depth);
               const nextIndent = indentUnit.repeat(depth + 1);
-              let out = '{\n';
+              let out = "{\n";
               for (let i = 0; i < keys.length; i++) {
                 const k = keys[i];
-                const keyHtml = '<span class="key">' + escapeHtml(JSON.stringify(k)) + '</span>';
-                out += nextIndent + keyHtml + ': ' + render(val[k], depth + 1) + (i < keys.length - 1 ? ',' : '') + '\n';
+                const keyHtml =
+                  '<span class="key">' +
+                  escapeHtml(JSON.stringify(k)) +
+                  "</span>";
+                out +=
+                  nextIndent +
+                  keyHtml +
+                  ": " +
+                  render(val[k], depth + 1) +
+                  (i < keys.length - 1 ? "," : "") +
+                  "\n";
               }
-              out += indent + '}';
+              out += indent + "}";
               return out;
             }
             return escapeHtml(String(val));
@@ -1064,29 +1770,60 @@
 
         // Bozuk JSON onarma yardımcıları (best-effort)
         function stripJsonLikeComments(text) {
-          let out = '';
-          let inLine = false, inBlock = false, inStr = false, strQuote = '"', esc = false;
+          let out = "";
+          let inLine = false,
+            inBlock = false,
+            inStr = false,
+            strQuote = '"',
+            esc = false;
           for (let i = 0; i < text.length; i++) {
             const ch = text[i];
             const next = text[i + 1];
             if (inLine) {
-              if (ch === '\n') { inLine = false; out += ch; }
+              if (ch === "\n") {
+                inLine = false;
+                out += ch;
+              }
               continue;
             }
             if (inBlock) {
-              if (ch === '*' && next === '/') { inBlock = false; i++; }
+              if (ch === "*" && next === "/") {
+                inBlock = false;
+                i++;
+              }
               continue;
             }
             if (inStr) {
               out += ch;
-              if (esc) { esc = false; continue; }
-              if (ch === '\\') { esc = true; continue; }
-              if (ch === strQuote) { inStr = false; }
+              if (esc) {
+                esc = false;
+                continue;
+              }
+              if (ch === "\\") {
+                esc = true;
+                continue;
+              }
+              if (ch === strQuote) {
+                inStr = false;
+              }
               continue;
             }
-            if (ch === '"' || ch === "'") { inStr = true; strQuote = ch; out += ch; continue; }
-            if (ch === '/' && next === '/') { inLine = true; i++; continue; }
-            if (ch === '/' && next === '*') { inBlock = true; i++; continue; }
+            if (ch === '"' || ch === "'") {
+              inStr = true;
+              strQuote = ch;
+              out += ch;
+              continue;
+            }
+            if (ch === "/" && next === "/") {
+              inLine = true;
+              i++;
+              continue;
+            }
+            if (ch === "/" && next === "*") {
+              inBlock = true;
+              i++;
+              continue;
+            }
             out += ch;
           }
           return out;
@@ -1094,17 +1831,20 @@
 
         function normalizeSmartQuotes(text) {
           return text
-            .replace(/\u201C|\u201D|\u201E|\u201F|\u2033|\u2036|\u00AB|\u00BB/g, '"')
+            .replace(
+              /\u201C|\u201D|\u201E|\u201F|\u2033|\u2036|\u00AB|\u00BB/g,
+              '"'
+            )
             .replace(/\u2018|\u2019|\u201A|\u201B/g, "'");
         }
 
         function replaceBacktickStrings(text) {
           return text.replace(/`([^`\\]*(?:\\.[^`\\]*)*)`/g, (_m, inner) => {
             const escaped = inner
-              .replace(/\\/g, '\\\\')
+              .replace(/\\/g, "\\\\")
               .replace(/"/g, '\\"')
-              .replace(/\n/g, '\\n')
-              .replace(/\r/g, '\\r');
+              .replace(/\n/g, "\\n")
+              .replace(/\r/g, "\\r");
             return '"' + escaped + '"';
           });
         }
@@ -1113,10 +1853,10 @@
           return text.replace(/'([^'\\]*(?:\\.[^'\\]*)*)'/g, (_m, inner) => {
             const unescaped = inner.replace(/\\'/g, "'");
             const escaped = unescaped
-              .replace(/\\/g, '\\\\')
+              .replace(/\\/g, "\\\\")
               .replace(/"/g, '\\"')
-              .replace(/\n/g, '\\n')
-              .replace(/\r/g, '\\r');
+              .replace(/\n/g, "\\n")
+              .replace(/\r/g, "\\r");
             return '"' + escaped + '"';
           });
         }
@@ -1126,17 +1866,17 @@
         }
 
         function removeTrailingCommas(text) {
-          return text.replace(/,(\s*[}\]])/g, '$1');
+          return text.replace(/,(\s*[}\]])/g, "$1");
         }
 
         function basicRepairs(text) {
           let s = text;
-          s = s.replace(/^\uFEFF/, '');
+          s = s.replace(/^\uFEFF/, "");
           s = normalizeSmartQuotes(s);
           s = stripJsonLikeComments(s);
           s = replaceBacktickStrings(s);
           s = removeTrailingCommas(s);
-          s = s.replace(/;+(\s*)$/g, '$1');
+          s = s.replace(/;+(\s*)$/g, "$1");
           s = quoteUnquotedKeys(s);
           s = replaceSingleQuotedStrings(s);
           return s;
@@ -1144,9 +1884,11 @@
 
         function tryParseWrappedArray(text) {
           try {
-            const wrapped = basicRepairs('[' + text.trim() + ']');
+            const wrapped = basicRepairs("[" + text.trim() + "]");
             return { ok: true, value: JSON.parse(wrapped) };
-          } catch (e) { return { ok: false, error: e }; }
+          } catch (e) {
+            return { ok: false, error: e };
+          }
         }
 
         function tryParseJsonLines(text) {
@@ -1155,7 +1897,7 @@
           for (let raw of lines) {
             let line = raw.trim();
             if (!line) continue;
-            if (line.endsWith(',')) line = line.slice(0, -1).trim();
+            if (line.endsWith(",")) line = line.slice(0, -1).trim();
             const repaired = basicRepairs(line);
             try {
               const val = JSON.parse(repaired);
@@ -1164,29 +1906,40 @@
               return { ok: false, error: e };
             }
           }
-          if (arr.length === 0) return { ok: false, error: 'empty' };
+          if (arr.length === 0) return { ok: false, error: "empty" };
           return { ok: true, value: arr };
         }
 
         function tryRepairJson(text) {
           // 1) Direkt dene
-          try { return { ok: true, value: JSON.parse(text) }; } catch (e0) {}
+          try {
+            return { ok: true, value: JSON.parse(text) };
+          } catch (e0) {}
           // 2) Basit onarımlar
           const basic = basicRepairs(text);
-          try { return { ok: true, value: JSON.parse(basic) }; } catch (e1) {}
+          try {
+            return { ok: true, value: JSON.parse(basic) };
+          } catch (e1) {}
           // 3) Diziy(miş) gibi: başa-sonra köşeli parantez ekle
           const wrapped = tryParseWrappedArray(text);
           if (wrapped.ok) return wrapped;
           // 4) JSON Lines
           const lines = tryParseJsonLines(text);
           if (lines.ok) return lines;
-          return { ok: false, error: String((wrapped.error && wrapped.error.message) || (lines.error && lines.error.message) || 'unknown') };
+          return {
+            ok: false,
+            error: String(
+              (wrapped.error && wrapped.error.message) ||
+                (lines.error && lines.error.message) ||
+                "unknown"
+            ),
+          };
         }
 
         // Sadece boşluk/yenisatır ekleyerek (içeriğe dokunmadan) rahat okunur hale getir
         function prettyPrintLenient(text, indentUnit) {
           const unit = indentUnit || getIndentUnit(getIndentSpace());
-          let out = '';
+          let out = "";
           let depth = 0;
           let inStr = false;
           let quote = '"';
@@ -1195,34 +1948,52 @@
             const ch = text[i];
             if (inStr) {
               out += ch;
-              if (esc) { esc = false; continue; }
-              if (ch === '\\') { esc = true; continue; }
-              if (ch === quote) { inStr = false; }
+              if (esc) {
+                esc = false;
+                continue;
+              }
+              if (ch === "\\") {
+                esc = true;
+                continue;
+              }
+              if (ch === quote) {
+                inStr = false;
+              }
               continue;
             }
-            if (ch === '"' || ch === "'") { inStr = true; quote = ch; out += ch; continue; }
-            if (ch === ' ' || ch === '\t' || ch === '\r' || ch === '\n') { continue; }
-            if (ch === '{' || ch === '[') {
-              out += ch + '\n' + unit.repeat(++depth);
+            if (ch === '"' || ch === "'") {
+              inStr = true;
+              quote = ch;
+              out += ch;
               continue;
             }
-            if (ch === '}' || ch === ']') {
+            if (ch === " " || ch === "\t" || ch === "\r" || ch === "\n") {
+              continue;
+            }
+            if (ch === "{" || ch === "[") {
+              out += ch + "\n" + unit.repeat(++depth);
+              continue;
+            }
+            if (ch === "}" || ch === "]") {
               depth = Math.max(0, depth - 1);
-              out += '\n' + unit.repeat(depth) + ch;
+              out += "\n" + unit.repeat(depth) + ch;
               continue;
             }
-            if (ch === ',') {
-              out += ch + '\n' + unit.repeat(depth);
+            if (ch === ",") {
+              out += ch + "\n" + unit.repeat(depth);
               continue;
             }
-            if (ch === ':') { out += ': '; continue; }
+            if (ch === ":") {
+              out += ": ";
+              continue;
+            }
             out += ch;
           }
           return out;
         }
 
         function minifyLenient(text) {
-          let out = '';
+          let out = "";
           let inStr = false;
           let quote = '"';
           let esc = false;
@@ -1230,13 +2001,28 @@
             const ch = text[i];
             if (inStr) {
               out += ch;
-              if (esc) { esc = false; continue; }
-              if (ch === '\\') { esc = true; continue; }
-              if (ch === quote) { inStr = false; }
+              if (esc) {
+                esc = false;
+                continue;
+              }
+              if (ch === "\\") {
+                esc = true;
+                continue;
+              }
+              if (ch === quote) {
+                inStr = false;
+              }
               continue;
             }
-            if (ch === '"' || ch === "'") { inStr = true; quote = ch; out += ch; continue; }
-            if (ch === ' ' || ch === '\t' || ch === '\r' || ch === '\n') { continue; }
+            if (ch === '"' || ch === "'") {
+              inStr = true;
+              quote = ch;
+              out += ch;
+              continue;
+            }
+            if (ch === " " || ch === "\t" || ch === "\r" || ch === "\n") {
+              continue;
+            }
             out += ch;
           }
           return out;
@@ -1245,122 +2031,209 @@
         function formatAction(replaceInput = true) {
           const text = dom.input.value.trim();
           if (exceedsMaxSize(text)) return;
-          if (!text) { setStatusOk(t('status.empty')); dom.tree.innerHTML = ''; dom.raw.textContent = ''; return; }
+          if (!text) {
+            setStatusOk(t("status.empty"));
+            dom.tree.innerHTML = "";
+            dom.raw.textContent = "";
+            return;
+          }
           const result = parseJsonSafely(text);
           if (!result.ok) {
             // Geçersizse: pretty (lenient) uygula ve renklendir, input'a yaz (minify etme)
-            const prettyLenient = prettyPrintLenient(text, getIndentUnit(getIndentSpace()));
-            dom.raw.innerHTML = buildInlineHighlightedHtmlFromText(prettyLenient);
-            dom.tree.innerHTML = '';
+            const prettyLenient = prettyPrintLenient(
+              text,
+              getIndentUnit(getIndentSpace())
+            );
+            dom.raw.innerHTML =
+              buildInlineHighlightedHtmlFromText(prettyLenient);
+            dom.tree.innerHTML = "";
             if (replaceInput) dom.input.value = prettyLenient;
-            const where = (result.line && result.column) ? t('where.position', { line: result.line, column: result.column }) : '';
-            setStatusErr(t('status.jsonError', { where, error: result.error }));
-            trackEvent('json_format', { event_label: 'format_lenient', value: 1, error_type: 'invalid_json' });
+            const where =
+              result.line && result.column
+                ? t("where.position", {
+                    line: result.line,
+                    column: result.column,
+                  })
+                : "";
+            setStatusErr(t("status.jsonError", { where, error: result.error }));
+            trackEvent("json_format", {
+              event_label: "format_lenient",
+              value: 1,
+              error_type: "invalid_json",
+            });
             return;
           }
           if (exceedsMaxDepth(result.value, settings.maxDepth)) {
-            setStatusErr(t('status.depthExceeded', { limit: settings.maxDepth }));
-            trackEvent('json_format', { event_label: 'format_depth_exceeded', value: 0 });
+            setStatusErr(
+              t("status.depthExceeded", { limit: settings.maxDepth })
+            );
+            trackEvent("json_format", {
+              event_label: "format_depth_exceeded",
+              value: 0,
+            });
             return;
           }
           const space = getIndentSpace();
           const pretty = stringify(result.value, space, dom.sortKeys.checked);
           if (replaceInput) dom.input.value = pretty;
           const indentUnit = getIndentUnit(space);
-          dom.raw.innerHTML = buildHighlightedHtml(result.value, indentUnit, dom.sortKeys.checked);
+          dom.raw.innerHTML = buildHighlightedHtml(
+            result.value,
+            indentUnit,
+            dom.sortKeys.checked
+          );
           renderTree(result.value);
-          if (settings.rememberSession) { settings.lastInput = dom.input.value; saveSettings(); }
-          setStatusOk(t('status.formatSuccess'));
-          trackEvent('json_format', { event_label: 'format_success', value: 1 });
+          if (settings.rememberSession) {
+            settings.lastInput = dom.input.value;
+            saveSettings();
+          }
+          setStatusOk(t("status.formatSuccess"));
+          trackEvent("json_format", {
+            event_label: "format_success",
+            value: 1,
+          });
         }
 
         function minifyAction() {
           const text = dom.input.value.trim();
           if (exceedsMaxSize(text)) return;
-          if (!text) { setStatusOk(t('status.empty')); return; }
+          if (!text) {
+            setStatusOk(t("status.empty"));
+            return;
+          }
           const result = parseJsonSafely(text);
           if (!result.ok) {
             // Geçersizse: minify (lenient) uygula ve renklendir, input'a yaz
             const minified = minifyLenient(text);
             dom.raw.innerHTML = buildInlineHighlightedHtmlFromText(minified);
-            dom.tree.innerHTML = '';
+            dom.tree.innerHTML = "";
             dom.input.value = minified;
-            const where = (result.line && result.column) ? t('where.position', { line: result.line, column: result.column }) : '';
-            setStatusErr(t('status.jsonError', { where, error: result.error }));
-            trackEvent('json_minify', { event_label: 'minify_lenient', value: 1, error_type: 'invalid_json' });
+            const where =
+              result.line && result.column
+                ? t("where.position", {
+                    line: result.line,
+                    column: result.column,
+                  })
+                : "";
+            setStatusErr(t("status.jsonError", { where, error: result.error }));
+            trackEvent("json_minify", {
+              event_label: "minify_lenient",
+              value: 1,
+              error_type: "invalid_json",
+            });
             return;
           }
-          if (exceedsMaxDepth(result.value, settings.maxDepth)) { setStatusErr(t('status.depthExceeded', { limit: settings.maxDepth })); return; }
+          if (exceedsMaxDepth(result.value, settings.maxDepth)) {
+            setStatusErr(
+              t("status.depthExceeded", { limit: settings.maxDepth })
+            );
+            return;
+          }
           const minified = stringify(result.value, 0, dom.sortKeys.checked);
           dom.input.value = minified;
-          dom.raw.innerHTML = buildHighlightedHtml(result.value, '', dom.sortKeys.checked);
+          dom.raw.innerHTML = buildHighlightedHtml(
+            result.value,
+            "",
+            dom.sortKeys.checked
+          );
           renderTree(result.value);
-          if (settings.rememberSession) { settings.lastInput = dom.input.value; saveSettings(); }
-          setStatusOk(t('status.minifySuccess'));
-          trackEvent('json_minify', { event_label: 'minify_success', value: 1 });
+          if (settings.rememberSession) {
+            settings.lastInput = dom.input.value;
+            saveSettings();
+          }
+          setStatusOk(t("status.minifySuccess"));
+          trackEvent("json_minify", {
+            event_label: "minify_success",
+            value: 1,
+          });
         }
 
         function validateAction() {
           const text = dom.input.value.trim();
           if (exceedsMaxSize(text)) return;
-          if (!text) { setStatusOk(t('status.empty')); return; }
+          if (!text) {
+            setStatusOk(t("status.empty"));
+            return;
+          }
           const result = parseJsonSafely(text);
           if (!result.ok) {
             // Değiştirmeden lenient biçimle, ham metni renklendirerek göster
-            const prettyLenient = prettyPrintLenient(text, getIndentUnit(getIndentSpace()));
-            dom.raw.innerHTML = buildInlineHighlightedHtmlFromText(prettyLenient);
-            dom.tree.innerHTML = '';
-            const where = (result.line && result.column) ? t('where.position', { line: result.line, column: result.column }) : '';
-            setStatusErr(t('status.invalid', { where, error: result.error }));
-            trackEvent('json_validate', { event_label: 'validation_error', error_type: 'syntax_error' });
+            const prettyLenient = prettyPrintLenient(
+              text,
+              getIndentUnit(getIndentSpace())
+            );
+            dom.raw.innerHTML =
+              buildInlineHighlightedHtmlFromText(prettyLenient);
+            dom.tree.innerHTML = "";
+            const where =
+              result.line && result.column
+                ? t("where.position", {
+                    line: result.line,
+                    column: result.column,
+                  })
+                : "";
+            setStatusErr(t("status.invalid", { where, error: result.error }));
+            trackEvent("json_validate", {
+              event_label: "validation_error",
+              error_type: "syntax_error",
+            });
             return;
           }
-          if (exceedsMaxDepth(result.value, settings.maxDepth)) { setStatusErr(t('status.depthExceeded', { limit: settings.maxDepth })); return; }
-          setStatusOk(t('status.valid'));
-          trackEvent('json_validate', { event_label: 'validation_success', value: 1 });
+          if (exceedsMaxDepth(result.value, settings.maxDepth)) {
+            setStatusErr(
+              t("status.depthExceeded", { limit: settings.maxDepth })
+            );
+            return;
+          }
+          setStatusOk(t("status.valid"));
+          trackEvent("json_validate", {
+            event_label: "validation_success",
+            value: 1,
+          });
         }
 
         function createNodeLabel(keyText, value) {
-          const node = document.createElement('span');
-          node.className = 'node';
+          const node = document.createElement("span");
+          node.className = "node";
           if (keyText !== null && keyText !== undefined) {
-            const keyEl = document.createElement('span');
-            keyEl.className = 'key';
-            keyEl.textContent = typeof keyText === 'number' ? `[${keyText}]` : keyText;
+            const keyEl = document.createElement("span");
+            keyEl.className = "key";
+            keyEl.textContent =
+              typeof keyText === "number" ? `[${keyText}]` : keyText;
             node.appendChild(keyEl);
-            const colon = document.createElement('span');
-            colon.className = 'dim';
-            colon.textContent = ': ';
+            const colon = document.createElement("span");
+            colon.className = "dim";
+            colon.textContent = ": ";
             node.appendChild(colon);
           }
 
           const t = typeof value;
-          let valueEl = document.createElement('span');
+          let valueEl = document.createElement("span");
           if (value === null) {
-            valueEl.className = 'type-null';
-            valueEl.textContent = 'null';
-          } else if (t === 'string') {
-            valueEl.className = 'type-string';
+            valueEl.className = "type-null";
+            valueEl.textContent = "null";
+          } else if (t === "string") {
+            valueEl.className = "type-string";
             valueEl.textContent = '"' + value + '"';
-          } else if (t === 'number') {
-            valueEl.className = 'type-number';
+          } else if (t === "number") {
+            valueEl.className = "type-number";
             valueEl.textContent = String(value);
-          } else if (t === 'boolean') {
-            valueEl.className = 'type-boolean';
+          } else if (t === "boolean") {
+            valueEl.className = "type-boolean";
             valueEl.textContent = String(value);
           } else if (Array.isArray(value)) {
-            const badge = document.createElement('span');
-            badge.className = 'badge';
+            const badge = document.createElement("span");
+            badge.className = "badge";
             badge.textContent = `[${value.length}]`;
-            node.appendChild(document.createTextNode('[]'));
+            node.appendChild(document.createTextNode("[]"));
             node.appendChild(badge);
             return node;
-          } else if (t === 'object') {
+          } else if (t === "object") {
             const keys = Object.keys(value);
-            const badge = document.createElement('span');
-            badge.className = 'badge';
+            const badge = document.createElement("span");
+            badge.className = "badge";
             badge.textContent = `{${keys.length}}`;
-            node.appendChild(document.createTextNode('{}'));
+            node.appendChild(document.createTextNode("{}"));
             node.appendChild(badge);
             return node;
           }
@@ -1369,51 +2242,63 @@
         }
 
         function buildTree(value, key, depth = 1) {
-          const li = document.createElement('li');
-          const isObj = value && typeof value === 'object' && value.constructor === Object;
+          const li = document.createElement("li");
+          const isObj =
+            value && typeof value === "object" && value.constructor === Object;
           const isArr = Array.isArray(value);
-          const hasChildren = isObj ? Object.keys(value).length > 0 : (isArr ? value.length > 0 : false);
+          const hasChildren = isObj
+            ? Object.keys(value).length > 0
+            : isArr
+            ? value.length > 0
+            : false;
 
           if (isObj || isArr) {
-            const head = document.createElement('div');
-            head.className = 'node';
+            const head = document.createElement("div");
+            head.className = "node";
 
-            const caret = document.createElement('span');
-            caret.className = 'caret';
-            caret.setAttribute('role', 'button');
-            caret.setAttribute('tabindex', '0');
+            const caret = document.createElement("span");
+            caret.className = "caret";
+            caret.setAttribute("role", "button");
+            caret.setAttribute("tabindex", "0");
             head.appendChild(caret);
 
             const label = createNodeLabel(key ?? null, value);
             head.appendChild(label);
             li.appendChild(head);
 
-            const children = document.createElement('ul');
-            children.className = 'children';
+            const children = document.createElement("ul");
+            children.className = "children";
 
             if (depth >= settings.maxDepth) {
-              const cap = document.createElement('li');
-            const capNode = document.createElement('div');
-              capNode.className = 'node dim';
-            capNode.textContent = t('tree.depthCap');
+              const cap = document.createElement("li");
+              const capNode = document.createElement("div");
+              capNode.className = "node dim";
+              capNode.textContent = t("tree.depthCap");
               cap.appendChild(capNode);
               children.appendChild(cap);
             } else {
               const list = isArr ? value : value;
               const keys = isArr ? value.map((_, i) => i) : Object.keys(list);
-              keys.forEach(k => {
+              keys.forEach((k) => {
                 const child = buildTree(list[k], k, depth + 1);
                 children.appendChild(child);
               });
             }
 
             li.appendChild(children);
-            if (hasChildren) li.classList.add('expanded');
-            caret.addEventListener('click', () => { li.classList.toggle('expanded'); });
-            caret.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); li.classList.toggle('expanded'); } });
+            if (hasChildren) li.classList.add("expanded");
+            caret.addEventListener("click", () => {
+              li.classList.toggle("expanded");
+            });
+            caret.addEventListener("keydown", (e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                li.classList.toggle("expanded");
+              }
+            });
           } else {
-            const line = document.createElement('div');
-            line.className = 'node';
+            const line = document.createElement("div");
+            line.className = "node";
             line.appendChild(createNodeLabel(key ?? null, value));
             li.appendChild(line);
           }
@@ -1422,69 +2307,132 @@
         }
 
         function renderTree(value) {
-          dom.tree.innerHTML = '';
+          dom.tree.innerHTML = "";
           const root = buildTree(value, null, 1);
-          dom.tree.appendChild(document.createElement('ul')).appendChild(root);
+          dom.tree.appendChild(document.createElement("ul")).appendChild(root);
         }
 
         function expandCollapseAll(expand) {
-          const nodes = dom.tree.querySelectorAll('li');
-          nodes.forEach(n => {
-            if (expand) n.classList.add('expanded'); else n.classList.remove('expanded');
+          const nodes = dom.tree.querySelectorAll("li");
+          nodes.forEach((n) => {
+            if (expand) n.classList.add("expanded");
+            else n.classList.remove("expanded");
           });
         }
 
-        dom.btnFormat.addEventListener('click', () => formatAction(true));
-        dom.btnMinify.addEventListener('click', () => minifyAction());
-        dom.btnValidate.addEventListener('click', () => validateAction());
-        dom.btnExpand.addEventListener('click', () => { formatAction(false); expandCollapseAll(true); });
-        dom.btnCollapse.addEventListener('click', () => { formatAction(false); expandCollapseAll(false); });
+        dom.btnFormat.addEventListener("click", () => formatAction(true));
+        dom.btnMinify.addEventListener("click", () => minifyAction());
+        dom.btnValidate.addEventListener("click", () => validateAction());
+        dom.btnExpand.addEventListener("click", () => {
+          formatAction(false);
+          expandCollapseAll(true);
+        });
+        dom.btnCollapse.addEventListener("click", () => {
+          formatAction(false);
+          expandCollapseAll(false);
+        });
         // Click tracking
-        dom.btnFormat.addEventListener('click', () => trackEvent('ui_click', { event_category: 'ui', event_label: 'btn_format' }));
-        dom.btnMinify.addEventListener('click', () => trackEvent('ui_click', { event_category: 'ui', event_label: 'btn_minify' }));
-        dom.btnValidate.addEventListener('click', () => trackEvent('ui_click', { event_category: 'ui', event_label: 'btn_validate' }));
-        dom.btnExpand.addEventListener('click', () => trackEvent('ui_click', { event_category: 'ui', event_label: 'btn_expand_all' }));
-        dom.btnCollapse.addEventListener('click', () => trackEvent('ui_click', { event_category: 'ui', event_label: 'btn_collapse_all' }));
+        dom.btnFormat.addEventListener("click", () =>
+          trackEvent("ui_click", {
+            event_category: "ui",
+            event_label: "btn_format",
+          })
+        );
+        dom.btnMinify.addEventListener("click", () =>
+          trackEvent("ui_click", {
+            event_category: "ui",
+            event_label: "btn_minify",
+          })
+        );
+        dom.btnValidate.addEventListener("click", () =>
+          trackEvent("ui_click", {
+            event_category: "ui",
+            event_label: "btn_validate",
+          })
+        );
+        dom.btnExpand.addEventListener("click", () =>
+          trackEvent("ui_click", {
+            event_category: "ui",
+            event_label: "btn_expand_all",
+          })
+        );
+        dom.btnCollapse.addEventListener("click", () =>
+          trackEvent("ui_click", {
+            event_category: "ui",
+            event_label: "btn_collapse_all",
+          })
+        );
 
         // Girinti ve anahtar sıralama: anında uygula
-        dom.indent.addEventListener('change', () => {
+        dom.indent.addEventListener("change", () => {
           // Sekme seçildiğinde de pretty bas
           formatAction(true);
-          trackEvent('settings_change', { event_label: 'indent', value: dom.indent.value });
+          trackEvent("settings_change", {
+            event_label: "indent",
+            value: dom.indent.value,
+          });
         });
-        dom.sortKeys.addEventListener('change', () => { formatAction(true); trackEvent('settings_change', { event_label: 'sort_keys', value: dom.sortKeys.checked ? 1 : 0 }); });
+        dom.sortKeys.addEventListener("change", () => {
+          formatAction(true);
+          trackEvent("settings_change", {
+            event_label: "sort_keys",
+            value: dom.sortKeys.checked ? 1 : 0,
+          });
+        });
         // Edit alanı değiştikçe RAW ve Tree anında güncellensin (lenient)
         let inputUpdateTimer = null;
-        dom.input.addEventListener('input', () => {
+        dom.input.addEventListener("input", () => {
           clearTimeout(inputUpdateTimer);
-          inputUpdateTimer = setTimeout(() => { if (settings.autoFormat) formatAction(false); else { syncHighlight(); } }, 200);
+          inputUpdateTimer = setTimeout(() => {
+            if (settings.autoFormat) formatAction(false);
+            else {
+              syncHighlight();
+            }
+          }, 200);
           syncHighlight();
         });
 
         // Dil seçimi (header)
-        dom.lang.addEventListener('change', () => {
+        dom.lang.addEventListener("change", () => {
           settings.language = dom.lang.value;
           saveSettings();
           applyLanguage(settings.language);
-          if (dom.input.value.trim() && (!dom.viewerEdit.classList.contains('hidden'))) {
+          if (
+            dom.input.value.trim() &&
+            !dom.viewerEdit.classList.contains("hidden")
+          ) {
             // Sadece düzenleme görünümündeyse status'u güncelle
           }
           // Eski edit görünümü kaldırıldı
           // if (!dom.viewerEdit.classList.contains('hidden')) return;
           if (dom.input.value.trim()) formatAction(false);
-          trackEvent('settings_change', { event_label: 'language_header', value: settings.language });
+          trackEvent("settings_change", {
+            event_label: "language_header",
+            value: settings.language,
+          });
         });
 
         // Ayarlar aç/kapa
-        dom.btnSettings.addEventListener('click', () => openSettings());
-        dom.btnSettings.addEventListener('click', () => trackEvent('ui_click', { event_category: 'ui', event_label: 'btn_settings' }));
-        dom.btnCloseSettings.addEventListener('click', () => closeSettings());
-        dom.btnCloseSettings.addEventListener('click', () => trackEvent('settings_close', { event_label: 'cancel' }));
-        dom.btnSaveSettings.addEventListener('click', () => saveSettingsFromUI());
-        dom.btnSaveSettings.addEventListener('click', () => trackEvent('settings_save', { event_label: 'save' }));
+        dom.btnSettings.addEventListener("click", () => openSettings());
+        dom.btnSettings.addEventListener("click", () =>
+          trackEvent("ui_click", {
+            event_category: "ui",
+            event_label: "btn_settings",
+          })
+        );
+        dom.btnCloseSettings.addEventListener("click", () => closeSettings());
+        dom.btnCloseSettings.addEventListener("click", () =>
+          trackEvent("settings_close", { event_label: "cancel" })
+        );
+        dom.btnSaveSettings.addEventListener("click", () =>
+          saveSettingsFromUI()
+        );
+        dom.btnSaveSettings.addEventListener("click", () =>
+          trackEvent("settings_save", { event_label: "save" })
+        );
 
-        dom.input.addEventListener('keydown', (e) => {
-          if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        dom.input.addEventListener("keydown", (e) => {
+          if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
             e.preventDefault();
             formatAction(true);
           }
@@ -1493,88 +2441,137 @@
         const syncHighlight = () => {
           const text = dom.input.value;
           const html = buildInlineHighlightedHtmlFromText(text);
-          const el = document.getElementById('inputHighlight');
+          const el = document.getElementById("inputHighlight");
           if (el) el.innerHTML = html;
-          const ta = dom.input, hw = document.getElementById('inputHighlight');
-          if (hw) hw.scrollTop = ta.scrollTop, hw.scrollLeft = ta.scrollLeft;
+          const ta = dom.input,
+            hw = document.getElementById("inputHighlight");
+          if (hw)
+            (hw.scrollTop = ta.scrollTop), (hw.scrollLeft = ta.scrollLeft);
         };
-        dom.input.addEventListener('input', syncHighlight);
-        dom.input.addEventListener('scroll', () => {
-          const hw = document.getElementById('inputHighlight');
-          if (hw) { hw.scrollTop = dom.input.scrollTop; hw.scrollLeft = dom.input.scrollLeft; }
+        dom.input.addEventListener("input", syncHighlight);
+        dom.input.addEventListener("scroll", () => {
+          const hw = document.getElementById("inputHighlight");
+          if (hw) {
+            hw.scrollTop = dom.input.scrollTop;
+            hw.scrollLeft = dom.input.scrollLeft;
+          }
         });
 
         // Dosya yükleme
-        dom.btnLoad.addEventListener('click', () => dom.fileInput.click());
-        dom.btnLoad.addEventListener('click', () => trackEvent('ui_click', { event_category: 'ui', event_label: 'btn_load' }));
-        dom.fileInput.addEventListener('change', async () => {
+        dom.btnLoad.addEventListener("click", () => dom.fileInput.click());
+        dom.btnLoad.addEventListener("click", () =>
+          trackEvent("ui_click", {
+            event_category: "ui",
+            event_label: "btn_load",
+          })
+        );
+        dom.fileInput.addEventListener("change", async () => {
           const file = dom.fileInput.files && dom.fileInput.files[0];
           if (!file) return;
           const text = await file.text();
           dom.input.value = text;
-          if (settings.autoFormat) formatAction(true); else { syncHighlight(); setStatusOk(t('status.ready')); }
-          dom.fileInput.value = '';
-          trackEvent('file_load', { event_label: 'file_input', value: text.length });
+          if (settings.autoFormat) formatAction(true);
+          else {
+            syncHighlight();
+            setStatusOk(t("status.ready"));
+          }
+          dom.fileInput.value = "";
+          trackEvent("file_load", {
+            event_label: "file_input",
+            value: text.length,
+          });
         });
 
         // Sürükle-bırak
-        ;['dragenter','dragover'].forEach(evt => dom.mainCard.addEventListener(evt, (e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'copy'; }));
-        dom.mainCard.addEventListener('drop', async (e) => {
+        ["dragenter", "dragover"].forEach((evt) =>
+          dom.mainCard.addEventListener(evt, (e) => {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = "copy";
+          })
+        );
+        dom.mainCard.addEventListener("drop", async (e) => {
           e.preventDefault();
           const file = e.dataTransfer.files && e.dataTransfer.files[0];
           if (file) {
             const text = await file.text();
             dom.input.value = text;
-            if (settings.autoFormat) formatAction(true); else { syncHighlight(); setStatusOk(t('status.ready')); }
+            if (settings.autoFormat) formatAction(true);
+            else {
+              syncHighlight();
+              setStatusOk(t("status.ready"));
+            }
           }
         });
 
         // Kaydet
-        dom.btnSave.addEventListener('click', () => {
+        dom.btnSave.addEventListener("click", () => {
           const text = dom.input.value.trim();
-          if (!text) { setStatusErr(t('status.nothingToSave')); return; }
+          if (!text) {
+            setStatusErr(t("status.nothingToSave"));
+            return;
+          }
           const res = parseJsonSafely(text);
-          if (!res.ok) { setStatusErr(t('status.cannotSaveInvalid')); return; }
+          if (!res.ok) {
+            setStatusErr(t("status.cannotSaveInvalid"));
+            return;
+          }
           const space = getIndentSpace();
           const content = stringify(res.value, space, dom.sortKeys.checked);
-          const blob = new Blob([content], { type: 'application/json;charset=utf-8' });
+          const blob = new Blob([content], {
+            type: "application/json;charset=utf-8",
+          });
           const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
+          const a = document.createElement("a");
           a.href = url;
-          a.download = 'data.json';
+          a.download = "data.json";
           document.body.appendChild(a);
           a.click();
           a.remove();
           URL.revokeObjectURL(url);
-          setStatusOk(t('status.downloaded', { name: 'data.json' }));
-          trackEvent('file_save', { event_label: 'download_json', value: content.length });
+          setStatusOk(t("status.downloaded", { name: "data.json" }));
+          trackEvent("file_save", {
+            event_label: "download_json",
+            value: content.length,
+          });
         });
 
         // Kopyala
-        dom.btnCopy.addEventListener('click', async () => {
+        dom.btnCopy.addEventListener("click", async () => {
           const txt = dom.raw.textContent || dom.input.value;
-          if (!txt) { setStatusErr(t('status.nothingToCopy')); return; }
+          if (!txt) {
+            setStatusErr(t("status.nothingToCopy"));
+            return;
+          }
           try {
             await navigator.clipboard.writeText(txt);
-            setStatusOk(t('status.copied'));
-            trackEvent('clipboard_copy', { event_label: 'copy', value: txt.length });
+            setStatusOk(t("status.copied"));
+            trackEvent("clipboard_copy", {
+              event_label: "copy",
+              value: txt.length,
+            });
           } catch {
-            setStatusErr(t('status.copyFailed'));
-            trackEvent('clipboard_copy', { event_label: 'copy_failed' });
+            setStatusErr(t("status.copyFailed"));
+            trackEvent("clipboard_copy", { event_label: "copy_failed" });
           }
         });
 
         // Yapıştır
-        dom.btnPaste.addEventListener('click', async () => {
+        dom.btnPaste.addEventListener("click", async () => {
           try {
             const txt = await navigator.clipboard.readText();
-            if (!txt) { setStatusErr(t('status.clipboardEmpty')); return; }
+            if (!txt) {
+              setStatusErr(t("status.clipboardEmpty"));
+              return;
+            }
             dom.input.value = txt;
             formatAction(true);
-            trackEvent('clipboard_paste', { event_label: 'paste', value: txt.length });
+            trackEvent("clipboard_paste", {
+              event_label: "paste",
+              value: txt.length,
+            });
           } catch {
-            setStatusErr(t('status.clipboardDenied'));
-            trackEvent('clipboard_paste', { event_label: 'paste_denied' });
+            setStatusErr(t("status.clipboardDenied"));
+            trackEvent("clipboard_paste", { event_label: "paste_denied" });
           }
         });
 
@@ -1582,9 +2579,18 @@
         try {
           if (settings.rememberSession && settings.lastInput) {
             dom.input.value = settings.lastInput;
-            if (settings.autoFormat) formatAction(false); else syncHighlight();
+            if (settings.autoFormat) formatAction(false);
+            else syncHighlight();
             // highlight hydrate
-            try { (function(){ const el = document.getElementById('inputHighlight'); if (el) el.innerHTML = buildInlineHighlightedHtmlFromText(dom.input.value); })(); } catch {}
+            try {
+              (function () {
+                const el = document.getElementById("inputHighlight");
+                if (el)
+                  el.innerHTML = buildInlineHighlightedHtmlFromText(
+                    dom.input.value
+                  );
+              })();
+            } catch {}
           } else {
             const example = {
               firstName: "John",
@@ -1593,12 +2599,21 @@
               address: { city: "New York", postalCode: "10021" },
               phoneNumbers: [
                 { type: "home", number: "212 555-1234" },
-                { type: "fax", number: "646 555-4567" }
-              ]
+                { type: "fax", number: "646 555-4567" },
+              ],
             };
             dom.input.value = JSON.stringify(example, null, 2);
-            if (settings.autoFormat) formatAction(true); else syncHighlight();
-            try { (function(){ const el = document.getElementById('inputHighlight'); if (el) el.innerHTML = buildInlineHighlightedHtmlFromText(dom.input.value); })(); } catch {}
+            if (settings.autoFormat) formatAction(true);
+            else syncHighlight();
+            try {
+              (function () {
+                const el = document.getElementById("inputHighlight");
+                if (el)
+                  el.innerHTML = buildInlineHighlightedHtmlFromText(
+                    dom.input.value
+                  );
+              })();
+            } catch {}
           }
         } catch {}
 
@@ -1606,39 +2621,44 @@
         let softFull = false;
         function toggleSoftFull() {
           softFull = !softFull;
-          document.body.classList.toggle('body-soft-full', softFull);
-          dom.mainCard.classList.toggle('fullscreen-card', softFull);
-          if (!dom.viewerTree.classList.contains('hidden') || !dom.viewerRaw.classList.contains('hidden')) {
+          document.body.classList.toggle("body-soft-full", softFull);
+          dom.mainCard.classList.toggle("fullscreen-card", softFull);
+          if (
+            !dom.viewerTree.classList.contains("hidden") ||
+            !dom.viewerRaw.classList.contains("hidden")
+          ) {
             formatAction(false);
           }
         }
-        dom.btnFull.addEventListener('click', toggleSoftFull);
+        dom.btnFull.addEventListener("click", toggleSoftFull);
 
         // Settings helpers
         function applyPalette(key) {
           const pal = colorPalettes[key] || colorPalettes.classic;
           const root = document.documentElement.style;
-          root.setProperty('--color-key', pal.key);
-          root.setProperty('--color-string', pal.string);
-          root.setProperty('--color-number', pal.number);
-          root.setProperty('--color-boolean', pal.boolean);
-          root.setProperty('--color-null', pal.null);
-          trackEvent('palette_apply', { event_label: key });
+          root.setProperty("--color-key", pal.key);
+          root.setProperty("--color-string", pal.string);
+          root.setProperty("--color-number", pal.number);
+          root.setProperty("--color-boolean", pal.boolean);
+          root.setProperty("--color-null", pal.null);
+          trackEvent("palette_apply", { event_label: key });
         }
 
         function populatePaletteUI() {
-          dom.paletteSelect.innerHTML = '';
-          Object.keys(colorPalettes).forEach(k => {
-            const opt = document.createElement('option');
-            opt.value = k; opt.textContent = colorPalettes[k].name;
+          dom.paletteSelect.innerHTML = "";
+          Object.keys(colorPalettes).forEach((k) => {
+            const opt = document.createElement("option");
+            opt.value = k;
+            opt.textContent = colorPalettes[k].name;
             if (k === settings.palette) opt.selected = true;
             dom.paletteSelect.appendChild(opt);
           });
-          dom.paletteGrid.innerHTML = '';
-          Object.keys(colorPalettes).forEach(k => {
+          dom.paletteGrid.innerHTML = "";
+          Object.keys(colorPalettes).forEach((k) => {
             const pal = colorPalettes[k];
-            const el = document.createElement('div');
-            el.className = 'palette' + (k === settings.palette ? ' active' : '');
+            const el = document.createElement("div");
+            el.className =
+              "palette" + (k === settings.palette ? " active" : "");
             el.innerHTML = `<div class="palette-name">${pal.name}</div><div class="swatches">
               <span class="sw" style="background:${pal.key}"></span>
               <span class="sw" style="background:${pal.string}"></span>
@@ -1646,16 +2666,27 @@
               <span class="sw" style="background:${pal.boolean}"></span>
               <span class="sw" style="background:${pal.null}"></span>
             </div>`;
-            el.addEventListener('click', () => {
-              settings.palette = k; applyPalette(k); saveSettings();
+            el.addEventListener("click", () => {
+              settings.palette = k;
+              applyPalette(k);
+              saveSettings();
               populatePaletteUI();
-              trackEvent('settings_change', { event_label: 'palette_quick', value: settings.palette });
+              trackEvent("settings_change", {
+                event_label: "palette_quick",
+                value: settings.palette,
+              });
             });
             dom.paletteGrid.appendChild(el);
           });
-          dom.paletteSelect.addEventListener('change', () => {
-            settings.palette = dom.paletteSelect.value; applyPalette(settings.palette); saveSettings(); populatePaletteUI();
-            trackEvent('settings_change', { event_label: 'palette_select', value: settings.palette });
+          dom.paletteSelect.addEventListener("change", () => {
+            settings.palette = dom.paletteSelect.value;
+            applyPalette(settings.palette);
+            saveSettings();
+            populatePaletteUI();
+            trackEvent("settings_change", {
+              event_label: "palette_select",
+              value: settings.palette,
+            });
           });
         }
 
@@ -1666,13 +2697,21 @@
           dom.autoFormat.checked = !!settings.autoFormat;
           dom.paletteSelect.value = settings.palette;
           dom.languageSelect.value = settings.language;
-          dom.settingsModal.classList.remove('hidden');
+          dom.settingsModal.classList.remove("hidden");
         }
-        function closeSettings() { dom.settingsModal.classList.add('hidden'); }
+        function closeSettings() {
+          dom.settingsModal.classList.add("hidden");
+        }
 
         function saveSettingsFromUI() {
-          settings.maxDepth = Math.max(1, Number(dom.inpMaxDepth.value || defaultSettings.maxDepth));
-          settings.maxSizeKB = Math.max(10, Number(dom.inpMaxSizeKB.value || defaultSettings.maxSizeKB));
+          settings.maxDepth = Math.max(
+            1,
+            Number(dom.inpMaxDepth.value || defaultSettings.maxDepth)
+          );
+          settings.maxSizeKB = Math.max(
+            10,
+            Number(dom.inpMaxSizeKB.value || defaultSettings.maxSizeKB)
+          );
           settings.rememberSession = !!dom.rememberSession.checked;
           settings.autoFormat = !!dom.autoFormat.checked;
           settings.palette = dom.paletteSelect.value;
@@ -1684,155 +2723,220 @@
           applyLanguage(settings.language);
           closeSettings();
           if (dom.input.value.trim()) formatAction(false);
-          trackEvent('settings_change', { event_label: 'max_depth', value: settings.maxDepth });
-          trackEvent('settings_change', { event_label: 'max_size_kb', value: settings.maxSizeKB });
-          trackEvent('settings_change', { event_label: 'remember_session', value: settings.rememberSession ? 1 : 0 });
-          trackEvent('settings_change', { event_label: 'palette', value: settings.palette });
-          trackEvent('settings_change', { event_label: 'language_modal', value: settings.language });
+          trackEvent("settings_change", {
+            event_label: "max_depth",
+            value: settings.maxDepth,
+          });
+          trackEvent("settings_change", {
+            event_label: "max_size_kb",
+            value: settings.maxSizeKB,
+          });
+          trackEvent("settings_change", {
+            event_label: "remember_session",
+            value: settings.rememberSession ? 1 : 0,
+          });
+          trackEvent("settings_change", {
+            event_label: "palette",
+            value: settings.palette,
+          });
+          trackEvent("settings_change", {
+            event_label: "language_modal",
+            value: settings.language,
+          });
         }
 
         function hydrateControlsFromSettings() {
           dom.indent.value = settings.indent;
           dom.sortKeys.checked = !!settings.sortKeys;
-          dom.lang.value = settings.language || 'tr';
+          dom.lang.value = settings.language || "tr";
         }
 
         function loadSettings() {
           try {
-            const raw = localStorage.getItem('jf_settings');
+            const raw = localStorage.getItem("jf_settings");
             if (!raw) return { ...defaultSettings };
             const obj = JSON.parse(raw);
             return { ...defaultSettings, ...obj };
-          } catch { return { ...defaultSettings }; }
+          } catch {
+            return { ...defaultSettings };
+          }
         }
 
         function saveSettings() {
-          try { localStorage.setItem('jf_settings', JSON.stringify(settings)); } catch {}
+          try {
+            localStorage.setItem("jf_settings", JSON.stringify(settings));
+          } catch {}
         }
 
         // Hızlı palet dropdown
         function updateQPSwatches() {
           const pal = colorPalettes[settings.palette];
           if (!pal) return;
-          dom.qpSwatches.innerHTML = '';
-          ['key','string','number','boolean','null'].forEach(k => {
-            const s = document.createElement('span');
-            s.className = 'qp-sw'; s.style.background = pal[k];
+          dom.qpSwatches.innerHTML = "";
+          ["key", "string", "number", "boolean", "null"].forEach((k) => {
+            const s = document.createElement("span");
+            s.className = "qp-sw";
+            s.style.background = pal[k];
             dom.qpSwatches.appendChild(s);
           });
         }
         function buildQuickPalette() {
           updateQPSwatches();
-          dom.qpList.innerHTML = '';
-          Object.keys(colorPalettes).forEach(k => {
+          dom.qpList.innerHTML = "";
+          Object.keys(colorPalettes).forEach((k) => {
             const pal = colorPalettes[k];
-            const item = document.createElement('div');
-            item.className = 'qp-item';
-            item.setAttribute('role','menuitem');
-            const left = document.createElement('div');
-            left.className = 'qp-name'; left.textContent = pal.name;
-            const right = document.createElement('div');
-            right.className = 'qp-swatches-inline';
-            ['key','string','number','boolean','null'].forEach(pk => {
-              const sw = document.createElement('span'); sw.className = 'qp-sw'; sw.style.background = pal[pk]; right.appendChild(sw);
+            const item = document.createElement("div");
+            item.className = "qp-item";
+            item.setAttribute("role", "menuitem");
+            const left = document.createElement("div");
+            left.className = "qp-name";
+            left.textContent = pal.name;
+            const right = document.createElement("div");
+            right.className = "qp-swatches-inline";
+            ["key", "string", "number", "boolean", "null"].forEach((pk) => {
+              const sw = document.createElement("span");
+              sw.className = "qp-sw";
+              sw.style.background = pal[pk];
+              right.appendChild(sw);
             });
-            item.appendChild(left); item.appendChild(right);
-            if (k === settings.palette) item.style.borderColor = 'var(--accent)';
-            item.addEventListener('click', () => {
-              settings.palette = k; saveSettings(); applyPalette(k); updateQPSwatches(); buildQuickPalette();
-              dom.qpMenu.classList.add('hidden'); dom.qpToggle.setAttribute('aria-expanded','false');
-              if (!dom.viewerEdit.classList.contains('hidden')) return;
+            item.appendChild(left);
+            item.appendChild(right);
+            if (k === settings.palette)
+              item.style.borderColor = "var(--accent)";
+            item.addEventListener("click", () => {
+              settings.palette = k;
+              saveSettings();
+              applyPalette(k);
+              updateQPSwatches();
+              buildQuickPalette();
+              dom.qpMenu.classList.add("hidden");
+              dom.qpToggle.setAttribute("aria-expanded", "false");
+              if (!dom.viewerEdit.classList.contains("hidden")) return;
               if (dom.input.value.trim()) formatAction(false);
-              trackEvent('settings_change', { event_label: 'palette_quick_dropdown', value: settings.palette });
+              trackEvent("settings_change", {
+                event_label: "palette_quick_dropdown",
+                value: settings.palette,
+              });
             });
             dom.qpList.appendChild(item);
           });
         }
-        dom.qpToggle.addEventListener('click', () => {
-          const open = !dom.qpMenu.classList.contains('hidden');
-          dom.qpMenu.classList.toggle('hidden');
-          dom.qpToggle.setAttribute('aria-expanded', String(!open));
+        dom.qpToggle.addEventListener("click", () => {
+          const open = !dom.qpMenu.classList.contains("hidden");
+          dom.qpMenu.classList.toggle("hidden");
+          dom.qpToggle.setAttribute("aria-expanded", String(!open));
         });
-        document.addEventListener('click', (e) => {
+        document.addEventListener("click", (e) => {
           if (!e.target.closest || !dom.qpMenu) return;
-          const inside = e.target.closest('#quickPalette');
-          if (!inside) { dom.qpMenu.classList.add('hidden'); dom.qpToggle.setAttribute('aria-expanded','false'); }
+          const inside = e.target.closest("#quickPalette");
+          if (!inside) {
+            dom.qpMenu.classList.add("hidden");
+            dom.qpToggle.setAttribute("aria-expanded", "false");
+          }
         });
 
         function applyLanguage(lang) {
           // html lang özniteliğini güncelle
-          try { document.documentElement.setAttribute('lang', lang || 'tr'); } catch {}
+          try {
+            document.documentElement.setAttribute("lang", lang || "tr");
+          } catch {}
           // Header buttons text and titles
-          dom.btnFormat.textContent = t('btn.format');
-          dom.btnFormat.title = t('tooltip.format');
-          dom.btnMinify.textContent = t('btn.minify');
-          dom.btnMinify.title = t('tooltip.minify');
-          dom.btnValidate.textContent = t('btn.validate');
-          dom.btnValidate.title = t('tooltip.validate');
-          dom.btnExpand.textContent = t('btn.expand');
-          dom.btnCollapse.textContent = t('btn.collapse');
+          dom.btnFormat.textContent = t("btn.format");
+          dom.btnFormat.title = t("tooltip.format");
+          dom.btnMinify.textContent = t("btn.minify");
+          dom.btnMinify.title = t("tooltip.minify");
+          dom.btnValidate.textContent = t("btn.validate");
+          dom.btnValidate.title = t("tooltip.validate");
+          dom.btnExpand.textContent = t("btn.expand");
+          dom.btnCollapse.textContent = t("btn.collapse");
 
-          dom.btnLoad.title = t('tooltip.load');
-          dom.btnSave.title = t('tooltip.save');
-          dom.btnCopy.title = t('tooltip.copy');
-          dom.btnPaste.title = t('tooltip.paste');
-          dom.btnTheme.title = t('tooltip.theme');
-          dom.btnFull.title = t('tooltip.full');
-          dom.btnSettings.title = t('tooltip.settings');
+          dom.btnLoad.title = t("tooltip.load");
+          dom.btnSave.title = t("tooltip.save");
+          dom.btnCopy.title = t("tooltip.copy");
+          dom.btnPaste.title = t("tooltip.paste");
+          dom.btnTheme.title = t("tooltip.theme");
+          dom.btnFull.title = t("tooltip.full");
+          dom.btnSettings.title = t("tooltip.settings");
 
           // Indent and sort controls
-          dom.labelIndent.textContent = t('label.indent');
+          dom.labelIndent.textContent = t("label.indent");
           const opt2 = dom.indent.querySelector('option[value="2"]');
           const opt4 = dom.indent.querySelector('option[value="4"]');
-          const optT = dom.indent.querySelector('option[value="\\t"], option[value="\t"]');
-          if (opt2) opt2.textContent = t('indent.2');
-          if (opt4) opt4.textContent = t('indent.4');
-          if (optT) optT.textContent = t('indent.tab');
-          if (dom.labelSort) dom.labelSort.textContent = t('label.sort');
-          if (dom.labelLang) dom.labelLang.textContent = t('label.lang');
+          const optT = dom.indent.querySelector(
+            'option[value="\\t"], option[value="\t"]'
+          );
+          if (opt2) opt2.textContent = t("indent.2");
+          if (opt4) opt4.textContent = t("indent.4");
+          if (optT) optT.textContent = t("indent.tab");
+          if (dom.labelSort) dom.labelSort.textContent = t("label.sort");
+          if (dom.labelLang) dom.labelLang.textContent = t("label.lang");
 
           // Tabs
-          dom.tabs.forEach(btn => {
-            const tab = btn.getAttribute('data-tab');
-            if (tab === 'edit') btn.textContent = t('tab.edit');
-            else if (tab === 'tree') btn.textContent = t('tab.tree');
-            else if (tab === 'raw') btn.textContent = t('tab.raw');
+          dom.tabs.forEach((btn) => {
+            const tab = btn.getAttribute("data-tab");
+            if (tab === "edit") btn.textContent = t("tab.edit");
+            else if (tab === "tree") btn.textContent = t("tab.tree");
+            else if (tab === "raw") btn.textContent = t("tab.raw");
           });
 
           // Hints and quick palette label
-          if (dom.dragHint) dom.dragHint.textContent = t('drag.supported');
-          if (dom.qpLabel) dom.qpLabel.textContent = t('quick.palette');
-          if (dom.dropHint) dom.dropHint.textContent = t('drop.hint');
-          if (dom.qiToggle) dom.qiToggle.title = t('label.indent');
-          if (dom.qlToggle) dom.qlToggle.title = t('settings.language');
+          if (dom.dragHint) dom.dragHint.textContent = t("drag.supported");
+          if (dom.qpLabel) dom.qpLabel.textContent = t("quick.palette");
+          if (dom.dropHint) dom.dropHint.textContent = t("drop.hint");
+          if (dom.qiToggle) dom.qiToggle.title = t("label.indent");
+          if (dom.qlToggle) dom.qlToggle.title = t("settings.language");
 
           // Footer
           if (dom.footerLeft) {
-            dom.footerLeft.innerHTML = `${t('footer.left')}<a href="https://jsonformat.info/" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none;">jsonformat.info</a>`;
+            dom.footerLeft.innerHTML = `${t(
+              "footer.left"
+            )}<a href="https://jsonformat.info/" target="_blank" rel="noopener" style="color:var(--accent); text-decoration:none;">jsonformat.info</a>`;
           }
           if (dom.footerRight) {
-            dom.footerRight.innerHTML = `${t('footer.right.prefix')} <span class="kbd">Ctrl</span> + <span class="kbd">Enter</span> → ${t('footer.action.format')}`;
+            dom.footerRight.innerHTML = `${t(
+              "footer.right.prefix"
+            )} <span class="kbd">Ctrl</span> + <span class="kbd">Enter</span> → ${t(
+              "footer.action.format"
+            )}`;
           }
 
           // Settings modal texts
-          if (dom.settingsTitle) dom.settingsTitle.textContent = t('settings.title');
+          if (dom.settingsTitle)
+            dom.settingsTitle.textContent = t("settings.title");
           const lblMaxDepth = document.querySelector('label[for="maxDepth"]');
           const lblMaxSize = document.querySelector('label[for="maxSizeKB"]');
-          const lblPalette = document.querySelector('label[for="paletteSelect"]');
-          if (lblMaxDepth) lblMaxDepth.textContent = t('settings.maxDepth');
-          if (lblMaxSize) lblMaxSize.textContent = t('settings.maxSizeKB');
-          if (dom.labelRemember) dom.labelRemember.textContent = t('settings.remember');
-          if (lblPalette) lblPalette.textContent = t('settings.palette');
-          if (dom.labelPalettePreview) dom.labelPalettePreview.textContent = t('settings.preview');
-          if (dom.btnCloseSettings) dom.btnCloseSettings.textContent = t('settings.cancel');
-          if (dom.btnSaveSettings) dom.btnSaveSettings.textContent = t('settings.save');
-          if (dom.labelLanguage) dom.labelLanguage.textContent = t('settings.language');
-          if (dom.labelAutoFormat) dom.labelAutoFormat.textContent = t('settings.autoFormat');
+          const lblPalette = document.querySelector(
+            'label[for="paletteSelect"]'
+          );
+          if (lblMaxDepth) lblMaxDepth.textContent = t("settings.maxDepth");
+          if (lblMaxSize) lblMaxSize.textContent = t("settings.maxSizeKB");
+          if (dom.labelRemember)
+            dom.labelRemember.textContent = t("settings.remember");
+          if (lblPalette) lblPalette.textContent = t("settings.palette");
+          if (dom.labelPalettePreview)
+            dom.labelPalettePreview.textContent = t("settings.preview");
+          if (dom.btnCloseSettings)
+            dom.btnCloseSettings.textContent = t("settings.cancel");
+          if (dom.btnSaveSettings)
+            dom.btnSaveSettings.textContent = t("settings.save");
+          if (dom.labelLanguage)
+            dom.labelLanguage.textContent = t("settings.language");
+          if (dom.labelAutoFormat)
+            dom.labelAutoFormat.textContent = t("settings.autoFormat");
 
           // Status default
-          const readyText = t('status.ready');
-          if (!dom.status.textContent || /^(Hazır|Ready)$/.test(dom.status.textContent)) dom.status.textContent = readyText;
-          if (dom.topStatus && (!dom.topStatus.textContent || /^(Hazır|Ready)$/.test(dom.topStatus.textContent))) dom.topStatus.textContent = readyText;
+          const readyText = t("status.ready");
+          if (
+            !dom.status.textContent ||
+            /^(Hazır|Ready)$/.test(dom.status.textContent)
+          )
+            dom.status.textContent = readyText;
+          if (
+            dom.topStatus &&
+            (!dom.topStatus.textContent ||
+              /^(Hazır|Ready)$/.test(dom.topStatus.textContent))
+          )
+            dom.topStatus.textContent = readyText;
 
           // Quick controls labels
           updateQuickIndentLabel();
@@ -1842,82 +2946,105 @@
         function updateQuickIndentLabel() {
           if (!dom.qiLabel) return;
           const v = dom.indent.value;
-          let txt = v === '\t' ? t('indent.tab') : (v === '4' ? t('indent.4') : t('indent.2'));
-          dom.qiLabel.textContent = `${t('label.indent')} ${txt}`;
+          let txt =
+            v === "\t"
+              ? t("indent.tab")
+              : v === "4"
+              ? t("indent.4")
+              : t("indent.2");
+          dom.qiLabel.textContent = `${t("label.indent")} ${txt}`;
         }
         function updateQuickLangLabel() {
           if (!dom.qlLabel) return;
-          const v = settings.language || 'tr';
-          const name = v === 'en' ? 'English' : 'Türkçe';
-          const flag = v === 'en' ? '🇬🇧' : '🇹🇷';
+          const v = settings.language || "tr";
+          const name = v === "en" ? "English" : "Türkçe";
+          const flag = v === "en" ? "🇬🇧" : "🇹🇷";
           dom.qlLabel.textContent = `${name} ${flag}`;
         }
 
         function buildQuickIndent() {
           if (!dom.qiList) return;
-          dom.qiList.innerHTML = '';
+          dom.qiList.innerHTML = "";
           const opts = [
-            { value: '2', label: t('indent.2') },
-            { value: '4', label: t('indent.4') },
-            { value: '\t', label: t('indent.tab') },
+            { value: "2", label: t("indent.2") },
+            { value: "4", label: t("indent.4") },
+            { value: "\t", label: t("indent.tab") },
           ];
-          opts.forEach(o => {
-            const item = document.createElement('div');
-            item.className = 'qp-item';
-            item.setAttribute('role','menuitem');
-            const left = document.createElement('div');
-            left.className = 'qp-name'; left.textContent = o.label;
+          opts.forEach((o) => {
+            const item = document.createElement("div");
+            item.className = "qp-item";
+            item.setAttribute("role", "menuitem");
+            const left = document.createElement("div");
+            left.className = "qp-name";
+            left.textContent = o.label;
             item.appendChild(left);
-            if (dom.indent.value === o.value) item.style.borderColor = 'var(--accent)';
-            item.addEventListener('click', () => {
+            if (dom.indent.value === o.value)
+              item.style.borderColor = "var(--accent)";
+            item.addEventListener("click", () => {
               dom.indent.value = o.value;
-              dom.indent.dispatchEvent(new Event('change'));
+              dom.indent.dispatchEvent(new Event("change"));
               updateQuickIndentLabel();
-              dom.qiMenu.classList.add('hidden'); dom.qiToggle.setAttribute('aria-expanded','false');
-              trackEvent('settings_change', { event_label: 'indent_quick', value: o.value });
+              dom.qiMenu.classList.add("hidden");
+              dom.qiToggle.setAttribute("aria-expanded", "false");
+              trackEvent("settings_change", {
+                event_label: "indent_quick",
+                value: o.value,
+              });
             });
             dom.qiList.appendChild(item);
           });
           updateQuickIndentLabel();
-          if (dom.qiToggle) dom.qiToggle.addEventListener('click', () => {
-            const open = !dom.qiMenu.classList.contains('hidden');
-            dom.qiMenu.classList.toggle('hidden');
-            dom.qiToggle.setAttribute('aria-expanded', String(!open));
-          });
+          if (dom.qiToggle)
+            dom.qiToggle.addEventListener("click", () => {
+              const open = !dom.qiMenu.classList.contains("hidden");
+              dom.qiMenu.classList.toggle("hidden");
+              dom.qiToggle.setAttribute("aria-expanded", String(!open));
+            });
         }
 
         function buildQuickLanguage() {
           if (!dom.qlList) return;
-          dom.qlList.innerHTML = '';
+          dom.qlList.innerHTML = "";
           const langs = [
-            { value: 'tr', name: 'Türkçe', flag: '🇹🇷' },
-            { value: 'en', name: 'English', flag: '🇬🇧' },
+            { value: "tr", name: "Türkçe", flag: "🇹🇷" },
+            { value: "en", name: "English", flag: "🇬🇧" },
           ];
-          langs.forEach(l => {
-            const item = document.createElement('div');
-            item.className = 'qp-item'; item.setAttribute('role','menuitem');
-            const left = document.createElement('div'); left.className = 'qp-name'; left.textContent = `${l.name} ${l.flag}`;
+          langs.forEach((l) => {
+            const item = document.createElement("div");
+            item.className = "qp-item";
+            item.setAttribute("role", "menuitem");
+            const left = document.createElement("div");
+            left.className = "qp-name";
+            left.textContent = `${l.name} ${l.flag}`;
             item.appendChild(left);
-            if ((settings.language || 'tr') === l.value) item.style.borderColor = 'var(--accent)';
-            item.addEventListener('click', () => {
-              settings.language = l.value; saveSettings(); applyLanguage(settings.language);
+            if ((settings.language || "tr") === l.value)
+              item.style.borderColor = "var(--accent)";
+            item.addEventListener("click", () => {
+              settings.language = l.value;
+              saveSettings();
+              applyLanguage(settings.language);
               if (dom.lang) dom.lang.value = l.value;
-              dom.qlMenu.classList.add('hidden'); dom.qlToggle.setAttribute('aria-expanded','false');
-              if (dom.input.value.trim()) { formatAction(false); }
-              trackEvent('settings_change', { event_label: 'language_quick', value: l.value });
+              dom.qlMenu.classList.add("hidden");
+              dom.qlToggle.setAttribute("aria-expanded", "false");
+              if (dom.input.value.trim()) {
+                formatAction(false);
+              }
+              trackEvent("settings_change", {
+                event_label: "language_quick",
+                value: l.value,
+              });
             });
             dom.qlList.appendChild(item);
           });
           updateQuickLangLabel();
-          if (dom.qlToggle) dom.qlToggle.addEventListener('click', () => {
-            const open = !dom.qlMenu.classList.contains('hidden');
-            dom.qlMenu.classList.toggle('hidden');
-            dom.qlToggle.setAttribute('aria-expanded', String(!open));
-          });
+          if (dom.qlToggle)
+            dom.qlToggle.addEventListener("click", () => {
+              const open = !dom.qlMenu.classList.contains("hidden");
+              dom.qlMenu.classList.toggle("hidden");
+              dom.qlToggle.setAttribute("aria-expanded", String(!open));
+            });
         }
       })();
     </script>
   </body>
-  </html>
-
-
+</html>
