@@ -414,6 +414,7 @@
         background: transparent;
         border-color: transparent;
       }
+      #btnExitFull.hidden { display: none; }
       .icon-settings {
         color: #fb7185;
         background: transparent;
@@ -1420,6 +1421,16 @@
               ></span>
             </div>
             <div class="card-header-right">
+              <button
+                class="icon-btn icon-full hidden"
+                id="btnExitFull"
+                aria-label="Tam ekrandan çık"
+                title="Tam ekrandan çık"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M7 14H5v5h5v-2H7v-3zm12 5v-5h-2v3h-3v2h5zM7 7h3V5H5v5h2V7zm10 0h3v3h2V5h-5v2z"></path>
+                </svg>
+              </button>
               <div class="quick-palette" id="quickPalette">
                 <button
                   class="qp-btn"
@@ -1624,6 +1635,7 @@
           btnPaste: document.getElementById("btnPaste"),
           btnTheme: document.getElementById("btnTheme"),
           btnSettings: document.getElementById("btnSettings"),
+          btnExitFull: document.getElementById("btnExitFull"),
           fileInput: document.getElementById("fileInput"),
           indent: document.getElementById("indent"),
           indentModal: document.getElementById("indentModal"), // legacy if exists
@@ -1725,6 +1737,7 @@
             "tooltip.paste": "Yapıştır",
             "tooltip.theme": "Tema",
             "tooltip.full": "JSON tam ekran",
+            "tooltip.exitFull": "Tam ekrandan çık",
             "tooltip.settings": "Ayarlar",
             "drag.supported": "Sürükle-bırak desteklenir",
             "quick.palette": "Palet",
@@ -1791,6 +1804,7 @@
             "tooltip.paste": "Paste",
             "tooltip.theme": "Theme",
             "tooltip.full": "JSON full screen",
+            "tooltip.exitFull": "Exit full screen",
             "tooltip.settings": "Settings",
             "drag.supported": "Drag and drop supported",
             "quick.palette": "Palette",
@@ -3435,6 +3449,7 @@
           softFull = !softFull;
           document.body.classList.toggle("body-soft-full", softFull);
           dom.mainCard.classList.toggle("fullscreen-card", softFull);
+          if (dom.btnExitFull) dom.btnExitFull.classList.toggle("hidden", !softFull);
           if (
             !dom.viewerTree.classList.contains("hidden") ||
             !dom.viewerRaw.classList.contains("hidden")
@@ -3443,6 +3458,11 @@
           }
         }
         dom.btnFull.addEventListener("click", toggleSoftFull);
+        if (dom.btnExitFull) {
+          dom.btnExitFull.addEventListener("click", () => {
+            if (softFull) toggleSoftFull();
+          });
+        }
 
         // Settings helpers
         function applyPalette(key) {
@@ -3756,6 +3776,7 @@
           dom.btnPaste.title = t("tooltip.paste");
           dom.btnTheme.title = t("tooltip.theme");
           dom.btnFull.title = t("tooltip.full");
+          if (dom.btnExitFull) dom.btnExitFull.title = t("tooltip.exitFull");
           dom.btnSettings.title = t("tooltip.settings");
 
           // Indent and sort controls

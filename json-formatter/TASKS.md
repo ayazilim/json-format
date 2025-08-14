@@ -40,6 +40,7 @@ Bu dosya, projede yapılan işleri ve planlanan görevleri takip etmek için kul
 - İlham alınan araç: [jsonviewer.stack.hu](https://jsonviewer.stack.hu/)
 
 ## Yapılan Son Düzenlemeler
+- [x] Tam ekran modunda palet menüsünün soluna "tam ekrandan çık" butonu eklendi; i18n ve görünürlük mantığı bağlandı
 - [x] Koyu temalar için 5 yeni palet eklendi (Noir, Derin Deniz, Gece Baykuşu, Gölgeler, Galaksi)
 - [x] Renk paletlerine 5 yeni canlı palet eklendi (Aurora, Tropik, Magma, Elektrik, Şeker)
 - [x] Footer yüksekliği düşürüldü (`--footer-h: 56px`) ve `page` konteyneri yüksekliği `calc(100vh - var(--footer-h))` ile ayarlandı; boş durumda gereksiz dikey scrollbar engellendi.
