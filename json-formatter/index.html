@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="tr">
-  <head>
-    <!-- Basic Meta Tags -->
+  <head> 
+     <!-- Basic Meta Tags -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
-    <!-- Primary Meta Tags (Turkish) -->
+     
+     <!-- Primary Meta Tags (Turkish) -->
     <title>
       JSON Formatter - JSON Düzenleyici ve Doğrulayıcı | jsonformat.info
     </title>
@@ -27,8 +27,8 @@
     <meta name="author" content="JSONFormat.info" />
     <meta name="copyright" content="© 2024 JSONFormat.info" />
     <meta name="revisit-after" content="7 days" />
-
-    <!-- Alternate Language -->
+     
+     <!-- Alternate Language -->
     <link
       rel="alternate"
       hreflang="tr"
@@ -44,8 +44,8 @@
       hreflang="x-default"
       href="https://jsonformat.info/"
     />
-
-    <!-- Open Graph / Facebook -->
+     
+     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://jsonformat.info/" />
     <meta
@@ -65,8 +65,8 @@
     <meta property="og:site_name" content="JSONFormat.info" />
     <meta property="og:locale" content="tr_TR" />
     <meta property="og:locale:alternate" content="en_US" />
-
-    <!-- Twitter -->
+     
+     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://jsonformat.info/" />
     <meta
@@ -83,35 +83,35 @@
     />
     <meta name="twitter:site" content="@jsonformat" />
     <meta name="twitter:creator" content="@jsonformat" />
-
-    <!-- Canonical URL -->
+     
+     <!-- Canonical URL -->
     <link rel="canonical" href="https://jsonformat.info/" />
-
-    <!-- Favicon -->
+     
+     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#667eea" />
-
-    <!-- DNS Prefetch -->
+     
+     <!-- DNS Prefetch -->
     <link rel="dns-prefetch" href="//www.googletagmanager.com" />
     <link rel="dns-prefetch" href="//www.google-analytics.com" />
     <link rel="dns-prefetch" href="//fonts.googleapis.com" />
     <link rel="dns-prefetch" href="//cdnjs.cloudflare.com" />
-
-    <!-- Preload Critical Resources -->
+     
+     <!-- Preload Critical Resources -->
     <link rel="preload" href="/css/main.css" as="style" />
     <link rel="preload" href="/js/json-formatter.js" as="script" />
-
-    <!-- GOOGLE ANALYTICS 4 -->
+     
+     <!-- GOOGLE ANALYTICS 4 -->
     <script
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-J43L67FJFY"
     ></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
+     <script>
+         window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);
       }
@@ -121,21 +121,21 @@
         page_location: "https://jsonformat.info/",
         content_group1: "JSON Tools",
         content_group2: "Formatter",
-      });
-    </script>
-
-    <!-- GOOGLE SEARCH CONSOLE -->
+         });
+     </script>
+     
+     <!-- GOOGLE SEARCH CONSOLE -->
     <meta
       name="google-site-verification"
       content="nEMYj6IA_R51LxQf2T2PNpOP3y3Zd5ed0n9lWchWgnw"
     />
-
-    <!-- BING WEBMASTER TOOLS -->
-    <meta name="msvalidate.01" content="37862A76E0EE2715ACCDC16AE71DD942" />
-
-    <!-- YANDEX WEBMASTER -->
-    <meta name="yandex-verification" content="96fde976efba257c" />
-
+     
+     <!-- BING WEBMASTER TOOLS -->
+   <meta name="msvalidate.01" content="37862A76E0EE2715ACCDC16AE71DD942" />
+     
+     <!-- YANDEX WEBMASTER -->
+     <meta name="yandex-verification" content="96fde976efba257c" />
+    
     <title>JSON Formatter & Viewer</title>
     <style>
       :root {
@@ -282,12 +282,46 @@
         transition: transform 0.05s ease, filter 0.2s ease,
           border-color 0.2s ease, background 0.2s ease;
       }
+      /* Icon variants for actions */
+      .icon-format { color: #22c55e; background: rgba(34,197,94,.12); border-color: rgba(34,197,94,.4); }
+      .icon-minify { color: #0ea5e9; background: rgba(14,165,233,.12); border-color: rgba(14,165,233,.4); }
+      .icon-validate { color: #f59e0b; background: rgba(245,158,11,.12); border-color: rgba(245,158,11,.4); }
+      .icon-expand { color: #10b981; background: rgba(16,185,129,.12); border-color: rgba(16,185,129,.4); }
+      .icon-collapse { color: #ef4444; background: rgba(239,68,68,.12); border-color: rgba(239,68,68,.4); }
+
+      /* Icon-only quick button */
+      .qp-btn.icon-only { width: 38px; height: 38px; padding: 0; justify-content: center; }
+      .qp-btn.icon-only .qp-label { font-size: 18px; line-height: 1; }
       .icon-btn svg {
         width: 18px;
         height: 18px;
         display: block;
         fill: currentColor;
       }
+      .qp-btn.icon-only svg {
+        width: 22px;
+        height: 22px;
+        display: block;
+      }
+      /* Flag icon wrapper/border */
+      .qp-btn.icon-only #qlLabel {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        background: var(--panel);
+      }
+      .qp-btn.icon-only #qlLabel svg {
+        border-radius: 4px;
+        overflow: hidden;
+      }
+
+      /* Subtle theme-based toning for icons */
+      [data-theme="light"] .icon-btn { filter: saturate(0.98) brightness(1.02); }
+      [data-theme="dark"] .icon-btn { filter: saturate(1.02) brightness(0.98); }
       .icon-btn:hover {
         transform: translateY(1px);
         filter: brightness(1.08);
@@ -873,23 +907,33 @@
         <div class="title">JSON Formatter & Viewer</div>
         <div class="toolbar">
           <div class="seg" role="group" aria-label="Biçimlendirme">
-            <button
-              class="btn primary"
-              id="btnFormat"
-              title="Biçimlendir (Ctrl+Enter)"
-            >
-              Biçimlendir
+            <button class="icon-btn icon-format" id="btnFormat" aria-label="Biçimlendir" title="Biçimlendir (Ctrl+Enter)">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3 11h8v2H3v-2zm10.5-6.5l1.4-1.4L18 6l-1.4 1.4L13.5 4.5zM12 18l3-3 5 5-3 3-5-5zM3 6h12v2H3V6z"></path>
+              </svg>
             </button>
-            <button class="btn" id="btnMinify" title="Sıkıştır (Minify)">
-              Sıkıştır
+            <button class="icon-btn icon-minify" id="btnMinify" aria-label="Sıkıştır" title="Sıkıştır (Minify)">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 10H3V7h4V3h3v4h4v3h-4v4H7v-4zm14 7h-4v4h-3v-4h-4v-3h4v-4h3v4h4v3z"></path>
+              </svg>
             </button>
-            <button class="btn" id="btnValidate" title="Doğrula">
-              Doğrula
+            <button class="icon-btn icon-validate" id="btnValidate" aria-label="Doğrula" title="Doğrula">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20zm-1.5 13.2l6-6-1.4-1.4-4.6 4.6-2.2-2.2-1.4 1.4 3.6 3.6z"></path>
+              </svg>
             </button>
           </div>
           <div class="seg" role="group" aria-label="Tree">
-            <button class="btn" id="btnExpand">Genişlet</button>
-            <button class="btn" id="btnCollapse">Daralt</button>
+            <button class="icon-btn icon-expand" id="btnExpand" aria-label="Genişlet" title="Genişlet">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 4h6v2H6v4H4V4zm10 0h6v6h-2V6h-4V4zM4 14h2v4h4v2H4v-6zm14 0h2v6h-6v-2h4v-4z"></path>
+              </svg>
+            </button>
+            <button class="icon-btn icon-collapse" id="btnCollapse" aria-label="Daralt" title="Daralt">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6 11h12v2H6v-2z"></path>
+              </svg>
+            </button>
           </div>
           <div class="opt hidden">
             <label for="indent" id="labelIndent">Girinti:</label>
@@ -935,17 +979,16 @@
           </div>
           <div class="quick-select" id="quickLang">
             <button
-              class="qp-btn"
+              class="qp-btn icon-only"
               id="qlToggle"
-              aria-haspopup="true"
+              aria-haspopup="false"
               aria-expanded="false"
               title="Dil"
             >
-              <span class="qp-label" id="qlLabel">Türkçe 🇹🇷</span>
+              <span class="qp-label" id="qlLabel">
+                <svg id="flagIcon" viewBox="0 0 24 24" aria-hidden="true"></svg>
+              </span>
             </button>
-            <div class="qp-menu hidden" id="qlMenu" role="menu">
-              <div class="qp-list" id="qlList"></div>
-            </div>
           </div>
           <div class="seg" role="group" aria-label="Dosya">
             <button
@@ -1060,7 +1103,7 @@
                 role="status"
               ></span>
             </div>
-            <div class="card-header-right">
+            <div class="card-header-right"> 
               <div class="quick-palette" id="quickPalette">
                 <button
                   class="qp-btn"
@@ -1102,14 +1145,14 @@
 
       <div class="footer">
         <div id="footerLeft">
-          İşlemler tamamen tarayıcınızda gerçekleşir; veri dışarı gönderilmez.
+          İşlemler tamamen tarayıcınızda gerçekleşir; veri dışarı gönderilmez. 
         </div>
         <div id="footerRight">
           Kısayol: <span class="kbd">Ctrl</span> +
           <span class="kbd">Enter</span> → Biçimlendir
         </div>
       </div>
-
+      
       <!-- Ayarlar Modal -->
       <div
         id="settingsModal"
@@ -1161,7 +1204,7 @@
             <div class="form-row">
               <label for="workerThresholdKB" id="labelWorkerThreshold">Worker Eşiği (KB)</label>
               <input type="number" id="workerThresholdKB" min="0" max="102400" value="1024" />
-            </div>
+          </div>
             <div class="form-row">
               <label for="workerAuto">
                 <input type="checkbox" id="workerAuto" />
@@ -1623,8 +1666,8 @@
             const tab = btn.getAttribute("data-tab");
             dom.viewerRaw.classList.toggle("hidden", tab !== "raw");
             dom.viewerTree.classList.toggle("hidden", tab !== "tree");
-            // Her tab değişiminde RAW ve Tree güncellensin (cache hissi olmasın)
-            formatAction(false);
+          // Her tab değişiminde RAW ve Tree güncellensin (cache hissi olmasın)
+          formatAction(false);
           })
         );
 
@@ -1725,17 +1768,17 @@
               try {
                 const value = JSON.parse(text);
                 resolve({ ok: true, value });
-              } catch (error) {
-                const msg = String(error && error.message ? error.message : error);
-                let position = null, line = null, column = null;
-                const match = msg.match(/position\s+(\d+)/i);
-                if (match) {
-                  position = Number(match[1]);
-                  const lc = positionToLineColumn(text, position);
-                  line = lc.line; column = lc.column;
-                }
+          } catch (error) {
+            const msg = String(error && error.message ? error.message : error);
+            let position = null, line = null, column = null;
+            const match = msg.match(/position\s+(\d+)/i);
+            if (match) {
+              position = Number(match[1]);
+              const lc = positionToLineColumn(text, position);
+              line = lc.line; column = lc.column;
+            }
                 resolve({ ok: false, error: msg, position, line, column });
-              }
+          }
             }
           });
         }
@@ -1989,8 +2032,8 @@
               out += ch;
               if (esc) {
                 esc = false;
-                continue;
-              }
+              continue;
+            }
               if (ch === "\\") {
                 esc = true;
                 continue;
@@ -2142,12 +2185,12 @@
               out += ch;
               if (esc) {
                 esc = false;
-                continue;
-              }
+              continue;
+            }
               if (ch === "\\") {
                 esc = true;
-                continue;
-              }
+              continue;
+            }
               if (ch === quote) {
                 inStr = false;
               }
@@ -2195,8 +2238,8 @@
               out += ch;
               if (esc) {
                 esc = false;
-                continue;
-              }
+              continue;
+            }
               if (ch === "\\") {
                 esc = true;
                 continue;
@@ -3050,7 +3093,7 @@
               buildQuickPalette();
               dom.qpMenu.classList.add("hidden");
               dom.qpToggle.setAttribute("aria-expanded", "false");
-              if (!dom.viewerEdit.classList.contains("hidden")) return;
+              if (dom.viewerEdit && !dom.viewerEdit.classList.contains("hidden")) return;
               if (dom.input.value.trim()) formatAction(false);
               trackEvent("settings_change", {
                 event_label: "palette_quick_dropdown",
@@ -3079,15 +3122,12 @@
           try {
             document.documentElement.setAttribute("lang", lang || "tr");
           } catch {}
-          // Header buttons text and titles
-          dom.btnFormat.textContent = t("btn.format");
+          // Header buttons titles (icon-only)
           dom.btnFormat.title = t("tooltip.format");
-          dom.btnMinify.textContent = t("btn.minify");
           dom.btnMinify.title = t("tooltip.minify");
-          dom.btnValidate.textContent = t("btn.validate");
           dom.btnValidate.title = t("tooltip.validate");
-          dom.btnExpand.textContent = t("btn.expand");
-          dom.btnCollapse.textContent = t("btn.collapse");
+          dom.btnExpand.title = t("btn.expand");
+          dom.btnCollapse.title = t("btn.collapse");
 
           dom.btnLoad.title = t("tooltip.load");
           dom.btnSave.title = t("tooltip.save");
@@ -3124,6 +3164,14 @@
           if (dom.dropHint) dom.dropHint.textContent = t("drop.hint");
           if (dom.qiToggle) dom.qiToggle.title = t("label.indent");
           if (dom.qlToggle) dom.qlToggle.title = t("settings.language");
+          // Dil bayrağı (icon-only): toggle mantığı (SVG ile)
+          try {
+            const isEn = (settings.language === 'en');
+            const svg = document.getElementById('flagIcon');
+            if (svg) {
+              svg.innerHTML = isEn ? buildFlagTR() : buildFlagUK();
+            }
+          } catch {}
 
           // Footer
           if (dom.footerLeft) {
@@ -3238,50 +3286,27 @@
               const open = !dom.qiMenu.classList.contains("hidden");
               dom.qiMenu.classList.toggle("hidden");
               dom.qiToggle.setAttribute("aria-expanded", String(!open));
-            });
+          });
         }
 
         function buildQuickLanguage() {
-          if (!dom.qlList) return;
-          dom.qlList.innerHTML = "";
-          const langs = [
-            { value: "tr", name: "Türkçe", flag: "🇹🇷" },
-            { value: "en", name: "English", flag: "🇬🇧" },
-          ];
-          langs.forEach((l) => {
-            const item = document.createElement("div");
-            item.className = "qp-item";
-            item.setAttribute("role", "menuitem");
-            const left = document.createElement("div");
-            left.className = "qp-name";
-            left.textContent = `${l.name} ${l.flag}`;
-            item.appendChild(left);
-            if ((settings.language || "tr") === l.value)
-              item.style.borderColor = "var(--accent)";
-            item.addEventListener("click", () => {
-              settings.language = l.value;
-              saveSettings();
-              applyLanguage(settings.language);
-              if (dom.lang) dom.lang.value = l.value;
-              dom.qlMenu.classList.add("hidden");
-              dom.qlToggle.setAttribute("aria-expanded", "false");
-              if (dom.input.value.trim()) {
-                formatAction(false);
-              }
-              trackEvent("settings_change", {
-                event_label: "language_quick",
-                value: l.value,
-              });
-            });
-            dom.qlList.appendChild(item);
-          });
-          updateQuickLangLabel();
+          // Toggle butonu kullanıyoruz; listeyi kaldırdık
           if (dom.qlToggle)
             dom.qlToggle.addEventListener("click", () => {
-              const open = !dom.qlMenu.classList.contains("hidden");
-              dom.qlMenu.classList.toggle("hidden");
-              dom.qlToggle.setAttribute("aria-expanded", String(!open));
+              settings.language = (settings.language === 'en' ? 'tr' : 'en');
+              saveSettings();
+              applyLanguage(settings.language);
+              if (dom.input.value.trim()) formatAction(false);
+              trackEvent("settings_change", { event_label: "language_toggle", value: settings.language });
             });
+        }
+
+        // Basit SVG bayrakları
+        function buildFlagUK() {
+          return '<g><rect width="24" height="24" fill="#012169"/><path d="M0 0l24 24M24 0L0 24" stroke="#fff" stroke-width="4"/><path d="M0 0l24 24M24 0L0 24" stroke="#C8102E" stroke-width="2"/><path d="M10 0h4v24h-4zM0 10v4h24v-4z" fill="#fff"/><path d="M11 0h2v24h-2zM0 11v2h24v-2z" fill="#C8102E"/></g>';
+        }
+        function buildFlagTR() {
+          return '<g><rect width="24" height="24" fill="#E30A17"/><circle cx="10" cy="12" r="5" fill="#fff"/><circle cx="11.2" cy="12" r="4" fill="#E30A17"/><path d="M14.5 12l2.6-1.2-1.6 2.2 1.6 2.2-2.6-1.2-1.6 2.2.3-2.6-2.6-1.2 2.6-1.2-.3-2.6z" fill="#fff"/></g>';
         }
 
         // Worker Auto toggle: threshold input enable/disable
@@ -3296,4 +3321,4 @@
       })();
     </script>
   </body>
-</html>
+  </html>
