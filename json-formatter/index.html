@@ -156,6 +156,8 @@
         --scrollbar-thumb: rgba(34, 211, 238, 0.5);
         --scrollbar-thumb-hover: rgba(34, 211, 238, 0.8);
         --scrollbar-track: var(--panel);
+        --tree-font-size: 13px;
+        --editor-font-size: 13px;
       }
       [data-theme="light"] {
         --bg: #f6f7fb;
@@ -300,6 +302,8 @@
         display: block;
         fill: currentColor;
       }
+      .icon-btn.small { width: 32px; height: 32px; }
+      .icon-btn.small svg { width: 16px; height: 16px; }
       .qp-btn.icon-only svg {
         width: 22px;
         height: 22px;
@@ -365,6 +369,8 @@
         background: rgba(251, 113, 133, 0.12);
         border-color: rgba(251, 113, 133, 0.4);
       }
+      .icon-zoom-in { color: #0ea5e9; background: rgba(14,165,233,.12); border-color: rgba(14,165,233,.4); }
+      .icon-zoom-out { color: #06b6d4; background: rgba(6,182,212,.12); border-color: rgba(6,182,212,.4); }
       .seg {
         display: inline-flex;
         border: 1px solid var(--border);
@@ -436,7 +442,7 @@
         resize: none;
         padding: 14px 16px;
         font-family: var(--font);
-        font-size: 13px;
+        font-size: var(--editor-font-size, 13px);
         line-height: 1.5;
         background: transparent;
         color: transparent;
@@ -498,7 +504,7 @@
         margin: 0;
         padding: 14px 16px;
         font-family: var(--font);
-        font-size: 13px;
+        font-size: var(--editor-font-size, 13px);
         line-height: 1.5;
         white-space: pre-wrap;
         word-break: break-word;
@@ -569,6 +575,7 @@
         color: var(--text);
         cursor: pointer;
       }
+      .tab-tools { display: inline-flex; align-items: center; gap: 6px; margin-left: 6px; }
       .tabs button.active {
         background: rgba(34, 211, 238, 0.12);
         border-color: rgba(34, 211, 238, 0.4);
@@ -597,7 +604,7 @@
       }
       .tree {
         font-family: var(--font);
-        font-size: 13px;
+        font-size: var(--tree-font-size, 13px);
       }
       .tree ul {
         list-style: none;
@@ -954,6 +961,7 @@
               </svg>
             </button>
           </div>
+          
           <div class="opt hidden">
             <label for="indent" id="labelIndent">Girinti:</label>
             <select id="indent" title="Girinti">
@@ -1102,6 +1110,18 @@
             <div class="tabs" role="tablist" aria-label="Görünümler">
               <button class="tab-btn active" id="tab-raw" role="tab" aria-selected="true" aria-controls="viewer-raw" data-tab="raw">Raw</button>
               <button class="tab-btn" id="tab-tree" role="tab" aria-selected="false" aria-controls="viewer-tree" data-tab="tree">Ağaç</button>
+              <span class="tab-tools" id="tabTools">
+                <button class="icon-btn icon-zoom-in small" id="btnZoomIn" aria-label="Yakınlaştır" title="Yakınlaştır">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79L20 21.5 21.5 20 15.5 14zM10 13H9V10H6V9h3V6h1v3h3v1h-3v3z"></path>
+                  </svg>
+                </button>
+                <button class="icon-btn icon-zoom-out small" id="btnZoomOut" aria-label="Uzaklaştır" title="Uzaklaştır">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79L20 21.5 21.5 20 15.5 14zM7 9h6v1H7z"></path>
+                  </svg>
+                </button>
+              </span>
               <span
                 class="top-status"
                 id="topStatus"
@@ -2583,6 +2603,32 @@
         dom.btnCollapse.addEventListener("click", () => {
           formatAction(false);
           expandCollapseAll(false);
+        });
+        // Zoom controls for Tree & Raw
+        let treeFontSize = 13;
+        let editorFontSize = 13;
+        const applyTreeZoom = () => {
+          document.documentElement.style.setProperty('--tree-font-size', treeFontSize + 'px');
+        };
+        const applyEditorZoom = () => {
+          document.documentElement.style.setProperty('--editor-font-size', editorFontSize + 'px');
+        };
+        const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+        const zoomStep = 1;
+        const minSize = 10, maxSize = 24;
+        const btnZoomIn = document.getElementById('btnZoomIn');
+        const btnZoomOut = document.getElementById('btnZoomOut');
+        if (btnZoomIn) btnZoomIn.addEventListener('click', () => { 
+          treeFontSize = clamp(treeFontSize + zoomStep, minSize, maxSize);
+          editorFontSize = clamp(editorFontSize + zoomStep, minSize, maxSize);
+          applyTreeZoom();
+          applyEditorZoom();
+        });
+        if (btnZoomOut) btnZoomOut.addEventListener('click', () => { 
+          treeFontSize = clamp(treeFontSize - zoomStep, minSize, maxSize);
+          editorFontSize = clamp(editorFontSize - zoomStep, minSize, maxSize);
+          applyTreeZoom();
+          applyEditorZoom();
         });
         // Click tracking
         dom.btnFormat.addEventListener("click", () =>
