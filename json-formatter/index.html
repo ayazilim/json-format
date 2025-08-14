@@ -278,22 +278,21 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        border: 1px solid var(--border);
-        background: var(--panel);
+        border: none;
+        background: transparent;
         color: var(--text);
-        box-shadow: var(--shadow);
+        box-shadow: none;
         cursor: pointer;
-        transition: transform 0.05s ease, filter 0.2s ease,
-          border-color 0.2s ease, background 0.2s ease;
+        transition: color 0.2s ease, transform 0.05s ease, filter 0.2s ease;
         gap: 0;
         margin: 0 2px; /* ikonların birbirine yapışmasını önle */
       }
       /* Icon variants for actions */
-      .icon-format { color: #22c55e; background: rgba(34,197,94,.12); border-color: rgba(34,197,94,.4); }
-      .icon-minify { color: #0ea5e9; background: rgba(14,165,233,.12); border-color: rgba(14,165,233,.4); }
-      .icon-validate { color: #f59e0b; background: rgba(245,158,11,.12); border-color: rgba(245,158,11,.4); }
-      .icon-expand { color: #10b981; background: rgba(16,185,129,.12); border-color: rgba(16,185,129,.4); }
-      .icon-collapse { color: #ef4444; background: rgba(239,68,68,.12); border-color: rgba(239,68,68,.4); }
+      .icon-format { color: #22c55e; background: transparent; border-color: transparent; }
+      .icon-minify { color: #0ea5e9; background: transparent; border-color: transparent; }
+      .icon-validate { color: #f59e0b; background: transparent; border-color: transparent; }
+      .icon-expand { color: #10b981; background: transparent; border-color: transparent; }
+      .icon-collapse { color: #ef4444; background: transparent; border-color: transparent; }
 
       /* Icon-only quick button */
       .qp-btn.icon-only { width: 38px; height: 38px; padding: 0; justify-content: center; }
@@ -334,47 +333,16 @@
       /* Subtle theme-based toning for icons */
       [data-theme="light"] .icon-btn { filter: saturate(0.98) brightness(1.02); }
       [data-theme="dark"] .icon-btn { filter: saturate(1.02) brightness(0.98); }
-      .icon-btn:hover {
-        transform: translateY(1px);
-        filter: brightness(1.08);
-      }
-      .icon-load {
-        color: #0ea5e9;
-        background: rgba(14, 165, 233, 0.12);
-        border-color: rgba(14, 165, 233, 0.4);
-      }
-      .icon-save {
-        color: #22c55e;
-        background: rgba(34, 197, 94, 0.12);
-        border-color: rgba(34, 197, 94, 0.4);
-      }
-      .icon-copy {
-        color: #06b6d4;
-        background: rgba(6, 182, 212, 0.12);
-        border-color: rgba(6, 182, 212, 0.4);
-      }
-      .icon-paste {
-        color: #f59e0b;
-        background: rgba(245, 158, 11, 0.12);
-        border-color: rgba(245, 158, 11, 0.4);
-      }
-      .icon-theme {
-        color: #8b5cf6;
-        background: rgba(139, 92, 246, 0.12);
-        border-color: rgba(139, 92, 246, 0.4);
-      }
-      .icon-full {
-        color: #94a3b8;
-        background: rgba(148, 163, 184, 0.12);
-        border-color: rgba(148, 163, 184, 0.4);
-      }
-      .icon-settings {
-        color: #fb7185;
-        background: rgba(251, 113, 133, 0.12);
-        border-color: rgba(251, 113, 133, 0.4);
-      }
-      .icon-zoom-in { color: #0ea5e9; background: rgba(14,165,233,.12); border-color: rgba(14,165,233,.4); }
-      .icon-zoom-out { color: #06b6d4; background: rgba(6,182,212,.12); border-color: rgba(6,182,212,.4); }
+      .icon-btn:hover { transform: translateY(0); filter: brightness(1.2); }
+      .icon-load { color: #0ea5e9; background: transparent; border-color: transparent; }
+      .icon-save { color: #22c55e; background: transparent; border-color: transparent; }
+      .icon-copy { color: #06b6d4; background: transparent; border-color: transparent; }
+      .icon-paste { color: #f59e0b; background: transparent; border-color: transparent; }
+      .icon-theme { color: #8b5cf6; background: transparent; border-color: transparent; }
+      .icon-full { color: #94a3b8; background: transparent; border-color: transparent; }
+      .icon-settings { color: #fb7185; background: transparent; border-color: transparent; }
+      .icon-zoom-in { color: #0ea5e9; background: transparent; border-color: transparent; }
+      .icon-zoom-out { color: #06b6d4; background: transparent; border-color: transparent; }
       .seg {
         display: inline-flex;
         border: 1px solid var(--border);
