@@ -197,17 +197,21 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 8px;
       }
       .title {
         font-weight: 700;
         font-size: 18px;
         letter-spacing: 0.2px;
+        min-width: 0;
       }
       .toolbar {
         display: flex;
         gap: 8px;
         flex-wrap: wrap;
         align-items: center;
+        min-width: 0;
       }
       .btn {
         border: 1px solid var(--border);
@@ -661,6 +665,13 @@
       @media (max-width: 1200px) {
         .workspace {
           grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 900px) {
+        .toolbar {
+          flex: 1 1 100%;
+          justify-content: flex-start;
         }
       }
 
