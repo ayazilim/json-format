@@ -823,6 +823,7 @@
       .radio-pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 999px; cursor: pointer; background: var(--panel); }
       .radio-pill input { accent-color: var(--accent); }
       .radio-pill.active { outline: 2px solid var(--accent); }
+      .indent-preview { font-family: var(--font); font-size: 12px; border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02)); color: var(--text); max-height: 140px; overflow: auto; white-space: pre; }
 
       /* Hızlı palet açılır menü */
       .card-header-right {
@@ -1201,6 +1202,7 @@
                 <label class="radio-pill"><input type="radio" name="indentChoice" value="4" /> 4</label>
                 <label class="radio-pill"><input type="radio" name="indentChoice" value="\t" /> Sekme</label>
               </div>
+              <div id="indentPreview" class="indent-preview" style="margin-top:8px"></div>
             </div>
             <div class="form-row">
               <label for="paletteSelect">Renk Paleti</label>
@@ -2626,6 +2628,14 @@
               saveSettings();
               if (dom.input.value.trim()) formatAction(true);
               trackEvent('settings_change', { event_label: 'indent_modal', value: settings.indent });
+              try {
+                const pv = document.getElementById('indentPreview');
+                if (pv) {
+                  const example = { hello: 'world', arr: [1, true, null], obj: { a: 1, b: 2 } };
+                  const space = (settings.indent === '\t' ? '\t' : Number(settings.indent) || 2);
+                  pv.textContent = JSON.stringify(example, null, space);
+                }
+              } catch {}
             });
           });
         }
@@ -2974,6 +2984,15 @@
               dom.indentGroup.querySelectorAll('label.radio-pill').forEach(l => l.classList.remove('active'));
               const sel = dom.indentGroup.querySelector(`input[name="indentChoice"][value="${settings.indent.replace("\\","\\\\")}"]`);
               if (sel) { sel.checked = true; sel.parentElement.classList.add('active'); }
+            }
+          } catch {}
+          // Indent preview
+          try {
+            const pv = document.getElementById('indentPreview');
+            if (pv) {
+              const example = { hello: 'world', arr: [1, true, null], obj: { a: 1, b: 2 } };
+              const space = (settings.indent === '\t' ? '\t' : Number(settings.indent) || 2);
+              pv.textContent = JSON.stringify(example, null, space);
             }
           } catch {}
           const wt = Number(settings.workerThresholdKB);
