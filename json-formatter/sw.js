@@ -4,6 +4,7 @@ const urlsToCache = [
   '/?lang=tr',
   '/?lang=en', 
   '/favicon.ico',
+  '/icons/',
   '/icons/icon.png',  
   '/icons/android-chrome-192x192.png',  
   '/icons/android-chrome-512x512.png',  
