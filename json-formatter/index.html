@@ -818,6 +818,11 @@
         gap: 8px;
         margin-top: 14px;
       }
+      /* Indent radio pills */
+      .indent-group { display: inline-flex; gap: 8px; }
+      .radio-pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 999px; cursor: pointer; background: var(--panel); }
+      .radio-pill input { accent-color: var(--accent); }
+      .radio-pill.active { outline: 2px solid var(--accent); }
 
       /* Hızlı palet açılır menü */
       .card-header-right {
@@ -1190,12 +1195,12 @@
               </select>
             </div>
             <div class="form-row">
-              <label for="indent" id="labelIndentModal">Girinti</label>
-              <select id="indentModal">
-                <option value="2">2</option>
-                <option value="4">4</option>
-                <option value="\t">Sekme</option>
-              </select>
+              <label id="labelIndentModal">Girinti</label>
+              <div id="indentGroup" role="radiogroup" aria-labelledby="labelIndentModal" class="indent-group">
+                <label class="radio-pill"><input type="radio" name="indentChoice" value="2" /> 2</label>
+                <label class="radio-pill"><input type="radio" name="indentChoice" value="4" /> 4</label>
+                <label class="radio-pill"><input type="radio" name="indentChoice" value="\t" /> Sekme</label>
+              </div>
             </div>
             <div class="form-row">
               <label for="paletteSelect">Renk Paleti</label>
@@ -1255,7 +1260,8 @@
           btnSettings: document.getElementById("btnSettings"),
           fileInput: document.getElementById("fileInput"),
           indent: document.getElementById("indent"),
-          indentModal: document.getElementById("indentModal"),
+          indentModal: document.getElementById("indentModal"), // legacy if exists
+          indentGroup: document.getElementById('indentGroup'),
           sortKeys: document.getElementById("sortKeys"),
           labelIndent: document.getElementById("labelIndent"),
           labelIndentModal: document.getElementById("labelIndentModal"),
@@ -2610,12 +2616,17 @@
             });
           });
         }
-        if (dom.indentModal) {
-          dom.indentModal.addEventListener('change', () => {
-            settings.indent = dom.indentModal.value;
-            saveSettings();
-            if (dom.input.value.trim()) formatAction(true);
-            trackEvent('settings_change', { event_label: 'indent_modal', value: settings.indent });
+        // Radio pills change handler
+        if (dom.indentGroup) {
+          dom.indentGroup.querySelectorAll('input[name="indentChoice"]').forEach(inp => {
+            inp.addEventListener('change', () => {
+              dom.indentGroup.querySelectorAll('label.radio-pill').forEach(l => l.classList.remove('active'));
+              if (inp.parentElement) inp.parentElement.classList.add('active');
+              settings.indent = inp.value;
+              saveSettings();
+              if (dom.input.value.trim()) formatAction(true);
+              trackEvent('settings_change', { event_label: 'indent_modal', value: settings.indent });
+            });
           });
         }
         dom.sortKeys.addEventListener("change", () => {
@@ -2957,7 +2968,14 @@
           dom.autoFormat.checked = !!settings.autoFormat;
           dom.paletteSelect.value = settings.palette;
           dom.languageSelect.value = settings.language;
-          if (dom.indentModal) dom.indentModal.value = settings.indent;
+          // Radio pills: set active based on settings.indent
+          try {
+            if (dom.indentGroup) {
+              dom.indentGroup.querySelectorAll('label.radio-pill').forEach(l => l.classList.remove('active'));
+              const sel = dom.indentGroup.querySelector(`input[name="indentChoice"][value="${settings.indent.replace("\\","\\\\")}"]`);
+              if (sel) { sel.checked = true; sel.parentElement.classList.add('active'); }
+            }
+          } catch {}
           const wt = Number(settings.workerThresholdKB);
           const wtEl = document.getElementById('workerThresholdKB');
           const lblWT = document.getElementById('labelWorkerThreshold');
