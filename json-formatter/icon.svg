@@ -1,59 +1,59 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
-  <title id="title">JSON Formatter Icon</title>
-  <desc id="desc">Curly braces with a validation check and color bars representing syntax highlighting.</desc>
+  <title id="title">JSON Format/Validate Icon</title>
+  <desc id="desc">Curly braces for JSON, a green check for validation, and three color bars for syntax highlighting. Transparent background.</desc>
 
-  <!-- Renk değişkenleri -->
+  <!-- Tema renkleri (isterseniz değiştirin) -->
   <style>
-    :root {
-      --bg: #0f172a;          /* arka plan */
-      --stroke: #e2e8f0;      /* ana çizgi rengi */
-      --accent: #22c55e;      /* doğrulama/aksan */
-      --bar1: #60a5fa;        /* renk şeritleri */
-      --bar2: #f59e0b;
-      --bar3: #ef4444;
+    :root{
+      --doc-fill:#ffffff;     /* belge zemini (arka plan şeffaf, bu sadece belgenin içi) */
+      --line:#0f172a;         /* koyu çizgi rengi */
+      --accent:#22c55e;       /* doğrulama tiki */
+      --bar1:#60a5fa;         /* mavi satır */
+      --bar2:#f59e0b;         /* turuncu satır */
+      --bar3:#ef4444;         /* kırmızı satır */
+      --dot:#0f172a;          /* nokta/virgül */
+      --shadow:rgba(15,23,42,.18);
     }
-    .s { stroke: var(--stroke); }
   </style>
 
-  <!-- Kart/tuval -->
-  <rect x="16" y="16" width="224" height="224" rx="24" fill="var(--bg)"></rect>
+  <!-- Yumuşak gölge sadece belge için (dış boşluk şeffaf kalır) -->
+  <defs>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="var(--shadow)" flood-opacity="1"></feDropShadow>
+    </filter>
+  </defs>
 
-  <!-- Kod paneli çerçevesi -->
-  <rect x="36" y="44" width="184" height="140" rx="12" fill="none" stroke="var(--stroke)" stroke-width="6" stroke-linejoin="round"></rect>
+  <!-- Belge kartı + kıvrık köşe -->
+  <g filter="url(#softShadow)">
+    <path d="M48 36h120a12 12 0 0 1 8.5 3.5l40 40A12 12 0 0 1 220 88v116a16 16 0 0 1-16 16H64a16 16 0 0 1-16-16V52a16 16 0 0 1 16-16z" fill="var(--doc-fill)" stroke="var(--line)" stroke-width="8" stroke-linejoin="round"></path>
+    <!-- Kıvrık köşe üçgeni -->
+    <path d="M168 36v32a20 20 0 0 0 20 20h32" fill="#eaeef7" stroke="var(--line)" stroke-width="8" stroke-linejoin="round"></path>
+  </g>
 
-  <!-- Süslü parantezler { } -->
-  <!-- Sol parantez -->
-  <path d="
-    M88 84
-    c-12 0-18 8-18 16
-    c0 7 4 12 12 16
-    c-8 4-12 9-12 16
-    c0 8 6 16 18 16
-  " fill="none" stroke="var(--stroke)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"></path>
-  <!-- Sağ parantez -->
-  <path d="
-    M168 84
-    c12 0 18 8 18 16
-    c0 7-4 12-12 16
-    c8 4 12 9 12 16
-    c0 8-6 16-18 16
-  " fill="none" stroke="var(--stroke)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"></path>
+  <!-- JSON süslü parantezler -->
+  <path d="M95 98
+           c-12 0-18 8-18 16
+           c0 7 4 12 12 16
+           c-8 4-12 9-12 16
+           c0 8 6 16 18 16" fill="none" stroke="var(--line)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"></path>
+  <path d="M161 98
+           c12 0 18 8 18 16
+           c0 7-4 12-12 16
+           c8 4 12 9 12 16
+           c0 8-6 16-18 16" fill="none" stroke="var(--line)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"></path>
 
-  <!-- Nokta/virgül ve iki tırnak ipucu -->
-  <circle cx="128" cy="114" r="4" fill="var(--stroke)"></circle>
-  <rect x="122" y="140" width="12" height="6" rx="3" fill="var(--stroke)"></rect>
+  <!-- Noktalar ve kısa çizgi (":", ",", "...") -->
+  <circle cx="128" cy="120" r="5" fill="var(--dot)"></circle>
+  <rect x="122" y="142" width="12" height="7" rx="3.5" fill="var(--dot)"></rect>
 
-  <!-- Renk şeritleri (syntax highlight) -->
-  <rect x="44" y="198" width="56" height="12" rx="6" fill="var(--bar1)"></rect>
-  <rect x="100" y="198" width="56" height="12" rx="6" fill="var(--bar2)"></rect>
-  <rect x="156" y="198" width="56" height="12" rx="6" fill="var(--bar3)"></rect>
+  <!-- Renk şeritleri -->
+  <rect x="72" y="182" width="56" height="14" rx="7" fill="var(--bar1)"></rect>
+  <rect x="128" y="182" width="56" height="14" rx="7" fill="var(--bar2)"></rect>
+  <rect x="100" y="202" width="84" height="14" rx="7" fill="var(--bar3)"></rect>
 
-  <!-- Doğrulama rozeti (sağ üst) -->
-  <circle cx="204" cy="60" r="18" fill="var(--accent)"></circle>
-  <path d="M196 60 l6 6 l10 -12" fill="none" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
-
-  <!-- Üst menü noktalari -->
-  <circle cx="56" cy="60" r="4" fill="var(--stroke)"></circle>
-  <circle cx="72" cy="60" r="4" fill="var(--stroke)"></circle>
-  <circle cx="88" cy="60" r="4" fill="var(--stroke)"></circle>
+  <!-- Doğrulama rozeti -->
+  <g transform="translate(168,152)">
+    <circle cx="36" cy="36" r="28" fill="var(--accent)" stroke="var(--line)" stroke-width="8"></circle>
+    <path d="M24 36l10 10l18-22" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"></path>
+  </g>
 </svg>
