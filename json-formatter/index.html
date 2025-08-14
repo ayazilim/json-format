@@ -968,20 +968,7 @@
               <option value="en">English</option>
             </select>
           </div>
-          <div class="quick-select" id="quickIndent">
-            <button
-              class="qp-btn"
-              id="qiToggle"
-              aria-haspopup="true"
-              aria-expanded="false"
-              title="Girinti"
-            >
-              <span class="qp-label" id="qiLabel">Girinti: 2</span>
-            </button>
-            <div class="qp-menu hidden" id="qiMenu" role="menu">
-              <div class="qp-list" id="qiList"></div>
-            </div>
-          </div>
+          
           <div class="quick-select" id="quickLang">
             <button
               class="qp-btn icon-only"
@@ -1203,6 +1190,14 @@
               </select>
             </div>
             <div class="form-row">
+              <label for="indent" id="labelIndentModal">Girinti</label>
+              <select id="indentModal">
+                <option value="2">2</option>
+                <option value="4">4</option>
+                <option value="\t">Sekme</option>
+              </select>
+            </div>
+            <div class="form-row">
               <label for="paletteSelect">Renk Paleti</label>
               <select id="paletteSelect"></select>
             </div>
@@ -1260,8 +1255,10 @@
           btnSettings: document.getElementById("btnSettings"),
           fileInput: document.getElementById("fileInput"),
           indent: document.getElementById("indent"),
+          indentModal: document.getElementById("indentModal"),
           sortKeys: document.getElementById("sortKeys"),
           labelIndent: document.getElementById("labelIndent"),
+          labelIndentModal: document.getElementById("labelIndentModal"),
           labelSort: document.getElementById("labelSort"),
           labelLang: document.getElementById("labelLang"),
           lang: document.getElementById("lang"),
@@ -2604,14 +2601,23 @@
         );
 
         // Girinti ve anahtar sıralama: anında uygula
-        dom.indent.addEventListener("change", () => {
-          // Sekme seçildiğinde de pretty bas
-          formatAction(true);
-          trackEvent("settings_change", {
-            event_label: "indent",
-            value: dom.indent.value,
+        if (dom.indent) {
+          dom.indent.addEventListener("change", () => {
+            formatAction(true);
+            trackEvent("settings_change", {
+              event_label: "indent",
+              value: dom.indent.value,
+            });
           });
-        });
+        }
+        if (dom.indentModal) {
+          dom.indentModal.addEventListener('change', () => {
+            settings.indent = dom.indentModal.value;
+            saveSettings();
+            if (dom.input.value.trim()) formatAction(true);
+            trackEvent('settings_change', { event_label: 'indent_modal', value: settings.indent });
+          });
+        }
         dom.sortKeys.addEventListener("change", () => {
           formatAction(true);
           trackEvent("settings_change", {
@@ -2951,6 +2957,7 @@
           dom.autoFormat.checked = !!settings.autoFormat;
           dom.paletteSelect.value = settings.palette;
           dom.languageSelect.value = settings.language;
+          if (dom.indentModal) dom.indentModal.value = settings.indent;
           const wt = Number(settings.workerThresholdKB);
           const wtEl = document.getElementById('workerThresholdKB');
           const lblWT = document.getElementById('labelWorkerThreshold');
@@ -2998,7 +3005,7 @@
           settings.rememberSession = !!dom.rememberSession.checked;
           settings.autoFormat = !!dom.autoFormat.checked;
           settings.palette = dom.paletteSelect.value;
-          settings.indent = dom.indent.value;
+          settings.indent = dom.indentModal && dom.indentModal.value ? dom.indentModal.value : settings.indent;
           settings.sortKeys = dom.sortKeys.checked;
           settings.language = dom.languageSelect.value;
           const wtEl = document.getElementById('workerThresholdKB');
@@ -3208,6 +3215,7 @@
           if (dom.labelRemember)
             dom.labelRemember.textContent = t("settings.remember");
           if (lblPalette) lblPalette.textContent = t("settings.palette");
+          if (dom.labelIndentModal) dom.labelIndentModal.textContent = t('label.indent').replace(':','');
           if (dom.labelPalettePreview)
             dom.labelPalettePreview.textContent = t("settings.preview");
           if (dom.btnCloseSettings)
