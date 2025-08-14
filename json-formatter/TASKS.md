@@ -36,3 +36,5 @@ Bu dosya, projede yapılan işleri ve planlanan görevleri takip etmek için kul
 ## Yapılan Son Düzenlemeler
 - [x] Footer yüksekliği düşürüldü (`--footer-h: 56px`) ve `page` konteyneri yüksekliği `calc(100vh - var(--footer-h))` ile ayarlandı; boş durumda gereksiz dikey scrollbar engellendi.
 - [x] Editör highlight katmanının (`.editor-highlight`) `overflow` değeri `hidden` yapıldı; iç içe scrollbar görünümü kaldırıldı. 
+- [x] Çift scrollbar sorunu: dış kaydırma kapatıldı, kaydırma `.editor` içinde toplandı; `.viewer` overflow gizlendi, textarea yatay scroll devre dışı bırakıldı.
+- [x] Scrollbar temalandırma: palet rengine göre dinamik scrollbar (thumb/hover) rengi atandı; karanlık modda beyaz kalma sorunu giderildi.

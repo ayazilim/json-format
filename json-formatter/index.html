@@ -152,6 +152,10 @@
         --font: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
           "Liberation Mono", "Courier New", monospace;
         --footer-h: 56px;
+        /* Scrollbar (vars) */
+        --scrollbar-thumb: rgba(34, 211, 238, 0.5);
+        --scrollbar-thumb-hover: rgba(34, 211, 238, 0.8);
+        --scrollbar-track: var(--panel);
       }
       [data-theme="light"] {
         --bg: #f6f7fb;
@@ -163,6 +167,10 @@
         --border: #e5e7eb;
         --ok: #059669;
         --shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        /* Light fallback */
+        --scrollbar-thumb: rgba(14, 165, 233, 0.4);
+        --scrollbar-thumb-hover: rgba(14, 165, 233, 0.65);
+        --scrollbar-track: var(--panel);
       }
       html,
       body {
@@ -400,6 +408,47 @@
         min-height: 300px;
         overflow: auto;
       }
+       /* Scrollbar styling */
+       .editor,
+       .viewer,
+       .qp-list,
+       .palette-grid,
+       .settings-dialog {
+         scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+         scrollbar-width: thin;
+       }
+       .editor::-webkit-scrollbar,
+       .viewer::-webkit-scrollbar,
+       .qp-list::-webkit-scrollbar,
+       .palette-grid::-webkit-scrollbar,
+       .settings-dialog::-webkit-scrollbar {
+         width: 10px;
+         height: 10px;
+       }
+       .editor::-webkit-scrollbar-thumb,
+       .viewer::-webkit-scrollbar-thumb,
+       .qp-list::-webkit-scrollbar-thumb,
+       .palette-grid::-webkit-scrollbar-thumb,
+       .settings-dialog::-webkit-scrollbar-thumb {
+         background-color: var(--scrollbar-thumb);
+         border-radius: 8px;
+         border: 3px solid transparent;
+         background-clip: padding-box;
+       }
+       .editor::-webkit-scrollbar-thumb:hover,
+       .viewer::-webkit-scrollbar-thumb:hover,
+       .qp-list::-webkit-scrollbar-thumb:hover,
+       .palette-grid::-webkit-scrollbar-thumb:hover,
+       .settings-dialog::-webkit-scrollbar-thumb:hover {
+         background-color: var(--scrollbar-thumb-hover);
+       }
+       .editor::-webkit-scrollbar-track,
+       .viewer::-webkit-scrollbar-track,
+       .qp-list::-webkit-scrollbar-track,
+       .palette-grid::-webkit-scrollbar-track,
+       .settings-dialog::-webkit-scrollbar-track {
+         background: var(--scrollbar-track);
+       }
       .editor-highlight {
         position: absolute;
         inset: 0;
@@ -1096,6 +1145,17 @@
 
     <script>
       (function () {
+        // Renkler için yardımcı: hex -> rgba(alpha)
+        function hexToRgba(hex, alpha) {
+          try {
+            const h = hex.replace('#', '');
+            const bigint = parseInt(h.length === 3 ? h.split('').map(c => c + c).join('') : h, 16);
+            const r = (bigint >> 16) & 255;
+            const g = (bigint >> 8) & 255;
+            const b = bigint & 255;
+            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+          } catch { return `rgba(34, 211, 238, ${alpha})`; }
+        }
         const dom = {
           page: document.getElementById("page"),
           input: document.getElementById("input"),
@@ -2641,6 +2701,9 @@
           root.setProperty("--color-number", pal.number);
           root.setProperty("--color-boolean", pal.boolean);
           root.setProperty("--color-null", pal.null);
+          // Scrollbar renklerini palete göre ayarla (thumb: key rengi baz alınır)
+          root.setProperty('--scrollbar-thumb', hexToRgba(pal.key, 0.5));
+          root.setProperty('--scrollbar-thumb-hover', hexToRgba(pal.key, 0.8));
           trackEvent("palette_apply", { event_label: key });
         }
 
