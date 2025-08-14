@@ -1,4 +1,4 @@
-const CACHE_NAME = 'json-formatter-v2'; // Versiyon numarasını her güncellemede artırın
+const CACHE_NAME = 'json-formatter-v1'; // Versiyon numarasını her güncellemede artırın
 const urlsToCache = [
   '/', 
   '/?lang=tr',
