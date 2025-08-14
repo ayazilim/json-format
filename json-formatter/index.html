@@ -662,6 +662,23 @@
       .hidden {
         display: none !important;
       }
+      /* Disabled form fields görünürlüğü */
+      .settings-dialog input[disabled], .settings-dialog select[disabled] {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+      /* A11y: görünür odak halkası */
+      .btn:focus-visible, .icon-btn:focus-visible, .tab-btn:focus-visible, .qp-btn:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+      /* Hata satırına atla görsel ipucu */
+      @keyframes flashError {
+        0% { box-shadow: inset 0 0 0 0 rgba(220,38,38,.0); }
+        50% { box-shadow: inset 0 0 0 9999px rgba(220,38,38,.08); }
+        100% { box-shadow: inset 0 0 0 0 rgba(220,38,38,.0); }
+      }
+      .editor.flash-error { animation: flashError .8s ease; }
       @media (max-width: 1200px) {
         .workspace {
           grid-template-columns: 1fr;
@@ -1033,9 +1050,9 @@
       <div class="workspace">
         <section class="card" id="mainCard">
           <div class="card-header">
-            <div class="tabs">
-              <button class="tab-btn active" data-tab="raw">Raw</button>
-              <button class="tab-btn" data-tab="tree">Ağaç</button>
+            <div class="tabs" role="tablist" aria-label="Görünümler">
+              <button class="tab-btn active" id="tab-raw" role="tab" aria-selected="true" aria-controls="viewer-raw" data-tab="raw">Raw</button>
+              <button class="tab-btn" id="tab-tree" role="tab" aria-selected="false" aria-controls="viewer-tree" data-tab="tree">Ağaç</button>
               <span
                 class="top-status"
                 id="topStatus"
@@ -1062,7 +1079,7 @@
             </div>
           </div>
           <div class="card-body">
-            <div class="viewer" id="viewer-raw" style="min-height: 0">
+            <div class="viewer" id="viewer-raw" role="tabpanel" aria-labelledby="tab-raw" tabindex="0" style="min-height: 0">
               <div class="editor" id="editorWrap">
                 <pre id="inputHighlight" class="editor-highlight"></pre>
                 <textarea
@@ -1072,7 +1089,7 @@
                 ></textarea>
               </div>
             </div>
-            <div class="viewer hidden" id="viewer-tree">
+            <div class="viewer hidden" id="viewer-tree" role="tabpanel" aria-labelledby="tab-tree" tabindex="0">
               <div class="tree" id="tree"></div>
             </div>
             <div class="status" id="status">Hazır</div>
@@ -1140,6 +1157,16 @@
             <div class="form-row">
               <label for="paletteSelect">Renk Paleti</label>
               <select id="paletteSelect"></select>
+            </div>
+            <div class="form-row">
+              <label for="workerThresholdKB" id="labelWorkerThreshold">Worker Eşiği (KB)</label>
+              <input type="number" id="workerThresholdKB" min="0" max="102400" value="1024" />
+            </div>
+            <div class="form-row">
+              <label for="workerAuto">
+                <input type="checkbox" id="workerAuto" />
+                <span id="labelWorkerAuto">Otomatik (önerilen)</span>
+              </label>
             </div>
           </div>
           <div class="form-row" style="margin-top: 8px">
@@ -1231,6 +1258,8 @@
           btnSaveSettings: document.getElementById("btnSaveSettings"),
           settingsTitle: document.getElementById("settingsTitle"),
           labelPalettePreview: document.getElementById("labelPalettePreview"),
+            workerThresholdKB: document.getElementById("workerThresholdKB"),
+            workerAuto: document.getElementById("workerAuto"),
         };
 
         // i18n
@@ -1297,6 +1326,8 @@
             "settings.save": "Kaydet",
             "settings.language": "Dil",
             "settings.autoFormat": "Otomatik biçimlendir",
+            "settings.workerThreshold": "Worker Eşiği (KB)",
+            "settings.workerAuto": "Otomatik (önerilen)",
             "tree.depthCap": "… (derinlik sınırı)",
           },
           en: {
@@ -1361,6 +1392,8 @@
             "settings.save": "Save",
             "settings.language": "Language",
             "settings.autoFormat": "Auto format",
+            "settings.workerThreshold": "Worker Threshold (KB)",
+            "settings.workerAuto": "Automatic (recommended)",
             "tree.depthCap": "… (depth limit)",
           },
         };
@@ -1399,6 +1432,11 @@
               : "light";
           document.documentElement.setAttribute("data-theme", current);
           localStorage.setItem("theme", current);
+          // theme-color meta eşitle
+          try {
+            const meta = document.querySelector('meta[name="theme-color"]');
+            if (meta) meta.setAttribute('content', current === 'dark' ? '#0f172a' : '#f6f7fb');
+          } catch {}
           trackEvent("ui_theme_toggle", {
             event_category: "ui",
             event_label: current === "light" ? "to_light" : "to_dark",
@@ -1542,7 +1580,19 @@
           lastInput: "",
           language: "tr",
           autoFormat: false,
+          workerThresholdKB: 1024,
+          workerAuto: true,
         };
+        // Tema entegrasyonu: sistem temasını başlangıçta algıla
+        try {
+          const sysDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+          const stored = localStorage.getItem('theme');
+          const current = stored || (sysDark ? 'dark' : 'light');
+          document.documentElement.setAttribute('data-theme', current);
+          // theme-color meta güncelle
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', current === 'dark' ? '#0f172a' : '#f6f7fb');
+        } catch {}
         let settings = loadSettings();
         // URL ?lang=tr|en parametresi gelirse dili buna göre ayarla (ayarları da güncelle)
         try {
@@ -1597,9 +1647,47 @@
             dom.topStatus.classList.add("err");
             dom.topStatus.textContent = message;
           }
+          // Hata satırına atla: line/column bilgisini statüden yakalamaya çalış
+          try {
+            const m = String(message || '').match(/\(satır\s(\d+),\s+sütun\s(\d+)\)|\(line\s(\d+),\s+column\s(\d+)\)/i);
+            const line = Number(m && (m[1] || m[3]));
+            const col = Number(m && (m[2] || m[4]));
+            if (Number.isFinite(line)) {
+              // textarea scroll to line
+              const ta = dom.input;
+              const before = ta.value.split(/\r?\n/).slice(0, Math.max(0, line - 1)).join("\n");
+              const pos = before.length + (line > 1 ? 1 : 0) + Math.max(0, (Number.isFinite(col) ? col - 1 : 0));
+              ta.focus();
+              if (typeof ta.setSelectionRange === 'function') ta.setSelectionRange(pos, pos);
+              // basit görünür scroll
+              const lineHeight = 20; // yaklaşık
+              ta.scrollTop = Math.max(0, (line - 2) * lineHeight);
+              const editor = document.getElementById('editorWrap');
+              if (editor) {
+                editor.classList.remove('flash-error');
+                void editor.offsetWidth; // reflow
+                editor.classList.add('flash-error');
+              }
+            }
+          } catch {}
         }
 
+        // Büyük JSON performansı: varsa Web Worker ile parse et, yoksa ana iş parçacığına düş
+        let parseWorker = null;
+        try {
+          parseWorker = new Worker('worker.js');
+        } catch {}
         function parseJsonSafely(text) {
+          const threshold = Math.max(0, Number(settings.workerThresholdKB || 0)) * 1024;
+          const auto = !!settings.workerAuto;
+          const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+          const cores = (navigator.hardwareConcurrency || 2);
+          const autoThreshold = Math.max(512 * 1024, Math.min(8 * 1024 * 1024, Math.floor((cores >= 8 ? 2 : 1) * 1024 * 1024)));
+          const finalThreshold = auto ? autoThreshold : threshold;
+          if (parseWorker && text && text.length > finalThreshold) {
+            // eşik üstünde worker kullan
+            return parseJsonInWorker(text);
+          }
           try {
             const value = JSON.parse(text);
             return { ok: true, value };
@@ -1617,6 +1705,39 @@
             }
             return { ok: false, error: msg, position, line, column };
           }
+        }
+
+        function parseJsonInWorker(text) {
+          return new Promise((resolve) => {
+            const id = Math.random().toString(36).slice(2);
+            const onMessage = (e) => {
+              const data = e.data || {};
+              if (data.id !== id) return;
+              parseWorker.removeEventListener('message', onMessage);
+              if (data.ok) resolve({ ok: true, value: data.value });
+              else resolve({ ok: false, error: data.error, position: data.position, line: data.line, column: data.column });
+            };
+            try {
+              parseWorker.addEventListener('message', onMessage);
+              parseWorker.postMessage({ id, text });
+            } catch {
+              // Worker başarısızsa normal parse'a dön
+              try {
+                const value = JSON.parse(text);
+                resolve({ ok: true, value });
+              } catch (error) {
+                const msg = String(error && error.message ? error.message : error);
+                let position = null, line = null, column = null;
+                const match = msg.match(/position\s+(\d+)/i);
+                if (match) {
+                  position = Number(match[1]);
+                  const lc = positionToLineColumn(text, position);
+                  line = lc.line; column = lc.column;
+                }
+                resolve({ ok: false, error: msg, position, line, column });
+              }
+            }
+          });
         }
 
         function positionToLineColumn(text, pos) {
@@ -2507,6 +2628,10 @@
             e.preventDefault();
             formatAction(true);
           }
+          if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S')) {
+            e.preventDefault();
+            dom.btnSave.click();
+          }
         });
         // Editör renklendirme senkronizasyonu
         const syncHighlight = () => {
@@ -2688,6 +2813,13 @@
           }
         } catch {}
 
+        // PWA: Service Worker kaydı
+        try {
+          if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js').catch(() => {});
+          }
+        } catch {}
+
         // Yumuşak tam ekran (yalnızca JSON kartı)
         let softFull = false;
         function toggleSoftFull() {
@@ -2771,6 +2903,35 @@
           dom.autoFormat.checked = !!settings.autoFormat;
           dom.paletteSelect.value = settings.palette;
           dom.languageSelect.value = settings.language;
+          const wt = Number(settings.workerThresholdKB);
+          const wtEl = document.getElementById('workerThresholdKB');
+          const lblWT = document.getElementById('labelWorkerThreshold');
+          const lblAuto = document.getElementById('labelWorkerAuto');
+          if (wtEl) wtEl.value = String(Number.isFinite(wt) ? wt : defaultSettings.workerThresholdKB);
+          if (lblWT) lblWT.textContent = t('settings.workerThreshold');
+          if (lblAuto) lblAuto.textContent = t('settings.workerAuto');
+          if (dom.workerAuto) dom.workerAuto.checked = !!settings.workerAuto;
+          if (wtEl && dom.workerAuto) wtEl.disabled = !!dom.workerAuto.checked;
+          // Açıklama ekle: Otomatik eşiğin nasıl çalıştığı
+          try {
+            let hint = document.getElementById('workerHint');
+            if (!hint) {
+              const row = document.createElement('div');
+              row.className = 'form-row';
+              hint = document.createElement('div');
+              hint.id = 'workerHint';
+              hint.style.fontSize = '12px';
+              hint.style.color = 'var(--muted)';
+              row.appendChild(hint);
+              const grid = document.querySelector('.settings-grid');
+              if (grid) grid.appendChild(row);
+            }
+            const cores = (navigator.hardwareConcurrency || 2);
+            const autoKB = Math.round(Math.max(512, Math.min(8192, Math.floor((cores >= 8 ? 2048 : 1024)) )));
+            hint.textContent = settings.language === 'en'
+              ? `Automatic uses a dynamic threshold (~${autoKB} KB) based on your device.`
+              : `Otomatik, cihazınıza göre dinamik bir eşik (~${autoKB} KB) kullanır.`;
+          } catch {}
           dom.settingsModal.classList.remove("hidden");
         }
         function closeSettings() {
@@ -2792,6 +2953,10 @@
           settings.indent = dom.indent.value;
           settings.sortKeys = dom.sortKeys.checked;
           settings.language = dom.languageSelect.value;
+          const wtEl = document.getElementById('workerThresholdKB');
+          const wt = Math.max(0, Number(wtEl && wtEl.value ? wtEl.value : defaultSettings.workerThresholdKB));
+          settings.workerThresholdKB = wt;
+          settings.workerAuto = !!(dom.workerAuto && dom.workerAuto.checked);
           saveSettings();
           applyPalette(settings.palette);
           applyLanguage(settings.language);
@@ -3117,6 +3282,16 @@
               dom.qlMenu.classList.toggle("hidden");
               dom.qlToggle.setAttribute("aria-expanded", String(!open));
             });
+        }
+
+        // Worker Auto toggle: threshold input enable/disable
+        if (dom.workerAuto && dom.workerThresholdKB) {
+          const updateDisabled = () => {
+            dom.workerThresholdKB.disabled = !!dom.workerAuto.checked;
+          };
+          dom.workerAuto.addEventListener('change', updateDisabled);
+          // İlk yüklemede de uygula
+          try { updateDisabled(); } catch {}
         }
       })();
     </script>

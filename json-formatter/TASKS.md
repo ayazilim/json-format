@@ -19,6 +19,12 @@ Bu dosya, projede yapılan işleri ve planlanan görevleri takip etmek için kul
 - [x] `hreflang` alternatif dil linkindeki URL düzeltildi (`?lang=en`)
  - [x] README iki dilli (EN/TR) olacak şekilde güncellendi ve genişletildi
  - [x] GitHub depo açıklaması (TR/EN) hazırlandı
+ - [x] Desktop mod responsive: `header` wrap ve `.toolbar` genişlik düzeni
+ - [x] A11y: görünür odak halkaları, `tablist/tabpanel` rolleri
+ - [x] Hata satırına atla: doğrulama/parse hatasında ilgili satıra kaydırma ve görsel vurgu
+ - [x] Tema entegrasyonu: `prefers-color-scheme` algılama ve `theme-color` meta güncelleme
+ - [x] Büyük JSON performansı: Web Worker ile parse, 200KB üstünde worker kullanımı
+ - [x] PWA: `serviceWorker` kaydı, `display_override` ilavesi
 
 ## Sıradaki İyileştirmeler
 - [ ] Ağaç görünümünde arama/filtreleme

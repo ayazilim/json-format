@@ -6,6 +6,7 @@
   "author": "Abdullah AYAZ | abayaz61@gmail.com",
   "scope": "/",
   "display": "standalone",
+  "display_override": ["standalone", "minimal-ui", "browser"],
   "orientation": "any",
   "theme_color": "#667eea",
   "background_color": "#ffffff",
